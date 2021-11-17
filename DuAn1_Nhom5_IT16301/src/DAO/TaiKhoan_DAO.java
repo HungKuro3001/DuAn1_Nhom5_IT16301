@@ -22,7 +22,7 @@ public class TaiKhoan_DAO extends Dao<TaiKhoan, String> {
 
     String updateSql = "UPDATE TAIKHOAN SET USERNAME=?, PASSWORD=?,ROLE=?, MANV=?,TRANGTHAI=? where IDTK=?";
     String updatePassWord = "UPDATE TAIKHOAN SET PASSWORD=? where IDTK=?";
-    String selectById = "SELECT*FROM TAIKHOAN WHERE MaNV=?";
+    String selectById = "SELECT*FROM TAIKHOAN WHERE USERNAME=?";
 
     @Override
     public void insert(TaiKhoan entity) {

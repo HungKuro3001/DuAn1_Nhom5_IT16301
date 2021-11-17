@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 public class jdbcHelper {
 
     public static String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    public static String dburl = "jdbc:sqlserver://localhost:1433;databaseName=DuAnMau";
+    public static String dburl = "jdbc:sqlserver://localhost:1433;databaseName=QLCHTS";
     public static String username = "sa";
     public static String password = "1";
     //nạp driver

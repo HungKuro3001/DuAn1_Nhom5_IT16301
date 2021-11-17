@@ -6,6 +6,9 @@
 package GUI;
 
 
+import DAO.TaiKhoan_DAO;
+import Entity.TaiKhoan;
+import Utils.Msgbox;
 import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -15,21 +18,21 @@ import javax.swing.JOptionPane;
  * @author Tiến Mạnh
  */
 public class Login extends javax.swing.JFrame {
-
+  private TaiKhoan_DAO dao= new TaiKhoan_DAO();
     /**
      * Creates new form Login
      */
     int a=1,b=1,c=1;
     public Login() {
         initComponents();
-        new Chao(this, true).setVisible(true);
+//        new Chao(this, true).setVisible(true);
         setBackground(new Color(0, 0, 0,0));    // (1)
         jPanel1.setBackground(new Color(0, 0, 0,0));//(2)   (1) VÀ (2) CÙNG NHAU ĐỂ tắt nền
         setLocationRelativeTo(null);
         txtUserName.setBackground(new Color(0, 0, 0,0));
          txtPassword.setBackground(new Color(0, 0, 0,0));
-          chkCheck.setVisible(false);
-          lblDieuKhoan.setVisible(false);
+         txtPassword.setText("Enter password");
+         
     }
 
     /**
@@ -132,8 +135,8 @@ public class Login extends javax.swing.JFrame {
 
         lblDieuKhoan.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         lblDieuKhoan.setForeground(new java.awt.Color(255, 255, 255));
-        lblDieuKhoan.setText("Agree");
-        jPanel1.add(lblDieuKhoan, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 520, 50, -1));
+        lblDieuKhoan.setText("ShowPass");
+        jPanel1.add(lblDieuKhoan, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 520, 80, -1));
 
         lblminimizeSize.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -205,11 +208,15 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUserNameActionPerformed
 
     private void lblDangNhapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDangNhapMouseClicked
-
+     dangNhap();
     }//GEN-LAST:event_lblDangNhapMouseClicked
 
     private void chkCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkCheckActionPerformed
-
+        if (chkCheck.isSelected()) {
+            txtPassword.setEchoChar((char)0);
+        }else{
+            txtPassword.setEchoChar('*');
+        }
     }//GEN-LAST:event_chkCheckActionPerformed
 
     private void lblminimizeSizeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblminimizeSizeMouseClicked
@@ -223,6 +230,19 @@ public class Login extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
+    public void dangNhap(){
+        
+        String userName = txtUserName.getText();
+        String passWord = txtPassword.getText();
+        TaiKhoan tk = dao.selectById(userName);
+        if (tk ==null) {
+            Msgbox.alert(this, "Sai tài khoản hoặc mật khẩu");
+        }else if (! tk.getPassWord().equals(passWord)) {
+           Msgbox.alert(this, "Sai tài khoản hoặc mật khẩu"); 
+        }else{
+           Msgbox.alert(this, "Đăng nhập thành công");  
+        }
+    }
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
