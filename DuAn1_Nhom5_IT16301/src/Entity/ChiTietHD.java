@@ -1,0 +1,92 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Entity;
+
+import java.math.BigDecimal;
+
+/**
+ *
+ * @author Admin
+ */
+public class ChiTietHD {
+    private String skuSP;
+    private String maHD;
+    private int soLuong;
+    private double tienCong;
+    private double donGia;
+    private double giamGia;
+    private BigDecimal ThanhTien;
+
+    public ChiTietHD() {
+    }
+
+    public ChiTietHD(String skuSP, String maHD, int soLuong, double tienCong, double donGia, double giamGia, BigDecimal ThanhTien) {
+        this.skuSP = skuSP;
+        this.maHD = maHD;
+        this.soLuong = soLuong;
+        this.tienCong = tienCong;
+        this.donGia = donGia;
+        this.giamGia = giamGia;
+        this.ThanhTien = ThanhTien;
+    }
+
+    public String getSkuSP() {
+        return skuSP;
+    }
+
+    public void setSkuSP(String skuSP) {
+        this.skuSP = skuSP;
+    }
+
+    public String getMaHD() {
+        return maHD;
+    }
+
+    public void setMaHD(String maHD) {
+        this.maHD = maHD;
+    }
+
+    public int getSoLuong() {
+        return soLuong;
+    }
+
+    public void setSoLuong(int soLuong) {
+        this.soLuong = soLuong;
+    }
+
+    public double getTienCong() {
+        return tienCong;
+    }
+
+    public void setTienCong(double tienCong) {
+        this.tienCong = tienCong;
+    }
+
+    public double getDonGia() {
+        return donGia;
+    }
+
+    public void setDonGia(double donGia) {
+        this.donGia = donGia;
+    }
+
+    public double getGiamGia() {
+        return giamGia;
+    }
+
+    public void setGiamGia(double giamGia) {
+        this.giamGia = giamGia;
+    }
+
+    public BigDecimal getThanhTien() {
+        return ThanhTien;
+    }
+
+    public void setThanhTien(BigDecimal ThanhTien) {
+        this.ThanhTien = ThanhTien;
+    }
+    
+}
