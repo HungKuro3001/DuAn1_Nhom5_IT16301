@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 public class NhanVien_DAO extends Dao<NhanVien, String> {
     String isnert ="Insert nhanvien values (?,?,?,?,?,?,?,?,?,1,?)";
     String selectAll   = "Select *from nhanvien";
-    String updateSql = "UPDATE NHANVIEN SET HOTEN =?,NGAYSINH =?,CCCD =?,SDT =?,GIOITINH =? where MANV=?";
+    String updateSql = "UPDATE NHANVIEN SET HOTEN =?,NGAYSINH =?,CCCD =?,SDT =?,GIOITINH =?, GhiChu=? where MANV=?";
     String updatePassWord = "UPDATE NHANVIEN SET PASSWORD=? where MANV =?";
     String selectById = "SELECT*FROM NHANVIEN WHERE USERNAME=?";
     String block="UPDATE NHANVIEN SET TRANGTHAI=? where MANV =?";
@@ -34,8 +34,8 @@ public class NhanVien_DAO extends Dao<NhanVien, String> {
 
     @Override
     public void update(NhanVien entity) {
-        jdbcHelper.Update(updateSql, entity.getUserName(), entity.getNgaySinh(),
-                entity.getCCCD(), entity.getSDT(),entity.getGioiTinh(),entity.getMaNV());
+        jdbcHelper.Update(updateSql, entity.getHoTen(), entity.getNgaySinh(),
+                entity.getCCCD(), entity.getSDT(),entity.getGioiTinh(),entity.getGhiChu(),entity.getMaNV());
     }
     public void khoaTk(NhanVien entity){
         jdbcHelper.Update(block,entity.isTrangThai(),entity.getMaNV());
