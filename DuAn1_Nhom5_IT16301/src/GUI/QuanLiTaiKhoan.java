@@ -10,7 +10,6 @@ import Entity.NhanVien;
 import Utils.Msgbox;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -24,7 +23,7 @@ import javax.swing.table.DefaultTableModel;
 public class QuanLiTaiKhoan extends javax.swing.JFrame {
 
     private NhanVien_DAO dao = new NhanVien_DAO();
-    private List<NhanVien> list = new  ArrayList();
+    private List<NhanVien> list = dao.selectAll();
 
     /**
      * Creates new form QuanLiTaiKhoan
@@ -71,7 +70,7 @@ public class QuanLiTaiKhoan extends javax.swing.JFrame {
         tblNhanVien = new javax.swing.JTable();
         btnUpdate = new javax.swing.JButton();
         btnInsert = new javax.swing.JButton();
-        btnKhoa = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -126,11 +125,6 @@ public class QuanLiTaiKhoan extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tblNhanVien);
 
         btnUpdate.setText("update");
-        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdateActionPerformed(evt);
-            }
-        });
 
         btnInsert.setText("Them");
         btnInsert.addActionListener(new java.awt.event.ActionListener() {
@@ -139,12 +133,7 @@ public class QuanLiTaiKhoan extends javax.swing.JFrame {
             }
         });
 
-        btnKhoa.setText("khoa");
-        btnKhoa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnKhoaActionPerformed(evt);
-            }
-        });
+        jButton3.setText("khoa");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -200,7 +189,7 @@ public class QuanLiTaiKhoan extends javax.swing.JFrame {
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addComponent(txtMaNV, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btnKhoa, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(43, 43, 43))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(rdoNam, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -270,7 +259,7 @@ public class QuanLiTaiKhoan extends javax.swing.JFrame {
                                 .addComponent(btnUpdate)
                                 .addGap(22, 22, 22)))
                         .addGap(16, 16, 16)
-                        .addComponent(btnKhoa)))
+                        .addComponent(jButton3)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(151, 151, 151))
@@ -292,23 +281,6 @@ public class QuanLiTaiKhoan extends javax.swing.JFrame {
         NhanVien nv = list.get(row);
         setForm(nv);
     }//GEN-LAST:event_tblNhanVienMouseClicked
-
-    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        update();
-    }//GEN-LAST:event_btnUpdateActionPerformed
-
-    private void btnKhoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhoaActionPerformed
-        int row = tblNhanVien.getSelectedRow();
-        NhanVien nv = list.get(row);
-        if (nv.isTrangThai()==true) {
-            nv.setTrangThai(false);
-            
-        }else{
-            nv.setTrangThai(true);
-        }
-        dao.khoaTk(nv);
-        fillTable();
-    }//GEN-LAST:event_btnKhoaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -387,45 +359,10 @@ public class QuanLiTaiKhoan extends javax.swing.JFrame {
         }
 
         NhanVien nv = getForm();
-        dao.insert(nv);
-        fillTable();
-    }
-
-    public void update() {
-        if (txtTen.getText().isEmpty() || txtTen.getText().length() > 10) {
-            Msgbox.alert(this, "Mã không được để trống và tối đa 50 kí tự");
-            return;
-        }
-
-        if (txtCCCD.getText().isEmpty()) {
-            Msgbox.alert(this, "Mã không được để trống CCCD");
-            return;
-        }
-        String cc = "[0-9]{12}";
-        if (!txtCCCD.getText().matches(cc)) {
-            Msgbox.alert(this, "sai định dạng CCCD");
-            return;
-        }
-        if (txtSDT.getText().isEmpty()) {
-            Msgbox.alert(this, "Mã không được để trống SĐT");
-            return;
-        }
-        String sdt = "0[0-9]{9}";
-        if (!txtSDT.getText().matches(sdt)) {
-            Msgbox.alert(this, "sai định dạng SĐT");
-            return;
-        }
-        if (txtMoTa.getText().isEmpty() || txtMoTa.getText().length() > 100) {
-            Msgbox.alert(this, "Mã không được để trống và tối đa 100 kí tự");
-            return;
-        }
-        NhanVien nv = getForm();
-        dao.update(nv);
-        fillTable();
+        System.out.println(nv.toString());
     }
 
     public void fillTable() {
-        list=dao.selectAll();
         DefaultTableModel model = (DefaultTableModel) tblNhanVien.getModel();
         model.setRowCount(0);
         for (NhanVien nhanVien : list) {
@@ -438,19 +375,14 @@ public class QuanLiTaiKhoan extends javax.swing.JFrame {
         }
     }
 
-    public NhanVien getForm() {
+    public NhanVien getForm() throws ParseException {
         NhanVien nv = new NhanVien();
         nv.setHoTen(txtTen.getText());
-        try {
-            SimpleDateFormat formater = new SimpleDateFormat();
-            formater.applyPattern("yyyy-MM-dd");
-            Date date = formater.parse(txtNgaySinh.getText());
-            nv.setNgaySinh(date);
-        } catch (Exception e) {
-            Msgbox.alert(this,"Ngày sinh" );
-        }
 
-        
+        SimpleDateFormat formater = new SimpleDateFormat();
+        formater.applyPattern("yyyy-MM-dd");
+        Date date = formater.parse(txtNgaySinh.getText());
+        nv.setNgaySinh(date);
         nv.setCCCD(txtCCCD.getText());
         nv.setSDT(txtSDT.getText());
         if (rdoNam.isSelected()) {
@@ -495,10 +427,10 @@ public class QuanLiTaiKhoan extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton RdoChuCH;
     private javax.swing.JButton btnInsert;
-    private javax.swing.JButton btnKhoa;
     private javax.swing.JButton btnUpdate;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
