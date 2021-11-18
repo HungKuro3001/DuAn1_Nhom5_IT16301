@@ -5,7 +5,7 @@
  */
 package DAO;
 
-import Entity.TaiKhoan;
+import Entity.NhanVien;
 import Helper.jdbcHelper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,21 +18,21 @@ import java.util.logging.Logger;
  *
  * @author Administrator
  */
-public class TaiKhoan_DAO extends Dao<TaiKhoan, String> {
+public class NhanVien_DAO extends Dao<NhanVien, String> {
 
-    String updateSql = "UPDATE TAIKHOAN SET USERNAME=?, PASSWORD=?,ROLE=?, MANV=?,TRANGTHAI=? where IDTK=?";
-    String updatePassWord = "UPDATE TAIKHOAN SET PASSWORD=? where IDTK=?";
-    String selectById = "SELECT*FROM TAIKHOAN WHERE USERNAME=?";
+    String updateSql = "UPDATE NHANVIEN SET HOTEN =?,NGAYSINH =?,CCCD =?,SDT =?,GIOITINH =? where MANV=?";
+    String updatePassWord = "UPDATE NHANVIEN SET PASSWORD=? where MANV =?";
+    String selectById = "SELECT*FROM NHANVIEN WHERE USERNAME=?";
 
     @Override
-    public void insert(TaiKhoan entity) {
+    public void insert(NhanVien entity) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void update(TaiKhoan entity) {
+    public void update(NhanVien entity) {
         jdbcHelper.Update(updateSql, entity.getUserName(), entity.getPassWord(),
-                entity.isRole(), entity.getMaNV(), entity.isTrangThai(), entity.getIDTK());
+                entity.isRole(), entity.getMaNV(), entity.isTrangThai());
     }
 
     @Override
@@ -41,13 +41,13 @@ public class TaiKhoan_DAO extends Dao<TaiKhoan, String> {
     }
 
     @Override
-    public List<TaiKhoan> selectAll() {
+    public List<NhanVien> selectAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public TaiKhoan selectById(String manv) {
-        List<TaiKhoan> list = this.selectBySql(selectById, manv);
+    public NhanVien selectById(String manv) {
+        List<NhanVien> list = this.selectBySql(selectById, manv);
         if (list.isEmpty()) {
             return null;
         }
@@ -55,19 +55,24 @@ public class TaiKhoan_DAO extends Dao<TaiKhoan, String> {
     }
 
     @Override
-    protected List<TaiKhoan> selectBySql(String sql, Object... args) {
+    protected List<NhanVien> selectBySql(String sql, Object... args) {
         try {
-            List<TaiKhoan> list = new ArrayList<>();
+            List<NhanVien> list = new ArrayList<>();
             ResultSet rs = jdbcHelper.query(sql, args);
             while (rs.next()) {
-                TaiKhoan tk = new TaiKhoan();
-                tk.setIDTK(rs.getInt(1));
-                tk.setUserName(rs.getString(2));
-                tk.setPassWord(rs.getString(3));
-                tk.setRole(rs.getBoolean(4));
-                tk.setMaNV(rs.getString(5));
-                tk.setTrangThai(rs.getBoolean(6));
-                list.add(tk);
+                NhanVien nv = new NhanVien();
+                nv.setMaNV(rs.getString(1));
+                nv.setHoTen(rs.getString(2));
+                nv.setNgaySinh(rs.getDate(3));
+                nv.setCCCD(rs.getString(4));
+                nv.setSDT(rs.getString(5));
+                nv.setGioiTinh(rs.getBoolean(6));
+                nv.setUserName(rs.getString(7));
+                nv.setPassWord(rs.getString(8));
+                nv.setRole(rs.getBoolean(9));
+                nv.setTrangThai(rs.getBoolean(10));
+                nv.setGhiChu(rs.getString(11));
+                list.add(nv);
             }
             rs.getStatement().getConnection().close();
             return list;
