@@ -34,7 +34,7 @@ public class NhanVien_DAO extends Dao<NhanVien, String> {
 
     @Override
     public void update(NhanVien entity) {
-        jdbcHelper.Update(updateSql, entity.getUserName(), entity.getPassWord(),
+        jdbcHelper.Update(updateSql, entity.getUserName(), entity.getNgaySinh(),
                 entity.getCCCD(), entity.getSDT(),entity.getGioiTinh(),entity.getMaNV());
     }
     public void khoaTk(NhanVien entity){
