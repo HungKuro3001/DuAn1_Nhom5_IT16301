@@ -5,7 +5,9 @@
  */
 package GUI;
 
-
+import DAO.NhanVien_DAO;
+import Entity.NhanVien;
+import Utils.Msgbox;
 import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -16,20 +18,22 @@ import javax.swing.JOptionPane;
  */
 public class Login extends javax.swing.JFrame {
 
+    private NhanVien_DAO dao = new NhanVien_DAO();
     /**
      * Creates new form Login
      */
-    int a=1,b=1,c=1;
+    int a = 1, b = 1, c = 1;
+
     public Login() {
         initComponents();
-        new Chao(this, true).setVisible(true);
-        setBackground(new Color(0, 0, 0,0));    // (1)
-        jPanel1.setBackground(new Color(0, 0, 0,0));//(2)   (1) VÀ (2) CÙNG NHAU ĐỂ tắt nền
+//        new Chao(this, true).setVisible(true);
+        setBackground(new Color(0, 0, 0, 0));    // (1)
+        jPanel1.setBackground(new Color(0, 0, 0, 0));//(2)   (1) VÀ (2) CÙNG NHAU ĐỂ tắt nền
         setLocationRelativeTo(null);
-        txtUserName.setBackground(new Color(0, 0, 0,0));
-         txtPassword.setBackground(new Color(0, 0, 0,0));
-          chkCheck.setVisible(false);
-          lblDieuKhoan.setVisible(false);
+        txtUserName.setBackground(new Color(0, 0, 0, 0));
+        txtPassword.setBackground(new Color(0, 0, 0, 0));
+        txtPassword.setText("Enter password");
+
     }
 
     /**
@@ -132,8 +136,8 @@ public class Login extends javax.swing.JFrame {
 
         lblDieuKhoan.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         lblDieuKhoan.setForeground(new java.awt.Color(255, 255, 255));
-        lblDieuKhoan.setText("Agree");
-        jPanel1.add(lblDieuKhoan, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 520, 50, -1));
+        lblDieuKhoan.setText("ShowPass");
+        jPanel1.add(lblDieuKhoan, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 520, 80, -1));
 
         lblminimizeSize.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -179,9 +183,9 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtPasswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtPasswordMouseClicked
-        if (b==1) {
+        if (b == 1) {
             txtPassword.setText("");
-            b=2;
+            b = 2;
         }
         txtPassword.setForeground(Color.white);
     }//GEN-LAST:event_txtPasswordMouseClicked
@@ -192,24 +196,28 @@ public class Login extends javax.swing.JFrame {
 
     private void txtUserNameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtUserNameMouseClicked
 
-        if(a==1){
+        if (a == 1) {
             txtUserName.setText("");
-            a=2;
+            a = 2;
         }
         txtUserName.setForeground(Color.white);
-    
+
     }//GEN-LAST:event_txtUserNameMouseClicked
 
     private void txtUserNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUserNameActionPerformed
-        
+
     }//GEN-LAST:event_txtUserNameActionPerformed
 
     private void lblDangNhapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDangNhapMouseClicked
-
+        dangNhap();
     }//GEN-LAST:event_lblDangNhapMouseClicked
 
     private void chkCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkCheckActionPerformed
-
+        if (chkCheck.isSelected()) {
+            txtPassword.setEchoChar((char) 0);
+        } else {
+            txtPassword.setEchoChar('*');
+        }
     }//GEN-LAST:event_chkCheckActionPerformed
 
     private void lblminimizeSizeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblminimizeSizeMouseClicked
@@ -217,12 +225,28 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_lblminimizeSizeMouseClicked
 
     private void lblExittMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExittMouseClicked
-        
+        System.exit(0);
     }//GEN-LAST:event_lblExittMouseClicked
 
     /**
      * @param args the command line arguments
      */
+    public void dangNhap() {
+
+        String userName = txtUserName.getText();
+        String passWord = txtPassword.getText();
+        NhanVien nv = dao.selectById(userName);
+        if (nv == null) {
+            Msgbox.alert(this, "Sai tài khoản hoặc mật khẩu");
+        } else if (!nv.getPassWord().equals(passWord)) {
+            Msgbox.alert(this, "Sai tài khoản hoặc mật khẩu");
+        } else if (nv.isTrangThai() == false) {
+            Msgbox.alert(this, "Tai khoan đã bị khóa");
+        } else {
+            Msgbox.alert(this, "Đăng nhập thành công");
+        }
+    }
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
