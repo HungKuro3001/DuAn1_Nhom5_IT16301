@@ -5,17 +5,32 @@
  */
 package GUI;
 
+import DAO.NhanVien_DAO;
+import Entity.NhanVien;
+import Utils.Msgbox;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Administrator
  */
 public class QuanLiTaiKhoan extends javax.swing.JFrame {
 
+    private NhanVien_DAO dao = new NhanVien_DAO();
+    private List<NhanVien> list = dao.selectAll();
+
     /**
      * Creates new form QuanLiTaiKhoan
      */
     public QuanLiTaiKhoan() {
         initComponents();
+        fillTable();
     }
 
     /**
@@ -52,7 +67,7 @@ public class QuanLiTaiKhoan extends javax.swing.JFrame {
         rdoNhanVien = new javax.swing.JRadioButton();
         RdoChuCH = new javax.swing.JRadioButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblNhanVien = new javax.swing.JTable();
         btnUpdate = new javax.swing.JButton();
         btnInsert = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -91,7 +106,7 @@ public class QuanLiTaiKhoan extends javax.swing.JFrame {
         buttonGroup2.add(RdoChuCH);
         RdoChuCH.setText("Chu");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblNhanVien.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null, null, null},
@@ -102,7 +117,12 @@ public class QuanLiTaiKhoan extends javax.swing.JFrame {
                 "Manv", "ten", "Ngaysinh", "CCCD", "SDT", "Gtinh", "UserName", "pass", "Role", "trangThai", "mota"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tblNhanVien.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblNhanVienMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblNhanVien);
 
         btnUpdate.setText("update");
 
@@ -249,8 +269,18 @@ public class QuanLiTaiKhoan extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
-        
+        try {
+            insert();
+        } catch (ParseException ex) {
+            Logger.getLogger(QuanLiTaiKhoan.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnInsertActionPerformed
+
+    private void tblNhanVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNhanVienMouseClicked
+        int row = tblNhanVien.getSelectedRow();
+        NhanVien nv = list.get(row);
+        setForm(nv);
+    }//GEN-LAST:event_tblNhanVienMouseClicked
 
     /**
      * @param args the command line arguments
@@ -286,8 +316,112 @@ public class QuanLiTaiKhoan extends javax.swing.JFrame {
             }
         });
     }
-    public void insert(){
-        
+
+    public void insert() throws ParseException {
+        if (txtTen.getText().isEmpty() || txtTen.getText().length() > 10) {
+            Msgbox.alert(this, "Mã không được để trống và tối đa 50 kí tự");
+            return;
+        }
+
+        if (txtCCCD.getText().isEmpty()) {
+            Msgbox.alert(this, "Mã không được để trống CCCD");
+            return;
+        }
+        String cc = "[0-9]{12}";
+        if (!txtCCCD.getText().matches(cc)) {
+            Msgbox.alert(this, "sai định dạng CCCD");
+            return;
+        }
+        if (txtSDT.getText().isEmpty()) {
+            Msgbox.alert(this, "Mã không được để trống SĐT");
+            return;
+        }
+        String sdt = "0[0-9]{9}";
+        if (!txtSDT.getText().matches(sdt)) {
+            Msgbox.alert(this, "sai định dạng SĐT");
+            return;
+        }
+        if (txtMoTa.getText().isEmpty() || txtMoTa.getText().length() > 100) {
+            Msgbox.alert(this, "Mã không được để trống và tối đa 100 kí tự");
+            return;
+        }
+        if (txtUserName.getText().isEmpty() || txtUserName.getText().length() > 100) {
+            Msgbox.alert(this, "UserName không được để trống và tối đa 30 kí tự");
+            return;
+        }
+        if (txtPassword.getText().isEmpty() || txtPassword.getText().length() > 100) {
+            Msgbox.alert(this, "txtPassword không được để trống và tối đa 30 kí tự");
+            return;
+        }
+        if (txtMaNV.getText().isEmpty() || txtMaNV.getText().length() > 10) {
+            Msgbox.alert(this, "Mã không được để trống và tối đa 10 kí tự");
+            return;
+        }
+
+        NhanVien nv = getForm();
+        System.out.println(nv.toString());
+    }
+
+    public void fillTable() {
+        DefaultTableModel model = (DefaultTableModel) tblNhanVien.getModel();
+        model.setRowCount(0);
+        for (NhanVien nhanVien : list) {
+            Object[] row = new Object[]{
+                nhanVien.getMaNV(), nhanVien.getHoTen(), nhanVien.getNgaySinh(), nhanVien.getCCCD(), nhanVien.getSDT(),
+                nhanVien.getGioiTinh(), nhanVien.getUserName(), "***", nhanVien.isRole(), nhanVien.isTrangThai(),
+                nhanVien.getGhiChu()
+            };
+            model.addRow(row);
+        }
+    }
+
+    public NhanVien getForm() throws ParseException {
+        NhanVien nv = new NhanVien();
+        nv.setHoTen(txtTen.getText());
+
+        SimpleDateFormat formater = new SimpleDateFormat();
+        formater.applyPattern("yyyy-MM-dd");
+        Date date = formater.parse(txtNgaySinh.getText());
+        nv.setNgaySinh(date);
+        nv.setCCCD(txtCCCD.getText());
+        nv.setSDT(txtSDT.getText());
+        if (rdoNam.isSelected()) {
+            nv.setGioiTinh(true);
+        } else {
+            nv.setGioiTinh(false);
+        }
+        nv.setGhiChu(txtMoTa.getText());
+        nv.setUserName(txtUserName.getText());
+        nv.setPassWord(txtPassword.getText());
+        if (RdoChuCH.isSelected()) {
+            nv.setRole(true);
+        } else {
+            nv.setRole(false);
+        }
+        nv.setMaNV(txtMaNV.getText());
+        return nv;
+    }
+
+    public void setForm(NhanVien nv) {
+        txtMaNV.setText(nv.getMaNV());
+        txtCCCD.setText(nv.getCCCD());
+        txtMoTa.setText(nv.getGhiChu());
+        txtNgaySinh.setText(nv.getNgaySinh() + "");
+        txtPassword.setText("**");
+        txtSDT.setText(nv.getSDT());
+        txtTen.setText(nv.getHoTen());
+        txtUserName.setText(nv.getUserName());
+        if (nv.getGioiTinh() == false) {
+            rdoNu.setSelected(true);
+        } else {
+            rdoNam.setSelected(true);
+        }
+        if (nv.isRole() == false) {
+            rdoNhanVien.setSelected(true);
+        } else {
+            RdoChuCH.setSelected(true);
+        }
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -308,10 +442,10 @@ public class QuanLiTaiKhoan extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JRadioButton rdoNam;
     private javax.swing.JRadioButton rdoNhanVien;
     private javax.swing.JRadioButton rdoNu;
+    private javax.swing.JTable tblNhanVien;
     private javax.swing.JTextField txtCCCD;
     private javax.swing.JTextField txtMaNV;
     private javax.swing.JTextField txtMoTa;

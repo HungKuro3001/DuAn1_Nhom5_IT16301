@@ -27,6 +27,10 @@ public class NhanVien {
     public NhanVien() {
     }
 
+    public boolean isGioiTinh() {
+        return gioiTinh;
+    }
+
     public NhanVien(String maNV, String HoTen, Date ngaySinh, String CCCD, String SDT, boolean gioiTinh, String userName, String passWord, boolean role, boolean trangThai, String GhiChu) {
         this.maNV = maNV;
         this.HoTen = HoTen;
@@ -128,6 +132,11 @@ public class NhanVien {
 
     public void setGhiChu(String GhiChu) {
         this.GhiChu = GhiChu;
+    }
+
+    @Override
+    public String toString() {
+        return "NhanVien{" + "maNV=" + maNV + ", HoTen=" + HoTen + ", ngaySinh=" + ngaySinh + ", CCCD=" + CCCD + ", SDT=" + SDT + ", gioiTinh=" + gioiTinh + ", userName=" + userName + ", passWord=" + passWord + ", role=" + role + ", trangThai=" + trangThai + ", GhiChu=" + GhiChu + '}';
     }
     
 }

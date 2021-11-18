@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  * @author Administrator
  */
 public class NhanVien_DAO extends Dao<NhanVien, String> {
-
+    String selectAll   = "Select *from nhanvien";
     String updateSql = "UPDATE NHANVIEN SET HOTEN =?,NGAYSINH =?,CCCD =?,SDT =?,GIOITINH =? where MANV=?";
     String updatePassWord = "UPDATE NHANVIEN SET PASSWORD=? where MANV =?";
     String selectById = "SELECT*FROM NHANVIEN WHERE USERNAME=?";
@@ -42,7 +42,8 @@ public class NhanVien_DAO extends Dao<NhanVien, String> {
 
     @Override
     public List<NhanVien> selectAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       List<NhanVien> list= this.selectBySql(selectAll);
+       return list;
     }
 
     @Override
