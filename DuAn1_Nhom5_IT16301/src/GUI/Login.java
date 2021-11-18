@@ -117,7 +117,7 @@ public class Login extends javax.swing.JFrame {
         jPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 380, 490, 10));
 
         lblDangNhap.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblDangNhap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/btnLoginSwitch.png"))); // NOI18N
+        lblDangNhap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Icon_Logo/btnLoginSwitch.png"))); // NOI18N
         lblDangNhap.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblDangNhapMouseClicked(evt);
@@ -149,7 +149,7 @@ public class Login extends javax.swing.JFrame {
         lblTB3.setForeground(new java.awt.Color(255, 255, 0));
         jPanel1.add(lblTB3, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 520, -1, -1));
 
-        lblExitt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/anhExit.png"))); // NOI18N
+        lblExitt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Icon_Logo/anhExit.png"))); // NOI18N
         lblExitt.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblExittMouseClicked(evt);
@@ -170,11 +170,11 @@ public class Login extends javax.swing.JFrame {
 
         lblRight.setForeground(new java.awt.Color(255, 255, 255));
         lblRight.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblRight.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/rightPanel_1.png"))); // NOI18N
+        lblRight.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Icon_Logo/rightPanel_1.png"))); // NOI18N
         jPanel1.add(lblRight, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 0, 680, 760));
 
         lblLeft.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblLeft.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/BaoCao.png"))); // NOI18N
+        lblLeft.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Icon_Logo/BaoCao.png"))); // NOI18N
         jPanel1.add(lblLeft, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 50, 620, 660));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 12, 1220, 790));

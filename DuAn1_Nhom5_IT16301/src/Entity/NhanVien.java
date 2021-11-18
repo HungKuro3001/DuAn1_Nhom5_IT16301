@@ -134,6 +134,9 @@ public class NhanVien {
         this.GhiChu = GhiChu;
     }
 
-
+    @Override
+    public String toString() {
+        return "NhanVien{" + "maNV=" + maNV + ", HoTen=" + HoTen + ", ngaySinh=" + ngaySinh + ", CCCD=" + CCCD + ", SDT=" + SDT + ", gioiTinh=" + gioiTinh + ", userName=" + userName + ", passWord=" + passWord + ", role=" + role + ", trangThai=" + trangThai + ", GhiChu=" + GhiChu + '}';
+    }
     
 }
