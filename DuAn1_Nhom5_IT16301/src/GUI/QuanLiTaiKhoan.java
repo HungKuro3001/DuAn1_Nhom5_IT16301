@@ -277,9 +277,7 @@ public class QuanLiTaiKhoan extends javax.swing.JFrame {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         String ngaysinh = formatter.format(ngay);
         System.out.println(ngaysinh);
-        if (txtTen.getText().equals("")) {
-            
-        }
+        
         
     }//GEN-LAST:event_btnUpdateActionPerformed
 
