@@ -110,7 +110,7 @@ public class Chao extends javax.swing.JDialog {
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 750, 960, -1));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/CHAY.png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Icon_Logo/CHAY.png"))); // NOI18N
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 750));
 
         pack();
