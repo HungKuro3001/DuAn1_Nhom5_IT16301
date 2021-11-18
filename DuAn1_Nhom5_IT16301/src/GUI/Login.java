@@ -5,9 +5,8 @@
  */
 package GUI;
 
-
-import DAO.TaiKhoan_DAO;
-import Entity.TaiKhoan;
+import DAO.NhanVien_DAO;
+import Entity.NhanVien;
 import Utils.Msgbox;
 import java.awt.Color;
 import javax.swing.JFrame;
@@ -18,21 +17,23 @@ import javax.swing.JOptionPane;
  * @author Tiến Mạnh
  */
 public class Login extends javax.swing.JFrame {
-  private TaiKhoan_DAO dao= new TaiKhoan_DAO();
+
+    private NhanVien_DAO dao = new NhanVien_DAO();
     /**
      * Creates new form Login
      */
-    int a=1,b=1,c=1;
+    int a = 1, b = 1, c = 1;
+
     public Login() {
         initComponents();
 //        new Chao(this, true).setVisible(true);
-        setBackground(new Color(0, 0, 0,0));    // (1)
-        jPanel1.setBackground(new Color(0, 0, 0,0));//(2)   (1) VÀ (2) CÙNG NHAU ĐỂ tắt nền
+        setBackground(new Color(0, 0, 0, 0));    // (1)
+        jPanel1.setBackground(new Color(0, 0, 0, 0));//(2)   (1) VÀ (2) CÙNG NHAU ĐỂ tắt nền
         setLocationRelativeTo(null);
-        txtUserName.setBackground(new Color(0, 0, 0,0));
-         txtPassword.setBackground(new Color(0, 0, 0,0));
-         txtPassword.setText("Enter password");
-         
+        txtUserName.setBackground(new Color(0, 0, 0, 0));
+        txtPassword.setBackground(new Color(0, 0, 0, 0));
+        txtPassword.setText("Enter password");
+
     }
 
     /**
@@ -182,9 +183,9 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtPasswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtPasswordMouseClicked
-        if (b==1) {
+        if (b == 1) {
             txtPassword.setText("");
-            b=2;
+            b = 2;
         }
         txtPassword.setForeground(Color.white);
     }//GEN-LAST:event_txtPasswordMouseClicked
@@ -195,26 +196,26 @@ public class Login extends javax.swing.JFrame {
 
     private void txtUserNameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtUserNameMouseClicked
 
-        if(a==1){
+        if (a == 1) {
             txtUserName.setText("");
-            a=2;
+            a = 2;
         }
         txtUserName.setForeground(Color.white);
-    
+
     }//GEN-LAST:event_txtUserNameMouseClicked
 
     private void txtUserNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUserNameActionPerformed
-        
+
     }//GEN-LAST:event_txtUserNameActionPerformed
 
     private void lblDangNhapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDangNhapMouseClicked
-     dangNhap();
+        dangNhap();
     }//GEN-LAST:event_lblDangNhapMouseClicked
 
     private void chkCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkCheckActionPerformed
         if (chkCheck.isSelected()) {
-            txtPassword.setEchoChar((char)0);
-        }else{
+            txtPassword.setEchoChar((char) 0);
+        } else {
             txtPassword.setEchoChar('*');
         }
     }//GEN-LAST:event_chkCheckActionPerformed
@@ -230,19 +231,22 @@ public class Login extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public void dangNhap(){
-        
+    public void dangNhap() {
+
         String userName = txtUserName.getText();
         String passWord = txtPassword.getText();
-        TaiKhoan tk = dao.selectById(userName);
-        if (tk ==null) {
+        NhanVien nv = dao.selectById(userName);
+        if (nv == null) {
             Msgbox.alert(this, "Sai tài khoản hoặc mật khẩu");
-        }else if (! tk.getPassWord().equals(passWord)) {
-           Msgbox.alert(this, "Sai tài khoản hoặc mật khẩu"); 
-        }else{
-           Msgbox.alert(this, "Đăng nhập thành công");  
+        } else if (!nv.getPassWord().equals(passWord)) {
+            Msgbox.alert(this, "Sai tài khoản hoặc mật khẩu");
+        } else if (nv.isTrangThai() == false) {
+            Msgbox.alert(this, "Tai khoan đã bị khóa");
+        } else {
+            Msgbox.alert(this, "Đăng nhập thành công");
         }
     }
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
