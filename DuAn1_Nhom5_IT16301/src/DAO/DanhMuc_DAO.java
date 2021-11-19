@@ -5,7 +5,7 @@
  */
 package DAO;
 
-import Entity.DanhMucSP;
+import Entity.DanhMucSp;
 
 import Helper.jdbcHelper;
 import java.sql.ResultSet;
@@ -17,7 +17,7 @@ import java.util.List;
  *
  * @author Administrator
  */
-public class DanhMuc_DAO extends Dao<DanhMucSP, String> {
+public class DanhMuc_DAO extends Dao<DanhMucSp, String> {
 
     String insert = "Insert DANHMUCSANPHAM values (?,?,?)";
     String selectAll = "Select *from DANHMUCSANPHAM";
@@ -26,12 +26,12 @@ public class DanhMuc_DAO extends Dao<DanhMucSP, String> {
     String selectById = "SELECT*FROM DANHMUCSANPHAM WHERE MADM=?";
 
     @Override
-    public void insert(DanhMucSP entity) {
+    public void insert(DanhMucSp entity) {
         jdbcHelper.Update(insert, entity.getMaDM(), entity.getTenDm(), entity.getMoTa());
     }
 
     @Override
-    public void update(DanhMucSP entity) {
+    public void update(DanhMucSp entity) {
         jdbcHelper.Update(updateSql, entity.getTenDm(), entity.getMoTa(), entity.getMaDM());
     }
 
@@ -41,14 +41,14 @@ public class DanhMuc_DAO extends Dao<DanhMucSP, String> {
     }
 
     @Override
-    public List<DanhMucSP> selectAll() {
-        List<DanhMucSP> list = this.selectBySql(selectAll);
+    public List<DanhMucSp> selectAll() {
+        List<DanhMucSp> list = this.selectBySql(selectAll);
         return list;
     }
 
     @Override
-    public DanhMucSP selectById(String maDM) {
-        List<DanhMucSP> list = this.selectBySql(selectById, maDM);
+    public DanhMucSp selectById(String maDM) {
+        List<DanhMucSp> list = this.selectBySql(selectById, maDM);
         if (list.isEmpty()) {
             return null;
         }
@@ -56,12 +56,12 @@ public class DanhMuc_DAO extends Dao<DanhMucSP, String> {
     }
 
     @Override
-    protected List<DanhMucSP> selectBySql(String sql, Object... args) {
+    protected List<DanhMucSp> selectBySql(String sql, Object... args) {
         try {
-            List<DanhMucSP> list = new ArrayList<>();
+            List<DanhMucSp> list = new ArrayList<>();
             ResultSet rs = jdbcHelper.query(sql, args);
             while (rs.next()) {
-                DanhMucSP dm = new DanhMucSP();
+                DanhMucSp dm = new DanhMucSp();
                 dm.setMaDM(rs.getString(1));
                 dm.setTenDm(rs.getString(2));
                 dm.setMoTa(rs.getString(3));
