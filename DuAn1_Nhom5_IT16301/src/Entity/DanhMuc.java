@@ -9,15 +9,15 @@ package Entity;
  *
  * @author Admin
  */
-public class DanhMucSp {
+public class DanhMuc {
     private String maDM;
     private String tenDm;
     private String moTa;
 
-    public DanhMucSp() {
+    public DanhMuc() {
     }
 
-    public DanhMucSp(String maDM, String tenDm, String moTa) {
+    public DanhMuc(String maDM, String tenDm, String moTa) {
         this.maDM = maDM;
         this.tenDm = tenDm;
         this.moTa = moTa;
