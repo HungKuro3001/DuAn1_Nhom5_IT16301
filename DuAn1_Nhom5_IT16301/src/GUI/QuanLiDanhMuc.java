@@ -6,7 +6,7 @@
 package GUI;
 
 import DAO.DanhMuc_DAO;
-import Entity.DanhMucSP;
+import Entity.DanhMuc;
 import Utils.Msgbox;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ import javax.swing.table.DefaultTableModel;
 public class QuanLiDanhMuc extends javax.swing.JFrame {
 
     private DanhMuc_DAO dao = new DanhMuc_DAO();
-    private List<DanhMucSP> list = new ArrayList();
+    private List<DanhMuc> list = new ArrayList();
 
     /**
      * Creates new form QuanLiDanhMuc
@@ -221,7 +221,7 @@ public class QuanLiDanhMuc extends javax.swing.JFrame {
     private void tblDanhMucMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDanhMucMouseClicked
         // TODO add your handling code here:
         int row = tblDanhMuc.getSelectedRow();
-        DanhMucSP dm = list.get(row);
+        DanhMuc dm = list.get(row);
         setForm(dm);
     }//GEN-LAST:event_tblDanhMucMouseClicked
 
@@ -289,7 +289,7 @@ public class QuanLiDanhMuc extends javax.swing.JFrame {
             Msgbox.alert(this, "Tên danh mục không được bỏ trống");
             return;
         }
-        DanhMucSP dm = getForm();
+        DanhMuc dm = getForm();
         dao.insert(dm);
         fillTable();
     }
@@ -303,20 +303,20 @@ public class QuanLiDanhMuc extends javax.swing.JFrame {
             Msgbox.alert(this, "Tên danh mục không được bỏ trống");
             return;
         }
-        DanhMucSP dm = getForm();
+        DanhMuc dm = getForm();
         dao.update(dm);
         fillTable();
     }
 
     private void delete() throws ParseException {
 
-        DanhMucSP dm = getForm();
+        DanhMuc dm = getForm();
         dao.delete(dm.getMaDM());
         fillTable();
     }
 
-    public DanhMucSP getForm() {
-        DanhMucSP dm = new DanhMucSP();
+    public DanhMuc getForm() {
+        DanhMuc dm = new DanhMuc();
         dm.setMaDM(txtMaDM.getText());
         dm.setTenDm(txtTenDM.getText());
         dm.setMoTa(txtMoTa.getText());
@@ -327,7 +327,7 @@ public class QuanLiDanhMuc extends javax.swing.JFrame {
         list = dao.selectAll();
         DefaultTableModel model = (DefaultTableModel) tblDanhMuc.getModel();
         model.setRowCount(0);
-        for (DanhMucSP danhMuc : list) {
+        for (DanhMuc danhMuc : list) {
             Object[] row = new Object[]{
                 danhMuc.getMaDM(), danhMuc.getTenDm(), danhMuc.getMoTa()
             };
@@ -335,7 +335,7 @@ public class QuanLiDanhMuc extends javax.swing.JFrame {
         }
     }
 
-    public void setForm(DanhMucSP dm) {
+    public void setForm(DanhMuc dm) {
         txtMaDM.setText(dm.getMaDM());
         txtTenDM.setText(dm.getTenDm());
         txtMoTa.setText(dm.getMoTa());
