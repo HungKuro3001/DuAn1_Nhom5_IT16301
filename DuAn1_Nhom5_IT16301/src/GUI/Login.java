@@ -7,6 +7,7 @@ package GUI;
 
 import DAO.NhanVien_DAO;
 import Entity.NhanVien;
+import Form.TestMenu.Main;
 import Utils.Msgbox;
 import java.awt.Color;
 import javax.swing.JFrame;
@@ -241,9 +242,10 @@ public class Login extends javax.swing.JFrame {
         } else if (!nv.getPassWord().equals(passWord)) {
             Msgbox.alert(this, "Sai tài khoản hoặc mật khẩu");
         } else if (nv.isTrangThai() == false) {
-            Msgbox.alert(this, "Tai khoan đã bị khóa");
+            Msgbox.alert(this, "Tài khoản đã bị khóa");
         } else {
             Msgbox.alert(this, "Đăng nhập thành công");
+            new Main().setVisible(true);
         }
     }
 

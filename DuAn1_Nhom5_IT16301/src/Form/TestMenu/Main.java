@@ -8,7 +8,10 @@ package Form.TestMenu;
 
 
 
+import GUI.Chao;
+import GUI.Login;
 import java.awt.Color;
+import java.awt.Panel;
 
 import javax.swing.JOptionPane;
 
@@ -22,33 +25,33 @@ public class Main extends javax.swing.JFrame {
    
     public Main() {
         initComponents();
-        //init();
-        //new Chao(this, true).setVisible(true);
-        //new Login().setVisible(true);
+        
         setBackground(new Color(0, 0, 0, 0));
         menu1.initMoving(this);
+        panelTransitions1.setBackground(new Color(240,240,240));
+        panelTransitions1.display(new GUI.pannelTrangChu());
         menu1.addEventMenu(new EventMenu() {
             @Override
             public void menuIndexChange(int index) {
                 
                 switch(index){
                     case 0:
-                        //panelTransitions1.display(new Panel_Form.DanhMuc());  
+                        panelTransitions1.display(new GUI.pannelQLNV());  
                         break;
                     case 1:  
-                        //panelTransitions1.display(new Panel_Form.NhanVien());  
+                        panelTransitions1.display(new GUI.pannelQLDMSP());
                         break;
                     case 2:  
-                        //panelTransitions1.display(new Panel_Form.KhachHang());  
+                          
                         break;
                     case 3:  
-                       // panelTransitions1.display(new Panel_Form.MatHang());  
+                        
                         break;  
                     case 4:
-                        //panelTransitions1.display(new Panel_Form.HoaDon());  
+                       
                         break; 
                     case 5:
-                        //panelTransitions1.display(new BaoCaoThongKe());  
+                  
                         break;
                     case 6:
                       
@@ -58,7 +61,7 @@ public class Main extends javax.swing.JFrame {
                    
                 
                 
-                //JOptionPane.showMessageDialog(null, index+"");
+                
             }
         });
     }
@@ -81,7 +84,7 @@ public class Main extends javax.swing.JFrame {
         panelBorder1.setBackground(new java.awt.Color(242, 242, 242));
         panelBorder1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         panelBorder1.add(menu1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 800));
-        panelBorder1.add(panelTransitions1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 0, 1450, 800));
+        panelBorder1.add(panelTransitions1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 0, 1420, 800));
 
         getContentPane().add(panelBorder1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, 1780, -1));
 
@@ -123,9 +126,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
     }
-    private void init(){
-       
-    }
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private Form.TestMenu.Menu menu1;
