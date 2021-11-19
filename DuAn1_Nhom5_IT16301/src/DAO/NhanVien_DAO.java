@@ -42,7 +42,7 @@ public class NhanVien_DAO extends Dao<NhanVien, String> {
     }
     @Override
     public void delete(String key) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override

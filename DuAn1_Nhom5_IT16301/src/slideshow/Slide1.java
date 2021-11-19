@@ -32,9 +32,6 @@ public class Slide1 extends javax.swing.JPanel {
         pictureBox1 = new slideshow.PictureBox();
         panelTransparent1 = new slideshow.PanelTransparent();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
 
         pictureBox1.setImage(new javax.swing.ImageIcon(getClass().getResource("/images/banner4.jpg"))); // NOI18N
 
@@ -45,29 +42,13 @@ public class Slide1 extends javax.swing.JPanel {
         jLabel1.setForeground(new java.awt.Color(7, 70, 100));
         jLabel1.setText("Trang sức Toản Huyền");
 
-        jLabel2.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(4, 55, 111));
-        jLabel2.setText("This is sample slideshow using java swing");
-
-        jLabel3.setFont(new java.awt.Font("sansserif", 2, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(4, 55, 111));
-        jLabel3.setText(" - Timing Framework library");
-
-        jLabel4.setFont(new java.awt.Font("sansserif", 2, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(4, 55, 111));
-        jLabel4.setText(" - Miglayout library");
-
         javax.swing.GroupLayout panelTransparent1Layout = new javax.swing.GroupLayout(panelTransparent1);
         panelTransparent1.setLayout(panelTransparent1Layout);
         panelTransparent1Layout.setHorizontalGroup(
             panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelTransparent1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLabel1)
                 .addContainerGap(112, Short.MAX_VALUE))
         );
         panelTransparent1Layout.setVerticalGroup(
@@ -75,13 +56,7 @@ public class Slide1 extends javax.swing.JPanel {
             .addGroup(panelTransparent1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addContainerGap(138, Short.MAX_VALUE))
         );
 
         pictureBox1.setLayer(panelTransparent1, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -114,9 +89,6 @@ public class Slide1 extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private slideshow.PanelTransparent panelTransparent1;
     private slideshow.PictureBox pictureBox1;
     // End of variables declaration//GEN-END:variables
