@@ -54,7 +54,7 @@ public class Main extends javax.swing.JFrame {
                   
                         break;
                     case 6:
-                      
+                        panelTransitions1.display(new GUI.QuanLyChatLieu());
                         break;
                 }
                

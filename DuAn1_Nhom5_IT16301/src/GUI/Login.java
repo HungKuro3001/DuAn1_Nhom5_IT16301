@@ -8,6 +8,7 @@ package GUI;
 import DAO.NhanVien_DAO;
 import Entity.NhanVien;
 import Form.TestMenu.Main;
+import Utils.Auth;
 import Utils.Msgbox;
 import java.awt.Color;
 import javax.swing.JFrame;
@@ -245,6 +246,7 @@ public class Login extends javax.swing.JFrame {
             Msgbox.alert(this, "Tài khoản đã bị khóa");
         } else {
             Msgbox.alert(this, "Đăng nhập thành công");
+            Auth.user=nv;
             new Main().setVisible(true);
         }
     }
