@@ -7,6 +7,7 @@ package GUI;
 
 import DAO.NhanVien_DAO;
 import Entity.NhanVien;
+import Utils.Auth;
 import Utils.Msgbox;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -28,6 +29,13 @@ public class pannelQLNV extends javax.swing.JPanel {
     public pannelQLNV() {
         initComponents();
         fillTable();
+        if (Auth.isManager()!=true) {
+            btnKhoa.setEnabled(false);
+            btnInsert.setEnabled(false);
+        } else {
+            btnKhoa.setEnabled(true);
+            btnInsert.setEnabled(true);
+        }
     }
 
     /**
@@ -39,6 +47,8 @@ public class pannelQLNV extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
         rdoNhanVien = new javax.swing.JRadioButton();
         RdoChuCH = new javax.swing.JRadioButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -70,10 +80,12 @@ public class pannelQLNV extends javax.swing.JPanel {
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        buttonGroup2.add(rdoNhanVien);
         rdoNhanVien.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         rdoNhanVien.setText("Nhân viên");
         add(rdoNhanVien, new org.netbeans.lib.awtextra.AbsoluteConstraints(833, 194, 93, -1));
 
+        buttonGroup2.add(RdoChuCH);
         RdoChuCH.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         RdoChuCH.setText("Chủ cửa hàng");
         add(RdoChuCH, new org.netbeans.lib.awtextra.AbsoluteConstraints(928, 194, 114, -1));
@@ -178,10 +190,13 @@ public class pannelQLNV extends javax.swing.JPanel {
         add(txtTen, new org.netbeans.lib.awtextra.AbsoluteConstraints(483, 116, 137, -1));
         add(txtCCCD, new org.netbeans.lib.awtextra.AbsoluteConstraints(483, 194, 137, -1));
 
+        buttonGroup1.add(rdoNam);
         rdoNam.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        rdoNam.setSelected(true);
         rdoNam.setText("Nam");
         add(rdoNam, new org.netbeans.lib.awtextra.AbsoluteConstraints(483, 277, 93, -1));
 
+        buttonGroup1.add(rdoNu);
         rdoNu.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         rdoNu.setText("Nữ");
         add(rdoNu, new org.netbeans.lib.awtextra.AbsoluteConstraints(594, 277, 93, -1));
@@ -212,6 +227,7 @@ public class pannelQLNV extends javax.swing.JPanel {
 
     private void btnKhoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhoaActionPerformed
         int row = tblNhanVien.getSelectedRow();
+        
         NhanVien nv = list.get(row);
         if (nv.isTrangThai()==true) {
             nv.setTrangThai(false);
@@ -309,7 +325,7 @@ public class pannelQLNV extends javax.swing.JPanel {
         for (NhanVien nhanVien : list) {
             Object[] row = new Object[]{
                 nhanVien.getMaNV(), nhanVien.getHoTen(), nhanVien.getNgaySinh(), nhanVien.getCCCD(), nhanVien.getSDT(),
-                nhanVien.getGioiTinh(), nhanVien.getUserName(), "***", nhanVien.isRole(), nhanVien.isTrangThai(),
+                nhanVien.getGioiTinh()==false?"Nữ":"Nam", nhanVien.getUserName(), "***", nhanVien.isRole()==true?"Chủ":"Nhân Viên", nhanVien.isTrangThai()==false?"Khóa":"Mở",
                 nhanVien.getGhiChu()
             };
             model.addRow(row);
@@ -375,6 +391,8 @@ public class pannelQLNV extends javax.swing.JPanel {
     private javax.swing.JButton btnInsert;
     private javax.swing.JButton btnKhoa;
     private javax.swing.JButton btnUpdate;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
