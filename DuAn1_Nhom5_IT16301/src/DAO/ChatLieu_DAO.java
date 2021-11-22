@@ -18,19 +18,19 @@ import java.sql.SQLException;
  */
 public class ChatLieu_DAO extends Dao<ChatLieu, String>{
     String selectAll = "Select *from CHATLIEU";
-    String insert    = "INSERT CHATLIEU VALUES (?,?,?,?,?)";
-    String update =    "UPDATE CHATLIEU SET TENCL=?,GIABAN=?,GIAMUA=?,MOTA=? WHERE MACL=?";
+    String insert    = "INSERT CHATLIEU VALUES (?,?,?)";
+    String update =    "UPDATE CHATLIEU SET TENCL=?,MOTA=? WHERE MACL=?";
     String delete =    "DELETE FROM CHATLIEU WHERE MACL=?";
     
 
     @Override
     public void insert(ChatLieu entity) {
-        jdbcHelper.Update(insert, entity.getMaCL(),entity.getTenCL(),entity.getGiaBan(),entity.getGiaMua(),entity.getMoTa());
+        jdbcHelper.Update(insert, entity.getMaCL(),entity.getTenCL(),entity.getMoTa());
     }
 
     @Override
     public void update(ChatLieu entity) {
-        jdbcHelper.Update(update, entity.getTenCL(),entity.getGiaBan(),entity.getGiaMua(),entity.getMoTa(),entity.getMaCL());
+        jdbcHelper.Update(update, entity.getTenCL(),entity.getMoTa(),entity.getMaCL());
     }
 
     @Override
@@ -46,7 +46,7 @@ public class ChatLieu_DAO extends Dao<ChatLieu, String>{
 
     @Override
     public ChatLieu selectById(String key) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return null;     
     }
     
         
@@ -60,9 +60,7 @@ public class ChatLieu_DAO extends Dao<ChatLieu, String>{
                 ChatLieu cl = new ChatLieu();
                 cl.setMaCL(rs.getString(1));
                 cl.setTenCL(rs.getString(2));
-                cl.setGiaBan(rs.getDouble(3));
-                cl.setGiaMua(rs.getDouble(4));
-                cl.setMoTa(rs.getString(5));
+                cl.setMoTa(rs.getString(3));
 
                 list.add(cl);
             }
