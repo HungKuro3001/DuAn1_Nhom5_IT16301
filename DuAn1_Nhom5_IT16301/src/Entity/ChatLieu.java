@@ -14,37 +14,16 @@ import java.math.BigDecimal;
 public class ChatLieu {
     private String maCL;
     private String tenCL;
-    private double giaBan;
-    private double giaMua;
     private String moTa;
 
     public ChatLieu() {
     }
 
-    public ChatLieu(String maCL, String tenCL, double giaBan, double giaMua, String moTa) {
+    public ChatLieu(String maCL, String tenCL, String moTa) {
         this.maCL = maCL;
         this.tenCL = tenCL;
-        this.giaBan = giaBan;
-        this.giaMua = giaMua;
         this.moTa = moTa;
     }
-
-    public double getGiaBan() {
-        return giaBan;
-    }
-
-    public void setGiaBan(double giaBan) {
-        this.giaBan = giaBan;
-    }
-
-    public double getGiaMua() {
-        return giaMua;
-    }
-
-    public void setGiaMua(double giaMua) {
-        this.giaMua = giaMua;
-    }
-
 
     
 
