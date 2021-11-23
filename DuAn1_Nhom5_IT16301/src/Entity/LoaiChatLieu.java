@@ -15,18 +15,29 @@ public class LoaiChatLieu {
     private String tenLCL;
     private double giaBan;
     private double giaMua;
+    private int tuoi;
 
     public LoaiChatLieu() {
     }
 
-    public LoaiChatLieu(String maLCL, String maCL, String tenLCL, double giaBan, double giaMua) {
+    public LoaiChatLieu(String maLCL, String maCL, String tenLCL, double giaBan, double giaMua, int tuoi) {
         this.maLCL = maLCL;
         this.maCL = maCL;
         this.tenLCL = tenLCL;
         this.giaBan = giaBan;
         this.giaMua = giaMua;
+        this.tuoi = tuoi;
     }
 
+    public int getTuoi() {
+        return tuoi;
+    }
+
+    public void setTuoi(int tuoi) {
+        this.tuoi = tuoi;
+    }
+
+    
     public String getMaLCL() {
         return maLCL;
     }
