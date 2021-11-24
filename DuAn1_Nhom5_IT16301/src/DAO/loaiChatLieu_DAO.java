@@ -5,6 +5,7 @@
  */
 package DAO;
 
+import Entity.ChatLieu;
 import Entity.LoaiChatLieu;
 import Helper.jdbcHelper;
 import java.util.ArrayList;
@@ -19,18 +20,19 @@ import java.sql.SQLException;
 public class loaiChatLieu_DAO extends Dao<LoaiChatLieu, String> {
 
     String selectbycl = "SELECT *FROM LOAICHATLIEU WHERE MACL=?";
-    String insert = "INSERT LOAICHATLIEU VALUES (?,?,?,?,?)";
-    String update = "UPDATE LOAICHATLIEU SET MACL=?, TENLCL=?, GIABANRA=?,GIAMUAVAO=? WHERE MALCL=?";
+    String insert = "INSERT LOAICHATLIEU VALUES (?,?,?,?,?,?)";
+    String update = "UPDATE LOAICHATLIEU SET MACL=?, TENLCL=?, GIABANRA=?,GIAMUAVAO=?, TUOI=? WHERE MALCL=?";
     String delete = "DELETE FROM LOAICHATLIEU WHERE MALCL=?";
+    String selectbyMalcl = "SELECT * FROM LOAICHATLIEU WHERE MALCL=?";
     @Override
 
     public void insert(LoaiChatLieu entity) {
-        jdbcHelper.Update(insert, entity.getMaLCL(),entity.getMaCL(),entity.getTenLCL(),entity.getGiaBan(),entity.getGiaMua());
+        jdbcHelper.Update(insert, entity.getMaLCL(),entity.getMaCL(),entity.getTenLCL(),entity.getGiaBan(),entity.getGiaMua(),entity.getTuoi());
     }
 
     @Override
     public void update(LoaiChatLieu entity) {
-        jdbcHelper.Update(update, entity.getMaCL(),entity.getTenLCL(),entity.getGiaBan(),entity.getGiaMua(),entity.getMaLCL());
+        jdbcHelper.Update(update, entity.getMaCL(),entity.getTenLCL(),entity.getGiaBan(),entity.getGiaMua(),entity.getTuoi(),entity.getMaLCL());
     }
 
     @Override
@@ -60,6 +62,7 @@ public class loaiChatLieu_DAO extends Dao<LoaiChatLieu, String> {
                 lcl.setTenLCL(rs.getString(3));
                 lcl.setGiaBan(rs.getDouble(4));
                 lcl.setGiaMua(rs.getDouble(5));
+                lcl.setTuoi(rs.getInt(6));
 
                 list.add(lcl);
             }
@@ -72,7 +75,11 @@ public class loaiChatLieu_DAO extends Dao<LoaiChatLieu, String> {
 
     @Override
     public LoaiChatLieu selectById(String key) {
-        return null; 
+        List<LoaiChatLieu> list = this.selectBySql(selectbyMalcl, key);
+        if (list.isEmpty()) {
+            return null;
+        }
+        return list.get(0);
     }
 
 }

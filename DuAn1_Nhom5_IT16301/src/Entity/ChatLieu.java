@@ -15,15 +15,31 @@ public class ChatLieu {
     private String maCL;
     private String tenCL;
     private String moTa;
+    private boolean TrangThai;
 
     public ChatLieu() {
     }
 
-    public ChatLieu(String maCL, String tenCL, String moTa) {
+    public ChatLieu(String maCL, String tenCL, String moTa, boolean TrangThai) {
         this.maCL = maCL;
         this.tenCL = tenCL;
         this.moTa = moTa;
+        this.TrangThai = TrangThai;
     }
+
+    
+    
+    
+    public boolean isTrangThai() {
+        return TrangThai;
+    }
+
+    public void setTrangThai(boolean TrangThai) {
+        this.TrangThai = TrangThai;
+    }
+
+  
+    
 
     
 
