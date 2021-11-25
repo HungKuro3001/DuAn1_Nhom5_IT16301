@@ -11,8 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 /**
  *
@@ -25,6 +24,7 @@ public class NhanVien_DAO extends Dao<NhanVien, String> {
     String updatePassWord = "UPDATE NHANVIEN SET PASSWORD=? where MANV =?";
     String selectById = "SELECT*FROM NHANVIEN WHERE USERNAME=?";
     String block="UPDATE NHANVIEN SET TRANGTHAI=? where MANV =?";
+    
 
     @Override
     public void insert(NhanVien entity) {

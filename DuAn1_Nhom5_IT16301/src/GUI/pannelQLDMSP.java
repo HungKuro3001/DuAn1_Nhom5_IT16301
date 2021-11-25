@@ -25,6 +25,7 @@ public class pannelQLDMSP extends javax.swing.JPanel {
     private List<DanhMuc> list = new ArrayList();
     public pannelQLDMSP() {
         initComponents();
+        fillTable();
     }
 
     /**

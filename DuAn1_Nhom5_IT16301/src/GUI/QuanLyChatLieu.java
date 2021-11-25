@@ -397,15 +397,7 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
         int row = tblChatLieu.getSelectedRow();
         ChatLieu cl = list.get(row);
         listLCL = daolcl.selectBycl(cl.getMaCL());
-        if (listLCL.size() < 1) {
-
-            block();
-        } else {
-            LoaiChatLieu lcl = listLCL.get(0);
-            System.out.println(lcl.getMaLCL());
-            Msgbox.alert(this, "Chất liệu này còn loại chất liệu");
-            return;
-        }
+        block();
 
     }//GEN-LAST:event_btnBlockActionPerformed
 
@@ -539,8 +531,12 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
         ChatLieu cl2 = list.get(row);
         if (cl2.isTrangThai() == true) {
             cl2.setTrangThai(false);
+            panLCL.setVisible(false);
+
         } else {
             cl2.setTrangThai(true);
+            panLCL.setVisible(true);
+            fillTableLCL(cl2.getMaCL());
         }
         dao.block(cl2);
         fillTable();
