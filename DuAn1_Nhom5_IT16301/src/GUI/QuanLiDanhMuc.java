@@ -70,11 +70,11 @@ public class QuanLiDanhMuc extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Mã Danh Mục", "Tên Danh Mục", "Mô tả"
+                "Mã Danh Mục", "Tên Danh Mục", "Mô tả", "Trạng Thái"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true, true
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -288,6 +288,12 @@ public class QuanLiDanhMuc extends javax.swing.JFrame {
         if (txtTenDM.getText().isEmpty()) {
             Msgbox.alert(this, "Tên danh mục không được bỏ trống");
             return;
+        }
+        for (DanhMuc danhMuc : list) {
+            if (danhMuc.getMaDM().equalsIgnoreCase(txtMaDM.getText())) {
+                Msgbox.alert(this, "Mã danh mục đã tồn tại");
+                return;
+            }
         }
         DanhMuc dm = getForm();
         dao.insert(dm);

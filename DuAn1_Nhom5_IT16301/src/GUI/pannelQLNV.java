@@ -282,7 +282,7 @@ public class pannelQLNV extends javax.swing.JPanel {
 
         NhanVien nv = getForm();
         dao.insert(nv);
-        fillTable();
+        fillTable(); 
     }
 
     public void update() {
@@ -347,7 +347,7 @@ public class pannelQLNV extends javax.swing.JPanel {
         
         nv.setCCCD(txtCCCD.getText());
         nv.setSDT(txtSDT.getText());
-        if (rdoNam.isSelected()) {
+        if (rdoNam.isSelected()){
             nv.setGioiTinh(true);
         } else {
             nv.setGioiTinh(false);
