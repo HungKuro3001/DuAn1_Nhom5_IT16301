@@ -19,11 +19,12 @@ import java.util.List;
  */
 public class DanhMuc_DAO extends Dao<DanhMuc, String> {
 
-    String insert = "Insert DANHMUCSANPHAM values (?,?,?)";
+    String insert = "Insert DANHMUCSANPHAM values (?,?,?,0)";
     String selectAll = "Select *from DANHMUCSANPHAM";
     String updateSql = "UPDATE DANHMUCSANPHAM SET TENDM =?,MOTA =? where MADM=?";
     String deleteSQL = "Delete from DANHMUCSANPHAM where MADM=?";
     String selectById = "SELECT*FROM DANHMUCSANPHAM WHERE MADM=?";
+    String updateTT = "Update DANHMUCSANPHAM set TRANGTHAI=? where MADM=? ";
 
     @Override
     public void insert(DanhMuc entity) {
@@ -34,7 +35,9 @@ public class DanhMuc_DAO extends Dao<DanhMuc, String> {
     public void update(DanhMuc entity) {
         jdbcHelper.Update(updateSql, entity.getTenDm(), entity.getMoTa(), entity.getMaDM());
     }
-
+    public void updateTT(DanhMuc entity) {
+        jdbcHelper.Update(updateTT, entity.isTrangThai(), entity.getMaDM());
+    }
     @Override
     public void delete(String key) {
         jdbcHelper.Update(deleteSQL, key);
@@ -65,7 +68,7 @@ public class DanhMuc_DAO extends Dao<DanhMuc, String> {
                 dm.setMaDM(rs.getString(1));
                 dm.setTenDm(rs.getString(2));
                 dm.setMoTa(rs.getString(3));
-
+                dm.setTrangThai(rs.getBoolean(4));
                 list.add(dm);
             }
             rs.getStatement().getConnection().close();
