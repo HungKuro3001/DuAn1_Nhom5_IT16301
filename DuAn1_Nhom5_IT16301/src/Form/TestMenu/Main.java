@@ -45,7 +45,7 @@ public class Main extends javax.swing.JFrame {
                           
                         break;
                     case 3:  
-                        
+                        panelTransitions1.display(new GUI.QLSP());
                         break;  
                     case 4:
                        
@@ -57,11 +57,7 @@ public class Main extends javax.swing.JFrame {
                         panelTransitions1.display(new GUI.QuanLyChatLieu());
                         break;
                 }
-               
-                   
-                
-                
-                
+ 
             }
         });
     }
