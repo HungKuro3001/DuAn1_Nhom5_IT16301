@@ -30,7 +30,6 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
      */
     public QuanLyChatLieu() {
         initComponents();
-        btnLCL.setVisible(false);
         panLCL.setVisible(false);
         fillTable();
     }
@@ -52,7 +51,7 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         btnSua = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        btnXoa = new javax.swing.JButton();
+        btnBlock = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblChatLieu = new javax.swing.JTable();
@@ -74,7 +73,8 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
         btnNewLCL = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         txtTenLCL = new javax.swing.JTextField();
-        btnLCL = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        txtTuoi = new javax.swing.JTextField();
 
         jLabel7.setText("Mô tả");
 
@@ -96,10 +96,10 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
 
         jLabel2.setText("Mã chất liệu");
 
-        btnXoa.setText("Xóa");
-        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+        btnBlock.setText("Khóa/Mở khóa");
+        btnBlock.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnXoaActionPerformed(evt);
+                btnBlockActionPerformed(evt);
             }
         });
 
@@ -110,11 +110,11 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Mã chất liệu", "Tên chất liệu", "Mô tả"
+                "Mã chất liệu", "Tên chất liệu", "Mô tả", "Trạng Thái"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -150,11 +150,11 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Mã loại CL", "Mã CL", "TenLCL", "Giá bán", "Giá mua"
+                "Mã loại CL", "Mã CL", "TenLCL", "Giá bán", "Giá mua", "Tuổi"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, true, true
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -198,44 +198,52 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
 
         jLabel10.setText("Tên LCL");
 
+        jLabel11.setText("Tuổii");
+
         javax.swing.GroupLayout panLCLLayout = new javax.swing.GroupLayout(panLCL);
         panLCL.setLayout(panLCLLayout);
         panLCLLayout.setHorizontalGroup(
             panLCLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panLCLLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(paneLCL, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addGap(22, 22, 22))
             .addGroup(panLCLLayout.createSequentialGroup()
                 .addGap(53, 53, 53)
                 .addGroup(panLCLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panLCLLayout.createSequentialGroup()
-                        .addComponent(paneLCL, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addContainerGap())
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtTuoi, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panLCLLayout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(panLCLLayout.createSequentialGroup()
                         .addGroup(panLCLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel10))
+                        .addGroup(panLCLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(panLCLLayout.createSequentialGroup()
+                                .addGap(55, 55, 55)
                                 .addGroup(panLCLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jLabel10))
+                                    .addComponent(txtTenLCL, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+                                    .addGroup(panLCLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(txtmaLCL)
+                                        .addComponent(txtCL, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE))))
+                            .addGroup(panLCLLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(panLCLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(panLCLLayout.createSequentialGroup()
-                                        .addGap(55, 55, 55)
-                                        .addGroup(panLCLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(txtTenLCL, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
-                                            .addGroup(panLCLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(txtmaLCL)
-                                                .addComponent(txtGiaMua)
-                                                .addComponent(txtCL, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE))))
-                                    .addGroup(panLCLLayout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(txtGiaBan, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
-                        .addGroup(panLCLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnInsertLClL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnDeleteLCL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnUpdateLCL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnNewLCL, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(51, 51, 51))))
+                                    .addComponent(txtGiaBan, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtGiaMua, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addGroup(panLCLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnInsertLClL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnDeleteLCL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnUpdateLCL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnNewLCL, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(51, 51, 51))
         );
         panLCLLayout.setVerticalGroup(
             panLCLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -259,32 +267,27 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
                 .addGroup(panLCLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(txtCL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnNewLCL)
-                .addGap(2, 2, 2)
+                .addGap(26, 26, 26)
                 .addGroup(panLCLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(txtGiaBan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(panLCLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panLCLLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
+                    .addComponent(txtGiaBan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnNewLCL))
+                .addGap(40, 40, 40)
+                .addGroup(panLCLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(panLCLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(btnDeleteLCL)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel6))
                     .addGroup(panLCLLayout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(txtGiaMua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(47, 47, 47)
+                        .addComponent(txtGiaMua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(9, 9, 9)))
+                .addGap(18, 18, 18)
+                .addGroup(panLCLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(txtTuoi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(75, 75, 75)
                 .addComponent(paneLCL, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(60, 60, 60))
         );
-
-        btnLCL.setText("Thêm loại CL");
-        btnLCL.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLCLActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -311,13 +314,12 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
                                         .addComponent(txtMaCL))
                                     .addComponent(txtMota, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(102, 102, 102)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnLCL))))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnBlock, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnSua, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnNew, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnThem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
                 .addComponent(panLCL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(261, 261, 261))
         );
@@ -348,14 +350,12 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
                             .addComponent(txtMota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnXoa))
+                            .addComponent(btnBlock))
                         .addGap(18, 18, 18)
                         .addComponent(btnNew)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnLCL)
-                        .addGap(33, 33, 33)
+                        .addGap(74, 74, 74)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(325, Short.MAX_VALUE))
+                .addContainerGap(196, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -372,21 +372,42 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
         ChatLieu cl = new ChatLieu();
         setForm(cl);
         txtmaLCL.setEditable(true);
+        txtMaCL.setEditable(true);
+        panLCL.setVisible(false);
     }//GEN-LAST:event_btnNewActionPerformed
 
     private void tblChatLieuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblChatLieuMouseClicked
         int row = tblChatLieu.getSelectedRow();
         ChatLieu cl = list.get(row);
         setForm(cl);
-        btnThem.setVisible(false);
-        txtMaCL.setEditable(false);
-        btnLCL.setVisible(true);
-        panLCL.setVisible(false);
+        if (cl.isTrangThai() == false) {
+            panLCL.setVisible(false);
+        } else {
+            panLCL.setVisible(true);
+            fillTableLCL(cl.getMaCL());
+            txtCL.setText(cl.getMaCL());
+            btnThem.setVisible(false);
+            txtMaCL.setEditable(false);
+        }
+
+
     }//GEN-LAST:event_tblChatLieuMouseClicked
 
-    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-        delete();
-    }//GEN-LAST:event_btnXoaActionPerformed
+    private void btnBlockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBlockActionPerformed
+        int row = tblChatLieu.getSelectedRow();
+        ChatLieu cl = list.get(row);
+        listLCL = daolcl.selectBycl(cl.getMaCL());
+        if (listLCL.size() < 1) {
+
+            block();
+        } else {
+            LoaiChatLieu lcl = listLCL.get(0);
+            System.out.println(lcl.getMaLCL());
+            Msgbox.alert(this, "Chất liệu này còn loại chất liệu");
+            return;
+        }
+
+    }//GEN-LAST:event_btnBlockActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         update();
@@ -395,14 +416,6 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         insert();
     }//GEN-LAST:event_btnThemActionPerformed
-
-    private void btnLCLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLCLActionPerformed
-        panLCL.setVisible(true);
-        int row = tblChatLieu.getSelectedRow();
-        ChatLieu chatLieu = list.get(row);
-        fillTableLCL(chatLieu.getMaCL());
-        txtCL.setText(chatLieu.getMaCL());
-    }//GEN-LAST:event_btnLCLActionPerformed
 
     private void btnInsertLClLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertLClLActionPerformed
         insertLCL();
@@ -430,7 +443,8 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
         model.setRowCount(0);
         for (ChatLieu chatLieu : list) {
             Object[] row = new Object[]{
-                chatLieu.getMaCL(), chatLieu.getTenCL(), chatLieu.getMoTa()
+                chatLieu.getMaCL(), chatLieu.getTenCL(), chatLieu.getMoTa(),
+                chatLieu.isTrangThai() == true ? "khả dụng" : "Không khả dụng"
             };
             model.addRow(row);
         }
@@ -443,7 +457,7 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
         for (LoaiChatLieu lcl : listLCL) {
             Object[] row = new Object[]{
                 lcl.getMaLCL(), lcl.getMaCL(), lcl.getTenLCL(), new BigDecimal(lcl.getGiaBan()),
-                new BigDecimal(lcl.getGiaMua())
+                new BigDecimal(lcl.getGiaMua()), lcl.getTuoi()
             };
             model.addRow(row);
         }
@@ -464,6 +478,7 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
         lcl.setTenLCL(txtTenLCL.getText());
         lcl.setGiaBan(Double.parseDouble(txtGiaBan.getText()));
         lcl.setGiaMua(Double.parseDouble(txtGiaMua.getText()));
+        lcl.setTuoi(Integer.parseInt(txtTuoi.getText()));
         return lcl;
     }
 
@@ -479,9 +494,11 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
         txtGiaMua.setText(new BigDecimal(lcl.getGiaMua()) + "");
         txtCL.setText(lcl.getMaCL());
         txtTenLCL.setText(lcl.getTenLCL());
+        txtTuoi.setText(lcl.getTuoi() + "");
     }
 
     public void insert() {
+
         if (txtMaCL.getText().isEmpty() || txtMaCL.getText().length() > 10) {
             Msgbox.alert(this, "Không để trống mã và tối đa 10 kí tự");
             return;
@@ -497,10 +514,6 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
             return;
         }
 
-        if (txtMota.getText().isEmpty()) {
-            Msgbox.alert(this, "Không để trống mô tả");
-            return;
-        }
         ChatLieu cl = getForm();
         dao.insert(cl);
         fillTable();
@@ -516,17 +529,20 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
             Msgbox.alert(this, "Không để trống tên và tối đa 50 kí tự");
             return;
         }
-        if (txtMota.getText().isEmpty()) {
-            Msgbox.alert(this, "Không để trống mô tả");
-            return;
-        }
         ChatLieu cl = getForm();
         dao.update(cl);
         fillTable();
     }
 
-    public void delete() {
-        dao.delete(txtMaCL.getText());
+    public void block() {
+        int row = tblChatLieu.getSelectedRow();
+        ChatLieu cl2 = list.get(row);
+        if (cl2.isTrangThai() == true) {
+            cl2.setTrangThai(false);
+        } else {
+            cl2.setTrangThai(true);
+        }
+        dao.block(cl2);
         fillTable();
         ChatLieu cl = new ChatLieu();
         setForm(cl);
@@ -542,12 +558,18 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
     }
 
     public void insertLCL() {
+
         if (txtmaLCL.getText().isEmpty() || txtmaLCL.getText().length() > 10) {
             Msgbox.alert(this, "Không để trống mã và tối đa 10 kí tự");
             return;
         }
-        if (txtTenLCL.getText().isEmpty() || txtTenLCL.getText().length() > 10) {
-            Msgbox.alert(this, "Không để trống tên  và tối đa 10 kí tự");
+        LoaiChatLieu lclcheck = daolcl.selectById(txtmaLCL.getText());
+        if (lclcheck != null) {
+            Msgbox.alert(this, "Mã chất liệu đã tồn tại");
+            return;
+        }
+        if (txtTenLCL.getText().isEmpty() || txtTenLCL.getText().length() > 50) {
+            Msgbox.alert(this, "Không để trống tên  và tối đa 50 kí tự");
             return;
         }
         for (LoaiChatLieu loaiChatLieu : listLCL) {
@@ -585,13 +607,27 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
             Msgbox.alert(this, "Sai định dạng giá mua");
             return;
         }
+        try {
+            if (txtTuoi.getText().isEmpty()) {
+                Msgbox.alert(this, "Không để trống tuổi");
+                return;
+            }
+            int tuoi = Integer.parseInt(txtTuoi.getText());
+            if (tuoi <= 0) {
+                Msgbox.alert(this, "tuổi >0");
+                return;
+            }
+        } catch (Exception e) {
+            Msgbox.alert(this, "Tuổi là số nguyên dương");
+            return;
+        }
         LoaiChatLieu lcl = getFormLCL();
         daolcl.insert(lcl);
         fillTableLCL(txtCL.getText());
     }
 
     public void updateLCL() {
-        if (txtTenLCL.getText().isEmpty() || txtTenLCL.getText().length() > 10) {
+        if (txtTenLCL.getText().isEmpty() || txtTenLCL.getText().length() > 50) {
             Msgbox.alert(this, "Không để trống tên  và tối đa 10 kí tự");
             return;
         }
@@ -624,6 +660,20 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
             Msgbox.alert(this, "Sai định dạng giá mua");
             return;
         }
+        try {
+            if (txtTuoi.getText().isEmpty()) {
+                Msgbox.alert(this, "Không để trống tuổi");
+                return;
+            }
+            int tuoi = Integer.parseInt(txtTuoi.getText());
+            if (tuoi <= 0) {
+                Msgbox.alert(this, "tuổi >0");
+                return;
+            }
+        } catch (Exception e) {
+            Msgbox.alert(this, "Tuổi là số nguyên dương");
+            return;
+        }
         LoaiChatLieu lcl = getFormLCL();
         daolcl.update(lcl);
         fillTableLCL(txtCL.getText());
@@ -631,17 +681,17 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBlock;
     private javax.swing.JButton btnDeleteLCL;
     private javax.swing.JButton btnInsertLClL;
-    private javax.swing.JButton btnLCL;
     private javax.swing.JButton btnNew;
     private javax.swing.JButton btnNewLCL;
     javax.swing.JButton btnSua;
     private javax.swing.JButton btnThem;
     private javax.swing.JButton btnUpdateLCL;
-    private javax.swing.JButton btnXoa;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
@@ -661,6 +711,7 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
     private javax.swing.JTextField txtMota;
     private javax.swing.JTextField txtTenCL;
     private javax.swing.JTextField txtTenLCL;
+    private javax.swing.JTextField txtTuoi;
     private javax.swing.JTextField txtmaLCL;
     // End of variables declaration//GEN-END:variables
 }

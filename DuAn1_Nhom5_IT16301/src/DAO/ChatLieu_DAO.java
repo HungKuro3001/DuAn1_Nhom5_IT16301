@@ -16,26 +16,30 @@ import java.sql.SQLException;
  *
  * @author Admin
  */
-public class ChatLieu_DAO extends Dao<ChatLieu, String>{
+public class ChatLieu_DAO extends Dao<ChatLieu, String> {
+
     String selectAll = "Select *from CHATLIEU";
-    String insert    = "INSERT CHATLIEU VALUES (?,?,?)";
-    String update =    "UPDATE CHATLIEU SET TENCL=?,MOTA=? WHERE MACL=?";
-    String delete =    "DELETE FROM CHATLIEU WHERE MACL=?";
-    
+    String insert = "INSERT CHATLIEU VALUES (?,?,1,?)";
+    String update = "UPDATE CHATLIEU SET TENCL=?,MOTA=? WHERE MACL=?";
+    String block = "UPDATE CHATLIEU SET TRANGTHAI=? WHERE MACL=?";
+
+    public void block(ChatLieu entity) {
+        jdbcHelper.Update(block,entity.isTrangThai(), entity.getMaCL());
+    }
 
     @Override
     public void insert(ChatLieu entity) {
-        jdbcHelper.Update(insert, entity.getMaCL(),entity.getTenCL(),entity.getMoTa());
+        jdbcHelper.Update(insert, entity.getMaCL(), entity.getTenCL(), entity.getMoTa());
     }
 
     @Override
     public void update(ChatLieu entity) {
-        jdbcHelper.Update(update, entity.getTenCL(),entity.getMoTa(),entity.getMaCL());
+        jdbcHelper.Update(update, entity.getTenCL(), entity.getMoTa(), entity.getMaCL());
     }
 
     @Override
     public void delete(String key) {
-        jdbcHelper.Update(delete, key);
+
     }
 
     @Override
@@ -46,11 +50,9 @@ public class ChatLieu_DAO extends Dao<ChatLieu, String>{
 
     @Override
     public ChatLieu selectById(String key) {
-        return null;     
+        return null;
     }
-    
-        
-  
+
     @Override
     protected List<ChatLieu> selectBySql(String sql, Object... args) {
         try {
@@ -60,7 +62,8 @@ public class ChatLieu_DAO extends Dao<ChatLieu, String>{
                 ChatLieu cl = new ChatLieu();
                 cl.setMaCL(rs.getString(1));
                 cl.setTenCL(rs.getString(2));
-                cl.setMoTa(rs.getString(3));
+                cl.setTrangThai(rs.getBoolean(3));
+                cl.setMoTa(rs.getString(4));
 
                 list.add(cl);
             }
@@ -71,5 +74,4 @@ public class ChatLieu_DAO extends Dao<ChatLieu, String>{
         }
     }
 
-    
 }
