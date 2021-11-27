@@ -13,14 +13,16 @@ public class DanhMuc {
     private String maDM;
     private String tenDm;
     private String moTa;
+    private boolean trangThai;
 
     public DanhMuc() {
     }
 
-    public DanhMuc(String maDM, String tenDm, String moTa) {
+    public DanhMuc(String maDM, String tenDm, String moTa, boolean trangThai) {
         this.maDM = maDM;
         this.tenDm = tenDm;
         this.moTa = moTa;
+        this.trangThai = trangThai;
     }
 
     public String getMaDM() {
@@ -46,5 +48,17 @@ public class DanhMuc {
     public void setMoTa(String moTa) {
         this.moTa = moTa;
     }
+
+    public boolean isTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(boolean trangThai) {
+        this.trangThai = trangThai;
+    }
+
+    
+    
+    
     
 }

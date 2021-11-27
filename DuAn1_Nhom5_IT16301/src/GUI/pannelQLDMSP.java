@@ -23,6 +23,7 @@ public class pannelQLDMSP extends javax.swing.JPanel {
 
     private DanhMuc_DAO dao = new DanhMuc_DAO();
     private List<DanhMuc> list = new ArrayList();
+
     public pannelQLDMSP() {
         initComponents();
         fillTable();
@@ -43,13 +44,13 @@ public class pannelQLDMSP extends javax.swing.JPanel {
         btnThem = new javax.swing.JButton();
         btnSua = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        btnXoa = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDanhMuc = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
         txtMaDM = new javax.swing.JTextField();
         txtTenDM = new javax.swing.JTextField();
+        btnKhoa = new javax.swing.JButton();
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(0, 204, 204));
@@ -77,14 +78,6 @@ public class pannelQLDMSP extends javax.swing.JPanel {
 
         jLabel2.setText("Mã Danh Mục");
 
-        btnXoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Icon_Logo/delete (1).png"))); // NOI18N
-        btnXoa.setText("Xóa");
-        btnXoa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnXoaActionPerformed(evt);
-            }
-        });
-
         jLabel3.setText("Tên Danh Mục");
 
         tblDanhMuc.setModel(new javax.swing.table.DefaultTableModel(
@@ -92,11 +85,11 @@ public class pannelQLDMSP extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Mã Danh Mục", "Tên Danh Mục", "Mô tả"
+                "Mã Danh Mục", "Tên Danh Mục", "Mô tả", "Trạng Thái"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true, true
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -124,6 +117,14 @@ public class pannelQLDMSP extends javax.swing.JPanel {
             }
         });
 
+        btnKhoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Icon_Logo/update.png"))); // NOI18N
+        btnKhoa.setText("Khóa");
+        btnKhoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnKhoaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -133,9 +134,11 @@ public class pannelQLDMSP extends javax.swing.JPanel {
                 .addComponent(jLabel11)
                 .addContainerGap(553, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(379, 379, 379))
+                .addContainerGap(951, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnKhoa, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(380, 380, 380))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(403, 403, 403)
@@ -155,9 +158,7 @@ public class pannelQLDMSP extends javax.swing.JPanel {
                                 .addComponent(txtMaDM)
                                 .addComponent(jScrollPane2))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(btnThem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnXoa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btnThem)
                             .addGap(381, 381, 381)))))
         );
         layout.setVerticalGroup(
@@ -165,9 +166,11 @@ public class pannelQLDMSP extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addComponent(jLabel11)
-                .addGap(180, 180, 180)
+                .addGap(141, 141, 141)
                 .addComponent(btnSua)
-                .addContainerGap(525, Short.MAX_VALUE))
+                .addGap(35, 35, 35)
+                .addComponent(btnKhoa)
+                .addContainerGap(488, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(125, 125, 125)
@@ -186,9 +189,7 @@ public class pannelQLDMSP extends javax.swing.JPanel {
                             .addComponent(jLabel4))
                         .addGroup(layout.createSequentialGroup()
                             .addGap(122, 122, 122)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(125, 125, 125)))
@@ -213,10 +214,6 @@ public class pannelQLDMSP extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnSuaActionPerformed
 
-    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnXoaActionPerformed
-
     private void tblDanhMucMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDanhMucMouseClicked
         // TODO add your handling code here:
         int row = tblDanhMuc.getSelectedRow();
@@ -231,10 +228,32 @@ public class pannelQLDMSP extends javax.swing.JPanel {
     private void txtTenDMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenDMActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTenDMActionPerformed
+
+    private void btnKhoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhoaActionPerformed
+        // TODO add your handling code here:
+        int row = tblDanhMuc.getSelectedRow();
+
+        DanhMuc dm = list.get(row);
+        if (dm.isTrangThai() == true) {
+            dm.setTrangThai(false);
+
+        } else {
+            dm.setTrangThai(true);
+        }
+        dao.updateTT(dm);
+        fillTable();
+
+    }//GEN-LAST:event_btnKhoaActionPerformed
     private void insert() throws ParseException {
         if (txtMaDM.getText().isEmpty()) {
             Msgbox.alert(this, "Mã danh mục không được bỏ trống");
             return;
+        }
+        for (DanhMuc danhMuc : list) {
+            if (danhMuc.getMaDM().equalsIgnoreCase(txtMaDM.getText())) {
+                Msgbox.alert(this, "Mã danh mục đã tồn tại");
+                return;
+            }
         }
         if (txtTenDM.getText().isEmpty()) {
             Msgbox.alert(this, "Tên danh mục không được bỏ trống");
@@ -280,7 +299,7 @@ public class pannelQLDMSP extends javax.swing.JPanel {
         model.setRowCount(0);
         for (DanhMuc danhMuc : list) {
             Object[] row = new Object[]{
-                danhMuc.getMaDM(), danhMuc.getTenDm(), danhMuc.getMoTa()
+                danhMuc.getMaDM(), danhMuc.getTenDm(), danhMuc.getMoTa(), danhMuc.isTrangThai() == false ? "Không khóa" : "Khóa"
             };
             model.addRow(row);
         }
@@ -294,9 +313,9 @@ public class pannelQLDMSP extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    javax.swing.JButton btnKhoa;
     javax.swing.JButton btnSua;
     private javax.swing.JButton btnThem;
-    private javax.swing.JButton btnXoa;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
