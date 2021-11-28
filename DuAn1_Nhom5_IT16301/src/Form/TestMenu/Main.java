@@ -13,6 +13,9 @@ import GUI.Login;
 import GUI.QLHD;
 import java.awt.Color;
 import java.awt.Panel;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 
@@ -49,9 +52,16 @@ public class Main extends javax.swing.JFrame {
                         panelTransitions1.display(new GUI.QLSP());
                         break;  
                     case 4:
-                        panelTransitions1.display( new QLHD());
+                    {
+                        try {
+                            panelTransitions1.display( new QLHD());
+                        } catch (SQLException ex) {
+                            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
                        
                         break; 
+ 
                     case 5:
                   
                         break;

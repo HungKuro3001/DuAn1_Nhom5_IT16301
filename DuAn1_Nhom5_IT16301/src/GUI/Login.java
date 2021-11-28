@@ -247,7 +247,7 @@ public class Login extends javax.swing.JFrame {
         } else {
             Msgbox.alert(this, "Đăng nhập thành công");
             Auth.user=nv;
-           
+           this.dispose();
             new Main().setVisible(true);
         }
     }
