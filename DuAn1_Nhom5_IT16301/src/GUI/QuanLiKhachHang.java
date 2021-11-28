@@ -17,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Administrator
  */
 public class QuanLiKhachHang extends javax.swing.JFrame {
-
+    
     private KhachHang_DAO dao = new KhachHang_DAO();
     private List<KhachHang> list = new ArrayList();
 
@@ -63,7 +63,6 @@ public class QuanLiKhachHang extends javax.swing.JFrame {
         btnKhoa = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         txtTimKiem = new javax.swing.JTextField();
-        btnTimKiem = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -178,9 +177,14 @@ public class QuanLiKhachHang extends javax.swing.JFrame {
         jLabel8.setToolTipText("");
 
         txtTimKiem.setToolTipText("");
-
-        btnTimKiem.setText("TÌM KIẾM");
-        btnTimKiem.setToolTipText("");
+        txtTimKiem.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTimKiemKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTimKiemKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -229,9 +233,7 @@ public class QuanLiKhachHang extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addGap(18, 18, 18)
-                        .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35)
-                        .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -270,11 +272,10 @@ public class QuanLiKhachHang extends javax.swing.JFrame {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
-                            .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnTimKiem))
+                            .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 529, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
@@ -329,17 +330,27 @@ public class QuanLiKhachHang extends javax.swing.JFrame {
     private void btnKhoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhoaActionPerformed
         // TODO add your handling code here:
         int row = tblKhachHang.getSelectedRow();
-
+        
         KhachHang kh = list.get(row);
         if (kh.isTrangThai() == true) {
             kh.setTrangThai(false);
-
+            
         } else {
             kh.setTrangThai(true);
         }
         dao.updateTT(kh);
         fillTable();
     }//GEN-LAST:event_btnKhoaActionPerformed
+
+    private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased
+        // TODO add your handling code here:
+        search();
+        
+    }//GEN-LAST:event_txtTimKiemKeyReleased
+
+    private void txtTimKiemKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTimKiemKeyTyped
 
     /**
      * @param args the command line arguments
@@ -381,7 +392,6 @@ public class QuanLiKhachHang extends javax.swing.JFrame {
     private javax.swing.JButton btnKhoa;
     private javax.swing.JButton btnLamMoi;
     private javax.swing.JButton btnThem;
-    private javax.swing.JButton btnTimKiem;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -411,7 +421,7 @@ public class QuanLiKhachHang extends javax.swing.JFrame {
         }
         for (KhachHang khachHang : list) {
             if (khachHang.getMaKh().equalsIgnoreCase(txtMaKH.getText())) {
-                Msgbox.alert(this, "Mã chất liệu đã tồn tại");
+                Msgbox.alert(this, "Mã khách hàng đã tồn tại");
                 return;
             }
         }
@@ -430,14 +440,15 @@ public class QuanLiKhachHang extends javax.swing.JFrame {
         }
         if (txtDiaChi.getText().isEmpty()) {
             Msgbox.alert(this, "Địa chỉ không được để trống");
+            return;
         }
         KhachHang kh = getForm();
         dao.insert(kh);
         fillTable();
     }
-
+    
     public void fillTable() {
-
+        
         list = dao.selectAll();
         DefaultTableModel model = (DefaultTableModel) tblKhachHang.getModel();
         model.setRowCount(0);
@@ -447,9 +458,9 @@ public class QuanLiKhachHang extends javax.swing.JFrame {
             };
             model.addRow(row);
         }
-
+        
     }
-
+    
     private void setForm(KhachHang kh) {
         txtMaKH.setText(kh.getMaKh());
         txtHoTen.setText(kh.getHoTen());
@@ -462,7 +473,7 @@ public class QuanLiKhachHang extends javax.swing.JFrame {
         txtDiaChi.setText(kh.getDiaChi());
         txtGhiChu.setText(kh.getGhiChu());
     }
-
+    
     public KhachHang getForm() {
         KhachHang KH = new KhachHang();
         KH.setMaKh(txtMaKH.getText());
@@ -477,7 +488,7 @@ public class QuanLiKhachHang extends javax.swing.JFrame {
         KH.setGhiChu(txtGhiChu.getText());
         return KH;
     }
-
+    
     private void update() {
         if (txtHoTen.getText().isEmpty()) {
             Msgbox.alert(this, "Họ tên không được để trống");
@@ -496,9 +507,28 @@ public class QuanLiKhachHang extends javax.swing.JFrame {
             Msgbox.alert(this, "Địa chỉ không được để trống");
             return;
         }
-      
+        
         KhachHang kh = getForm();
         dao.update(kh);
         fillTable();
+    }
+
+     private void search(){
+        if(txtTimKiem.getText().trim().equals("")){
+            fillTable();
+        }
+        else{
+            String SDT =txtTimKiem.getText();
+        list = dao.search(SDT);
+        DefaultTableModel model = (DefaultTableModel) tblKhachHang.getModel();
+        model.setRowCount(0);
+        for (KhachHang khachHang : list) {
+            Object[] row = new Object[]{
+                khachHang.getMaKh(), khachHang.getHoTen(), khachHang.getSdt(), khachHang.isGioiTinh() == false ? "Nữ" : "Nam", khachHang.getDiaChi(), khachHang.getGhiChu(), khachHang.isTrangThai() == false ? "Mở" : "Khóa"
+            };
+            model.addRow(row);
+        }
+        }
+        
     }
 }
