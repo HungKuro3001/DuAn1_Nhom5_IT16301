@@ -217,6 +217,22 @@ public class QLSP extends javax.swing.JPanel {
         txtGiaBanRa.setText(""+new BigDecimal(result[0]));
         txtGiaMuaVao.setText(""+new BigDecimal(result[1]));
     }
+    private void search(){
+        if(txtSearch.getText().trim().equals("")){
+            fillTable();
+        }
+        else{
+            String tenSP =txtSearch.getText();
+        listSP = SPD.search(tenSP);
+        DefaultTableModel model =(DefaultTableModel)tblSanPham.getModel();
+        model.setRowCount(0);
+        for (SanPham sp : listSP) {
+            model.addRow(new Object[]{sp.getMaSP(),sp.getMaDm(),sp.getTenSP(),sp.getMaLCL(),sp.getKhoiLuong(),new BigDecimal(sp.getGiaMuaVao()),new BigDecimal(sp.getGiaBanRa())
+                    ,sp.getTienCong(),sp.getTrangThai(),sp.getSoLuong(),sp.getMoTa()});
+        }
+        }
+        
+    }
 
     private void init(){
         txtMaSanPham.setText(SPD.maSP_TuSinh());
@@ -265,7 +281,7 @@ public class QLSP extends javax.swing.JPanel {
         jLabel14 = new javax.swing.JLabel();
         cbxChatLieu = new javax.swing.JComboBox<>();
         jLabel15 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtSearch = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -442,7 +458,13 @@ public class QLSP extends javax.swing.JPanel {
 
         jLabel15.setText("Khối lượng:");
         add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 270, -1, -1));
-        add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 20, 150, -1));
+
+        txtSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtSearchKeyReleased(evt);
+            }
+        });
+        add(txtSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 20, 150, -1));
 
         jLabel5.setText("Tìm kiếm:");
         add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 20, -1, -1));
@@ -511,6 +533,10 @@ public class QLSP extends javax.swing.JPanel {
         fillTable();
     }//GEN-LAST:event_cbxTrangThaiItemStateChanged
 
+    private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
+        search();
+    }//GEN-LAST:event_txtSearchKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLamMoi;
@@ -538,13 +564,13 @@ public class QLSP extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblDonVi;
     private javax.swing.JTable tblSanPham;
     private javax.swing.JTextField txtGiaBanRa;
     private javax.swing.JTextField txtGiaMuaVao;
     private javax.swing.JTextField txtKhoiLuong;
     private javax.swing.JTextField txtMaSanPham;
+    private javax.swing.JTextField txtSearch;
     private javax.swing.JTextField txtSoLuong;
     private javax.swing.JTextField txtTenDanhMuc;
     private javax.swing.JTextField txtTenSp;

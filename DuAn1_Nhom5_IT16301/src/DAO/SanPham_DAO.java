@@ -46,6 +46,12 @@ public class SanPham_DAO extends Dao<SanPham, String> {
         }
         return list;
     }
+        public List<SanPham> search(String tenSP){
+         String search ="EXEC SP_SEARCH "+"N'%"+tenSP+"%'";
+         
+        List<SanPham> listSP =this.selectBySql(search);
+        return listSP;
+    }
 
     public double[] calculateMoney(double khoiLuong, String maLCL) throws SQLException {
         double giaBanRa = 0, giaMuaVao = 0;
