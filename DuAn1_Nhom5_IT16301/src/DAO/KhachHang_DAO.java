@@ -6,7 +6,9 @@
 package DAO;
 
 import Entity.KhachHang;
+import Entity.NhanVien;
 import Helper.jdbcHelper;
+import static java.nio.file.Files.list;
 import java.util.List;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -21,7 +23,7 @@ public class KhachHang_DAO extends Dao<KhachHang , String>{
     String insert = "Insert into KHACHHANG values(?,?,?,?,?,?,0)";
     String update = "Update KHACHHANG set HOTEN=?, SDT=?,GIOITINH=?,DIACHI=?,GHICHU=? where MAKH=?";
     String updateTT = "Update KHACHHANG set TRANGTHAI = ? where MAKH=?";
-    String selectBySDT = "Select * from KHACHHANG where SDT=?";
+    String selectBySDT = "Select * from KHACHHANG where SDT like %?%";
     
     @Override
     public void insert(KhachHang entity) {
@@ -50,7 +52,12 @@ public class KhachHang_DAO extends Dao<KhachHang , String>{
     public KhachHang selectById(String key) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    public List<KhachHang> search(String SDT){
+         String search ="Select * from KHACHHANG where SDT like '%"+SDT+"%'";
+        List<KhachHang> listKH =this.selectBySql(search);
+        return listKH;
+    }
+   
     @Override
     protected List<KhachHang> selectBySql(String sql, Object... args) {
         try {
