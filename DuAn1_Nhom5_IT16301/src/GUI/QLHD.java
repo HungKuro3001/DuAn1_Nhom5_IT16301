@@ -4,6 +4,8 @@
  */
 package GUI;
 
+import Utils.Auth;
+
 /**
  *
  * @author Tiến Mạnh
@@ -15,6 +17,7 @@ public class QLHD extends javax.swing.JPanel {
      */
     public QLHD() {
         initComponents();
+        txtMANhanVien.setText(Auth.user.getMaNV());
         
     }
 

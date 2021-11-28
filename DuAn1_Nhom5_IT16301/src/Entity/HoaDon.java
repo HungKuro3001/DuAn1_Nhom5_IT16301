@@ -19,14 +19,14 @@ public class HoaDon {
     private Date ngayGD;
     private boolean hinhThucThanhToan;
     private boolean hinhthucmua;
-    private BigDecimal khachTra;
-    private BigDecimal tongTien;
+    private double khachTra;
+    private double tongTien;
     private String TrangThaiHD;
 
     public HoaDon() {
     }
 
-    public HoaDon(String MaHD, String maNV, String maKH, Date ngayGD, boolean hinhThucThanhToan, boolean hinhthucmua, BigDecimal khachTra, BigDecimal tongTien, String TrangThaiHD) {
+    public HoaDon(String MaHD, String maNV, String maKH, Date ngayGD, boolean hinhThucThanhToan, boolean hinhthucmua, double khachTra, double tongTien, String TrangThaiHD) {
         this.MaHD = MaHD;
         this.maNV = maNV;
         this.maKH = maKH;
@@ -86,19 +86,19 @@ public class HoaDon {
         this.hinhthucmua = hinhthucmua;
     }
 
-    public BigDecimal getKhachTra() {
+    public double getKhachTra() {
         return khachTra;
     }
 
-    public void setKhachTra(BigDecimal khachTra) {
+    public void setKhachTra(double khachTra) {
         this.khachTra = khachTra;
     }
 
-    public BigDecimal getTongTien() {
+    public double getTongTien() {
         return tongTien;
     }
 
-    public void setTongTien(BigDecimal tongTien) {
+    public void setTongTien(double tongTien) {
         this.tongTien = tongTien;
     }
 
