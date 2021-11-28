@@ -4,7 +4,13 @@
  */
 package GUI;
 
+import DAO.HoaDon_DAO;
+import Entity.HoaDon;
 import Utils.Auth;
+import Utils.Msgbox;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *
@@ -12,13 +18,15 @@ import Utils.Auth;
  */
 public class QLHD extends javax.swing.JPanel {
 
+    private HoaDon_DAO hdDao = new HoaDon_DAO();
+
     /**
      * Creates new form QLHD
      */
     public QLHD() {
         initComponents();
         txtMANhanVien.setText(Auth.user.getMaNV());
-        
+
     }
 
     /**
@@ -191,6 +199,8 @@ public class QLHD extends javax.swing.JPanel {
         lblBangChu.setText("Năm trăm nghìn đồng");
 
         jLabel23.setText("Trả lại khách");
+
+        txtTraLaiKhach.setEditable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -421,7 +431,52 @@ public class QLHD extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
+    public HoaDon getForm() throws ParseException {
+        long millis = System.currentTimeMillis();
+        java.util.Date date = new java.util.Date(millis);
+        Date sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(date + "");
+        java.sql.Date ngayGD = new java.sql.Date(sdf.getTime());
+        HoaDon hd = new HoaDon();
+        hd.setMaHD(txtMaHoaDon.getText());
+        hd.setMaNV(txtMANhanVien.getText());
+        hd.setMaKH(cbxMaKH.getSelectedItem().toString());
+        hd.setNgayGD(ngayGD);
+        if (cbxHTTT.getSelectedItem().equals("Tiền mặt")) {
+            hd.setHinhThucThanhToan(true);
+        } else {
+            hd.setHinhThucThanhToan(false);
+        }
+        if (cbxHinhThucMua.getSelectedItem().equals("Trực tiếp")) {
+            hd.setHinhThucThanhToan(true);
+        } else {
+            hd.setHinhThucThanhToan(false);
+        }
+        hd.setKhachTra(Double.parseDouble(txtKhachTra.getText()));
+        hd.setTongTien(Double.parseDouble(txtTongTien.getText()));
+        hd.setTrangThaiHD(cbxTrangThaiHD.getSelectedItem() + "");
+        return hd;
+    }
 
+    public void insert() throws ParseException {
+        try {
+            if (txtKhachTra.getText().isEmpty()) {
+                Msgbox.alert(this, "Không để trống tiền khách trả");
+                return;
+            }
+            double khtra = Double.parseDouble(txtKhachTra.getText());
+            double TT = Double.parseDouble(txtTongTien.getText());
+
+            if (khtra < TT) {
+                Msgbox.alert(this, "Khách trả phải >= Tổng tiền");
+                return;
+            }
+        } catch (Exception e) {
+            Msgbox.alert(this, "Tiền khách trả > 0");
+            return;
+        }
+        HoaDon hd = getForm();
+        hdDao.insert(hd);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cbxHTTT;
