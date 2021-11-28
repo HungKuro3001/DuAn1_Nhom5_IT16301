@@ -10,6 +10,7 @@ package Form.TestMenu;
 
 import GUI.Chao;
 import GUI.Login;
+import GUI.QLHD;
 import java.awt.Color;
 import java.awt.Panel;
 
@@ -48,6 +49,7 @@ public class Main extends javax.swing.JFrame {
                         panelTransitions1.display(new GUI.QLSP());
                         break;  
                     case 4:
+                        panelTransitions1.display( new QLHD());
                        
                         break; 
                     case 5:
