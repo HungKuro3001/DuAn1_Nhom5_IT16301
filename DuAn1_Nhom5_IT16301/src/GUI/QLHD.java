@@ -6,11 +6,16 @@ package GUI;
 
 import DAO.HoaDon_DAO;
 import DAO.KhachHang_DAO;
+import Entity.HoaDon;
 import Entity.KhachHang;
 import Utils.Auth;
+import Utils.Msgbox;
 import java.awt.Color;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
@@ -61,6 +66,52 @@ public class QLHD extends javax.swing.JPanel {
                txtTenKH.setText(khachHang.getHoTen());
            } 
         }
+    }
+     public HoaDon getForm() throws ParseException {
+        long millis = System.currentTimeMillis();
+        java.util.Date date = new java.util.Date(millis);
+        Date sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(date + "");
+        java.sql.Date ngayGD = new java.sql.Date(sdf.getTime());
+        HoaDon hd = new HoaDon();
+        hd.setMaHD(txtMaHoaDon.getText());
+        hd.setMaNV(txtMANhanVien.getText());
+        hd.setMaKH(cbxMaKH.getSelectedItem().toString());
+        hd.setNgayGD(ngayGD);
+        if (cbxHTTT.getSelectedItem().equals("Tiền mặt")) {
+            hd.setHinhThucThanhToan(true);
+        } else {
+            hd.setHinhThucThanhToan(false);
+        }
+        if (cbxHinhThucMua.getSelectedItem().equals("Trực tiếp")) {
+            hd.setHinhThucThanhToan(true);
+        } else {
+            hd.setHinhThucThanhToan(false);
+        }
+        hd.setKhachTra(Double.parseDouble(txtKhachTra.getText()));
+        hd.setTongTien(Double.parseDouble(txtTongTien.getText()));
+        hd.setTrangThaiHD(cbxTrangThaiHD.getSelectedItem() + "");
+        return hd;
+    }
+
+    public void insert() throws ParseException {
+        try {
+            if (txtKhachTra.getText().isEmpty()) {
+                Msgbox.alert(this, "Không để trống tiền khách trả");
+                return;
+            }
+            double khtra = Double.parseDouble(txtKhachTra.getText());
+            double TT = Double.parseDouble(txtTongTien.getText());
+
+            if (khtra < TT) {
+                Msgbox.alert(this, "Khách trả phải >= Tổng tiền");
+                return;
+            }
+        } catch (Exception e) {
+            Msgbox.alert(this, "Tiền khách trả > 0");
+            return;
+        }
+        HoaDon hd = getForm();
+        hdd.insert(hd);
     }
 
     /**
@@ -121,6 +172,7 @@ public class QLHD extends javax.swing.JPanel {
         lblBangChu = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
         txtTraLaiKhach = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(0, 204, 204));
@@ -159,7 +211,11 @@ public class QLHD extends javax.swing.JPanel {
 
         jLabel8.setText("HTTT");
 
+        cbxHTTT.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tiền mặt", "Thẻ tín dụng" }));
+
         jLabel9.setText("Hình thức mua");
+
+        cbxHinhThucMua.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Trực tiếp", "Online" }));
 
         jLabel10.setText("Khách trả");
 
@@ -168,6 +224,8 @@ public class QLHD extends javax.swing.JPanel {
         txtTongTien.setEditable(false);
 
         jLabel13.setText("Trạng thái HD");
+
+        cbxTrangThaiHD.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đã thanh toán", "Chưa thanh toán" }));
 
         tblHoaDon.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -240,6 +298,8 @@ public class QLHD extends javax.swing.JPanel {
 
         jLabel23.setText("Trả lại khách");
 
+        jButton1.setText("Thêm");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -306,9 +366,12 @@ public class QLHD extends javax.swing.JPanel {
                                     .addGap(228, 228, 228))
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                     .addGap(286, 286, 286)
-                                    .addComponent(jLabel22)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(lblBangChu)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jButton1)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel22)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(lblBangChu)))
                                     .addGap(67, 67, 67)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -427,11 +490,16 @@ public class QLHD extends javax.swing.JPanel {
                             .addComponent(txtTraLaiKhach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel23)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel13)
-                    .addComponent(cbxTrangThaiHD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(35, 35, 35)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel13)
+                            .addComponent(cbxTrangThaiHD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(jButton1)))
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -484,6 +552,7 @@ public class QLHD extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> cbxMASP;
     private javax.swing.JComboBox<String> cbxMaKH;
     private javax.swing.JComboBox<String> cbxTrangThaiHD;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

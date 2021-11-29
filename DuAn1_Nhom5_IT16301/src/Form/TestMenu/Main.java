@@ -56,7 +56,7 @@ public class Main extends javax.swing.JFrame {
                         try {
                             panelTransitions1.display( new QLHD());
                         } catch (SQLException ex) {
-                            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                            ex.printStackTrace();
                         }
                     }
                        
