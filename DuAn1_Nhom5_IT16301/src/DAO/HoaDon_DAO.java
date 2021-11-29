@@ -56,6 +56,15 @@ public class HoaDon_DAO extends Dao<HoaDon, String>{
         }
         return list.get(0);
     }
+    public String maSP_TuSinh() throws SQLException {
+        String ma = null;
+        String sql = "{CALL SP_MAHD}";
+        ResultSet rs = jdbcHelper.query(sql);
+        while (rs.next()) {
+             ma =rs.getString(1);
+        }
+        return ma;
+    } 
 
     @Override
     protected List<HoaDon> selectBySql(String sql, Object... args) {
