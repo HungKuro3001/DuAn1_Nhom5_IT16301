@@ -12,11 +12,17 @@ import Utils.Auth;
 import Utils.Msgbox;
 import java.awt.Color;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 /**
@@ -28,50 +34,83 @@ public class QLHD extends javax.swing.JPanel {
     /**
      * Creates new form QLHD
      */
-    KhachHang_DAO khd =new KhachHang_DAO();
-    HoaDon_DAO hdd =new HoaDon_DAO();
-    List<KhachHang> listKH =new ArrayList<>();
-    
+    KhachHang_DAO khd = new KhachHang_DAO();
+    HoaDon_DAO hdd = new HoaDon_DAO();
+    List<KhachHang> listKH = new ArrayList<>();
+    List<HoaDon> listHD = new ArrayList<>();
+
     public QLHD() throws SQLException {
         initComponents();
         init();
         setBackground(new Color(240, 240, 240));
-        
+        String maHD = hdd.maSP_TuSinh();
+        txtMaHoaDon.setText(maHD);
+
     }
-    private void fillTextField() throws SQLException{
-       txtMANhanVien.setText(Auth.user.getMaNV());
-       txtTenNV.setText(Auth.user.getHoTen());
-       txtThoiGian.setText(""+ java.time.LocalDate.now());
-       String maHD =hdd.maSP_TuSinh();
-       txtMaHoaDon.setText(maHD);
-       
+
+    private void fillTextField() throws SQLException {
+        txtMANhanVien.setText(Auth.user.getMaNV());
+        txtTenNV.setText(Auth.user.getHoTen());
+        txtThoiGian.setText("" + java.time.LocalDate.now());
+
     }
-    private void fillCBX(){
+
+    private void fillCBX() {
         AutoCompleteDecorator.decorate(cbxMaKH);
-         AutoCompleteDecorator.decorate(cbxMASP);
-         listKH =khd.selectAll();
-         for (KhachHang khachHang : listKH) {
-           cbxMaKH.addItem(khachHang.getMaKh()); 
-        }  
-       
-    } 
-    private void init() throws SQLException{
+        AutoCompleteDecorator.decorate(cbxMASP);
+        listKH = khd.selectAll();
+        for (KhachHang khachHang : listKH) {
+            cbxMaKH.addItem(khachHang.getMaKh());
+        }
+
+    }
+
+    private void init() throws SQLException {
+        fillTable();
         fillTextField();
         fillCBX();
         fillNameCustomer();
+        txtKhachTra.setText("0");
+        txtTongTien.setText("0");
+        txtTraLaiKhach.setText("0");
     }
-    private void fillNameCustomer(){
-         for (KhachHang khachHang : listKH) {
-           if(cbxMaKH.getSelectedItem().toString().equals(khachHang.getMaKh())){
-               txtTenKH.setText(khachHang.getHoTen());
-           } 
+    private void display() throws ParseException{
+        int row =tblHoaDon.getSelectedRow();
+        HoaDon hd=listHD.get(row);
+        txtMaHoaDon.setText(hd.getMaHD());
+        cbxMaKH.setSelectedItem(hd.getMaKH());
+        txtMANhanVien.setText(hd.getMaNV());
+//        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+//       Date  ngay =  dateFormat.parse(""+hd.getNgayGD());
+        txtThoiGian.setText(""+hd.getNgayGD());
+        cbxHTTT.setSelectedItem(hd.isHinhThucThanhToan());
+         if (hd.isHinhThucThanhToan()==true) {
+            cbxHTTT.setSelectedItem("Tiền mặt");
+        } else {
+            cbxHTTT.setSelectedItem("Thẻ tín dụng");
+        }
+        if (hd.isHinhthucmua()==true) {
+            cbxHinhThucMua.setSelectedItem("Trực tiếp");
+        } else {
+            cbxHinhThucMua.setSelectedItem("Online");
+        }
+        txtKhachTra.setText(""+hd.getKhachTra());
+        txtTongTien.setText(""+hd.getTongTien());
+        cbxTrangThaiHD.setSelectedItem(hd.getTrangThaiHD());
+    }
+
+    private void fillNameCustomer() {
+        for (KhachHang khachHang : listKH) {
+            if (cbxMaKH.getSelectedItem().toString().equals(khachHang.getMaKh())) {
+                txtTenKH.setText(khachHang.getHoTen());
+            }
         }
     }
-     public HoaDon getForm() throws ParseException {
-        long millis = System.currentTimeMillis();
-        java.util.Date date = new java.util.Date(millis);
-        Date sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(date + "");
-        java.sql.Date ngayGD = new java.sql.Date(sdf.getTime());
+
+    public HoaDon getForm() throws ParseException {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        Calendar cal = Calendar.getInstance();
+        java.sql.Timestamp ngayGD = new java.sql.Timestamp(cal.getTimeInMillis());
         HoaDon hd = new HoaDon();
         hd.setMaHD(txtMaHoaDon.getText());
         hd.setMaNV(txtMANhanVien.getText());
@@ -83,9 +122,9 @@ public class QLHD extends javax.swing.JPanel {
             hd.setHinhThucThanhToan(false);
         }
         if (cbxHinhThucMua.getSelectedItem().equals("Trực tiếp")) {
-            hd.setHinhThucThanhToan(true);
+            hd.setHinhthucmua(true);
         } else {
-            hd.setHinhThucThanhToan(false);
+            hd.setHinhthucmua(false);
         }
         hd.setKhachTra(Double.parseDouble(txtKhachTra.getText()));
         hd.setTongTien(Double.parseDouble(txtTongTien.getText()));
@@ -112,6 +151,17 @@ public class QLHD extends javax.swing.JPanel {
         }
         HoaDon hd = getForm();
         hdd.insert(hd);
+    }
+
+    private void fillTable() {
+        listHD = hdd.selectAll();
+        DefaultTableModel model = new DefaultTableModel();
+        model = (DefaultTableModel) tblHoaDon.getModel();
+        model.setRowCount(0);
+        for (HoaDon hd : listHD) {
+            model.addRow(new Object[]{hd.getMaHD(), hd.getMaNV(), hd.getMaKH(),
+                hd.getNgayGD(), hd.isHinhThucThanhToan() == true ? "Tiền mặt" : "Thẻ tín dụng", hd.isHinhthucmua() == true ? "Trực tiếp" : "Online", hd.getKhachTra(), hd.getTongTien(), hd.getTrangThaiHD()});
+        }
     }
 
     /**
@@ -243,6 +293,11 @@ public class QLHD extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        tblHoaDon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblHoaDonMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblHoaDon);
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -299,6 +354,11 @@ public class QLHD extends javax.swing.JPanel {
         jLabel23.setText("Trả lại khách");
 
         jButton1.setText("Thêm");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -544,6 +604,24 @@ public class QLHD extends javax.swing.JPanel {
     private void cbxMaKHItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxMaKHItemStateChanged
         fillNameCustomer();
     }//GEN-LAST:event_cbxMaKHItemStateChanged
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            insert();
+            fillTable();
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void tblHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHoaDonMouseClicked
+        try {
+            display();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_tblHoaDonMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
