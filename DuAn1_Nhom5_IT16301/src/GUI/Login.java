@@ -34,8 +34,7 @@ public class Login extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         txtUserName.setBackground(new Color(0, 0, 0, 0));
         txtPassword.setBackground(new Color(0, 0, 0, 0));
-        txtPassword.setText("Enter password");
-
+        txtPassword.setText("123");
     }
 
     
@@ -90,7 +89,7 @@ public class Login extends javax.swing.JFrame {
 
         txtUserName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtUserName.setForeground(new java.awt.Color(153, 153, 153));
-        txtUserName.setText("Enter username");
+        txtUserName.setText("hoang02");
         txtUserName.setBorder(null);
         txtUserName.setOpaque(false);
         txtUserName.addFocusListener(new java.awt.event.FocusAdapter() {

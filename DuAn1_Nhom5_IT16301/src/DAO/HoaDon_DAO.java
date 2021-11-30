@@ -25,9 +25,9 @@ public class HoaDon_DAO extends Dao<HoaDon, String>{
     
     @Override
     public void insert(HoaDon entity) {
-        jdbcHelper.Update(insertHD, entity.getMaHD(),entity.getMaKH(),entity.getNgayGD(),
+        jdbcHelper.Update(insertHD, entity.getMaHD(),entity.getMaNV(),entity.getMaKH(),entity.getNgayGD(),
                 entity.isHinhThucThanhToan(),entity.isHinhthucmua(),entity.getKhachTra(),entity.getTongTien(),
-                entity.getTrangThaiHD(),entity.getMaNV());
+                entity.getTrangThaiHD());
     }
 
     @Override
