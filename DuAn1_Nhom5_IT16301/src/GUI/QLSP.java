@@ -100,6 +100,9 @@ public class QLSP extends javax.swing.JPanel {
         listSP = SPD.selectByTT(trangThai);
         DefaultTableModel model =(DefaultTableModel)tblSanPham.getModel();
         model.setRowCount(0);
+        if (listSP==null) {
+            return;
+        }
         for (SanPham sp : listSP) {
             model.addRow(new Object[]{sp.getMaSP(),sp.getMaDm(),sp.getTenSP(),sp.getMaLCL(),sp.getKhoiLuong(),new BigDecimal(sp.getGiaMuaVao()),new BigDecimal(sp.getGiaBanRa())
                     ,sp.getTienCong(),sp.getTrangThai(),sp.getSoLuong(),sp.getMoTa()});

@@ -5,42 +5,42 @@
  */
 package Entity;
 
-import java.math.BigDecimal;
 
 /**
  *
  * @author Admin
  */
 public class ChiTietHD {
-    private String skuSP;
     private String maHD;
     private int soLuong;
     private double tienCong;
     private double donGia;
     private double giamGia;
-    private BigDecimal ThanhTien;
+    private double ThanhTien;
+    private String maSp;
 
     public ChiTietHD() {
     }
 
-    public ChiTietHD(String skuSP, String maHD, int soLuong, double tienCong, double donGia, double giamGia, BigDecimal ThanhTien) {
-        this.skuSP = skuSP;
+    public ChiTietHD(String maHD, int soLuong, double tienCong, double donGia, double giamGia, double ThanhTien, String maSp) {
         this.maHD = maHD;
         this.soLuong = soLuong;
         this.tienCong = tienCong;
         this.donGia = donGia;
         this.giamGia = giamGia;
         this.ThanhTien = ThanhTien;
+        this.maSp = maSp;
     }
 
-    public String getSkuSP() {
-        return skuSP;
+    public String getMaSp() {
+        return maSp;
     }
 
-    public void setSkuSP(String skuSP) {
-        this.skuSP = skuSP;
+    public void setMaSp(String maSp) {
+        this.maSp = maSp;
     }
 
+    
     public String getMaHD() {
         return maHD;
     }
@@ -81,11 +81,11 @@ public class ChiTietHD {
         this.giamGia = giamGia;
     }
 
-    public BigDecimal getThanhTien() {
+    public double getThanhTien() {
         return ThanhTien;
     }
 
-    public void setThanhTien(BigDecimal ThanhTien) {
+    public void setThanhTien(double ThanhTien) {
         this.ThanhTien = ThanhTien;
     }
     
