@@ -53,7 +53,7 @@ public class QLHD extends javax.swing.JPanel {
         setBackground(new Color(240, 240, 240));
         String maHD = hdd.maSP_TuSinh();
         txtMaHoaDon.setText(maHD);
-        txtTongTien.setText("5");
+//        txtTongTien.setText("5");
         txtGiamGia.setEnabled(false);
 
     }
@@ -253,7 +253,7 @@ public class QLHD extends javax.swing.JPanel {
         double dongia = Double.parseDouble(txtDonGia.getText());
         int sl = Integer.parseInt(txtSoLuong.getText());
         double TTChưaGiamGia = dongia * sl;
-        double giamGia = Integer.parseInt(txtGiamGia.getText());
+        double giamGia = Double.parseDouble(txtGiamGia.getText());
         if (rdoTienMat.isSelected()) {
             cthd.setGiamGia(giamGia);
             double thanhTien = TTChưaGiamGia - giamGia;
@@ -306,6 +306,7 @@ public class QLHD extends javax.swing.JPanel {
             return;
         }
     }
+
     private void updateHDCT() {
         try {
             int sl = Integer.parseInt(txtSoLuong.getText());
@@ -334,6 +335,7 @@ public class QLHD extends javax.swing.JPanel {
             return;
         }
     }
+
     private void fillTableCTHD() {
         listCTHD = cthdd.selectByMAHD(txtMaHoaDon.getText());
         DefaultTableModel model = (DefaultTableModel) tblHoaDonChiTiet.getModel();
@@ -411,7 +413,6 @@ public class QLHD extends javax.swing.JPanel {
         btnNew = new javax.swing.JButton();
         btnThem = new javax.swing.JButton();
         btnCapNhatCTHD = new javax.swing.JButton();
-        btnXoa = new javax.swing.JButton();
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(0, 204, 204));
@@ -620,8 +621,6 @@ public class QLHD extends javax.swing.JPanel {
             }
         });
 
-        btnXoa.setText("Xóa");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -679,9 +678,7 @@ public class QLHD extends javax.swing.JPanel {
                                                     .addGroup(layout.createSequentialGroup()
                                                         .addComponent(btnThem)
                                                         .addGap(31, 31, 31)
-                                                        .addComponent(btnCapNhatCTHD)
-                                                        .addGap(30, 30, 30)
-                                                        .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                                                        .addComponent(btnCapNhatCTHD)))))))
                                 .addGap(68, 68, 68))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -874,8 +871,7 @@ public class QLHD extends javax.swing.JPanel {
                 .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnThem)
-                    .addComponent(btnCapNhatCTHD)
-                    .addComponent(btnXoa))
+                    .addComponent(btnCapNhatCTHD))
                 .addContainerGap(70, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -897,7 +893,14 @@ public class QLHD extends javax.swing.JPanel {
     private void tblHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHoaDonMouseClicked
         try {
             display();
-            txtKhachTra.setEditable(false);
+            float khachtra = Float.parseFloat(txtKhachTra.getText());
+            float tongtien = Float.parseFloat(txtTongTien.getText());
+            float tralai = khachtra - tongtien;
+            if (tralai < 0) {
+                Msgbox.alert(this, "Số tiền trả cần tối thiểu bằng tổng tiền");
+                return;
+            }
+            txtTraLaiKhach.setText(tralai + "");
             fillTableCTHD();
         } catch (ParseException e) {
             e.printStackTrace();
@@ -945,6 +948,8 @@ public class QLHD extends javax.swing.JPanel {
         cbxHinhThucMua.setSelectedIndex(0);
         cbxMaKH.setSelectedIndex(0);
         cbxTrangThaiHD.setSelectedIndex(0);
+        txtTongTien.setText("0");
+        txtKhachTra.setText("0");
         try {
             String maHD = hdd.maSP_TuSinh();
             txtMaHoaDon.setText(maHD);
@@ -956,6 +961,9 @@ public class QLHD extends javax.swing.JPanel {
 
     private void cbxMASPItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxMASPItemStateChanged
         fillNameProduct();
+        txtSoLuong.setText("");
+        txtGiamGia.setText("");
+        txtThanhTien.setText("");
     }//GEN-LAST:event_cbxMASPItemStateChanged
 
     private void rdoTienMatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdoTienMatMouseClicked
@@ -978,6 +986,24 @@ public class QLHD extends javax.swing.JPanel {
 
     private void txtSoLuongKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSoLuongKeyReleased
         try {
+            int row = tblHoaDonChiTiet.getSelectedRow();
+            if(row>0){
+             ChiTietHD cthd = listCTHD.get(row);
+            if (cthd != null) {
+                double dongia = Double.parseDouble(txtDonGia.getText());
+                int sl = Integer.parseInt(txtSoLuong.getText());
+                double TTChưaGiamGia = dongia * sl;
+                double giamGia = Double.parseDouble(txtGiamGia.getText());
+                double thanhTien = TTChưaGiamGia - giamGia;
+                txtThanhTien.setText(thanhTien + "");
+                if (sl <= 0) {
+                    Msgbox.alert(this, "Số lượng là số nguyên dương");
+                    txtSoLuong.setText("");
+                    return;
+                }
+            }   
+            }
+            
             int sl = Integer.parseInt(txtSoLuong.getText());
             if (sl <= 0) {
                 Msgbox.alert(this, "Số lượng là số nguyên dương");
@@ -987,24 +1013,33 @@ public class QLHD extends javax.swing.JPanel {
         } catch (Exception e) {
             Msgbox.alert(this, "Số lượng là số nguyên dương");
             txtSoLuong.setText("");
+
             return;
         }
     }//GEN-LAST:event_txtSoLuongKeyReleased
 
     private void tblHoaDonChiTietMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHoaDonChiTietMouseClicked
-         int row = tblHoaDonChiTiet.getSelectedRow();
-         ChiTietHD cthd= listCTHD.get(row);
-         setForm(cthd);
+        int row = tblHoaDonChiTiet.getSelectedRow();
+        ChiTietHD cthd = listCTHD.get(row);
+        setForm(cthd);
     }//GEN-LAST:event_tblHoaDonChiTietMouseClicked
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         try {
             HoaDon hd = hdd.selectById(txtMaHoaDon.getText());
+            double tongTien = 0;
             if (hd == null) {
                 Msgbox.alert(this, "Mã hóa đơn chưa tồn tại");
                 return;
             }
             insertHDCT();
+            for (ChiTietHD cthoadon : listCTHD) {
+                tongTien += cthoadon.getThanhTien();
+            }
+            txtTongTien.setText(tongTien + "");
+            HoaDon TTHD = getForm();
+            hdd.updatetongTien(TTHD);
+            fillTable();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1012,7 +1047,21 @@ public class QLHD extends javax.swing.JPanel {
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnCapNhatCTHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatCTHDActionPerformed
-        updateHDCT();
+        try {
+            double tongTien = 0;
+            updateHDCT();
+
+            for (ChiTietHD cthoadon : listCTHD) {
+                tongTien += cthoadon.getThanhTien();
+            }
+            txtTongTien.setText(tongTien + "");
+            HoaDon TTHD = getForm();
+            hdd.updatetongTien(TTHD);
+            fillTable();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }//GEN-LAST:event_btnCapNhatCTHDActionPerformed
 
 
@@ -1021,7 +1070,6 @@ public class QLHD extends javax.swing.JPanel {
     private javax.swing.JButton btnCapNhatCTHD;
     private javax.swing.JButton btnNew;
     private javax.swing.JButton btnThem;
-    private javax.swing.JButton btnXoa;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cbxHTTT;
     private javax.swing.JComboBox<String> cbxHinhThucMua;

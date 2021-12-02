@@ -83,8 +83,6 @@
                                                       <Component id="btnThem" min="-2" max="-2" attributes="0"/>
                                                       <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                                                       <Component id="btnCapNhatCTHD" min="-2" max="-2" attributes="0"/>
-                                                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                                                      <Component id="btnXoa" min="-2" pref="63" max="-2" attributes="0"/>
                                                   </Group>
                                               </Group>
                                           </Group>
@@ -346,7 +344,6 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnThem" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnCapNhatCTHD" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnXoa" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="70" max="32767" attributes="0"/>
           </Group>
@@ -832,11 +829,6 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCapNhatCTHDActionPerformed"/>
       </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="btnXoa">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="X&#xf3;a"/>
-      </Properties>
     </Component>
   </SubComponents>
 </Form>

@@ -19,9 +19,10 @@ import java.util.List;
 public class HoaDon_DAO extends Dao<HoaDon, String>{
       
     String insertHD ="INSERT INTO HOADON VALUES (?,?,?,?,?,?,?,?,?)";
-    String updateHD ="UPDATE HOADON SET MAKH=?, HINHTHUCTHANHTOAN=?, HINHTHUCMUA=?, TRANGTHAIHD=? WHERE MAHD=?";
+    String updateHD ="UPDATE HOADON SET MAKH=?,KHACHTRA=?, HINHTHUCTHANHTOAN=?, HINHTHUCMUA=?, TRANGTHAIHD=? WHERE MAHD=?";
     String selectAll="SELECT * FROM HOADON";
     String selectById="SELECT * FROM HOADON WHERE MAHD=?";
+    String updateTT= "UPDATE HOADON SET TONGTIEN=? WHERE MAHD=?";
     
     @Override
     public void insert(HoaDon entity) {
@@ -32,8 +33,11 @@ public class HoaDon_DAO extends Dao<HoaDon, String>{
 
     @Override
     public void update(HoaDon entity) {
-        jdbcHelper.Update(updateHD,entity.getMaKH(),entity.isHinhThucThanhToan(),
+        jdbcHelper.Update(updateHD,entity.getMaKH(),entity.getKhachTra(),entity.isHinhThucThanhToan(),
                 entity.isHinhthucmua(), entity.getTrangThaiHD(), entity.getMaHD());
+    }
+    public void updatetongTien(HoaDon entity) {
+        jdbcHelper.Update(updateTT,entity.getTongTien(), entity.getMaHD());
     }
 
     @Override
