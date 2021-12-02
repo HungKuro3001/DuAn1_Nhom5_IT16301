@@ -84,5 +84,17 @@ public class ChiTietHD_DAO extends Dao<ChiTietHD, String> {
         }
 
     }
+         public int duLieu(String maDM,String ngayBatDau,String ngayKetThuc) throws SQLException { //lấy số lượng theo danh mục
+        String query ="exec SP_BCTK2 @NGAYBATDAU = '"+ngayBatDau+"',@NGAYKETTHUC ='"+ngayKetThuc+" 23:59:59.999',@madm ="+maDM+"";
+             //System.out.println(""+query);
+        int SLSP = 0;
+        ResultSet rs =jdbcHelper.query(query);
+        while(rs.next()){
+            SLSP =rs.getInt(1);
+        }
+        
+        return SLSP;
+    }
+         
 
 }

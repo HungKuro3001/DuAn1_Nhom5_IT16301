@@ -8,6 +8,7 @@ package Form.TestMenu;
 
 
 
+import GUI.BaoCaoThongKe;
 import GUI.Chao;
 import GUI.Login;
 import GUI.QLHD;
@@ -63,8 +64,15 @@ public class Main extends javax.swing.JFrame {
                         break; 
  
                     case 5:
-                  
+                    {
+                        try {
+                            panelTransitions1.display( new BaoCaoThongKe());
+                        } catch (SQLException ex) {
+                          ex.printStackTrace();
+                        }
+                    }
                         break;
+
                     case 6:
                         panelTransitions1.display(new GUI.QuanLyChatLieu());
                         break;
