@@ -52,8 +52,6 @@ public class Main extends javax.swing.JFrame {
                     case 2:  
                         panelTransitions1.display(new QuanLiKhachHang());
                         break;
-                          
-                        break;
                     case 3:  
                         panelTransitions1.display(new GUI.QLSP());
                         break;  
