@@ -64,7 +64,7 @@ public class QLHD extends javax.swing.JPanel {
     List<HoaDon> listHD = new ArrayList<>();
     List<SanPham> listSP = new ArrayList<>();
     List<ChiTietHD> listCTHD = new ArrayList<>();
-    
+
     public QLHD() throws SQLException {
         initComponents();
         init();
@@ -73,16 +73,16 @@ public class QLHD extends javax.swing.JPanel {
         txtMaHoaDon.setText(maHD);
 //        txtTongTien.setText("5");
         txtGiamGia.setText("0");
-        
+
     }
-    
+
     private void fillTextField() throws SQLException {
         txtMANhanVien.setText(Auth.user.getMaNV());
         txtTenNV.setText(Auth.user.getHoTen());
         txtThoiGian.setText("" + java.time.LocalDate.now());
-        
+
     }
-    
+
     private void fillCBX() {
         AutoCompleteDecorator.decorate(cbxMaKH);
         AutoCompleteDecorator.decorate(cbxMASP);
@@ -95,7 +95,7 @@ public class QLHD extends javax.swing.JPanel {
             cbxMASP.addItem(sanpham.getMaSP());
         }
     }
-    
+
     private void init() throws SQLException {
         fillTable();
         fillTextField();
@@ -107,7 +107,7 @@ public class QLHD extends javax.swing.JPanel {
         txtTongTien.setText("0");
         txtTraLaiKhach.setText("0");
     }
-    
+
     private void display() throws ParseException {
         int row = tblHoaDon.getSelectedRow();
         HoaDon hd = listHD.get(row);
@@ -131,9 +131,9 @@ public class QLHD extends javax.swing.JPanel {
         cbxTrangThaiHD.setSelectedItem(hd.getTrangThaiHD());
         String chu = numberToString(Double.parseDouble(txtTongTien.getText()));
         lblBangChu.setText(chu);
-        
+
     }
-    
+
     private void fillNameCustomer() {
         for (KhachHang khachHang : listKH) {
             if (cbxMaKH.getSelectedItem().toString().equals(khachHang.getMaKh())) {
@@ -142,7 +142,7 @@ public class QLHD extends javax.swing.JPanel {
             }
         }
     }
-    
+
     private void fillNameProduct() {
         for (SanPham sanpham : listSP) {
             if (sanpham.getMaSP().equals(cbxMASP.getSelectedItem().toString())) {
@@ -152,7 +152,7 @@ public class QLHD extends javax.swing.JPanel {
             }
         }
     }
-    
+
     public HoaDon getForm() throws ParseException {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
         Calendar cal = Calendar.getInstance();
@@ -177,7 +177,7 @@ public class QLHD extends javax.swing.JPanel {
         hd.setTrangThaiHD(cbxTrangThaiHD.getSelectedItem() + "");
         return hd;
     }
-    
+
     public void insert() throws ParseException {
         try {
             if (txtKhachTra.getText().isEmpty()) {
@@ -186,7 +186,7 @@ public class QLHD extends javax.swing.JPanel {
             }
             double khtra = Double.parseDouble(txtKhachTra.getText());
             double TT = Double.parseDouble(txtTongTien.getText());
-            
+
             if (khtra < TT) {
                 Msgbox.alert(this, "Khách trả phải >= Tổng tiền");
                 return;
@@ -198,21 +198,23 @@ public class QLHD extends javax.swing.JPanel {
         HoaDon hd = getForm();
         hdd.insert(hd);
     }
-    
+
     private void fillTable() {
         listHD = hdd.selectAll();
         DefaultTableModel model = new DefaultTableModel();
         model = (DefaultTableModel) tblHoaDon.getModel();
         model.setRowCount(0);
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(2);
         for (HoaDon hd : listHD) {
             model.addRow(new Object[]{hd.getMaHD(), hd.getMaNV(), hd.getMaKH(),
                 hd.getNgayGD(), hd.isHinhThucThanhToan() == true ? "Tiền mặt"
                 : "Thẻ tín dụng", hd.isHinhthucmua() == true ? "Mua" : "Bán",
-                new BigDecimal(hd.getKhachTra()), new BigDecimal(hd.getTongTien()),
+                df.format(hd.getKhachTra()), df.format(hd.getTongTien()),
                 hd.getTrangThaiHD()});
         }
     }
-    
+
     private void thanhTien() {
         if (txtGiamGia.getText().isEmpty()) {
             Msgbox.alert(this, "không để trống giảm giá");
@@ -262,13 +264,13 @@ public class QLHD extends javax.swing.JPanel {
                 txtGiamGia.setText("");
                 return;
             }
-            
+
             double thanhTien = TTChưaGiamGia / 100 * (100 - giamGia);
             txtThanhTien.setText(thanhTien + "");
         }
-        
+
     }
-    
+
     private ChiTietHD getFormCT() {
         ChiTietHD cthd = new ChiTietHD();
         cthd.setMaHD(txtMaHoaDon.getText());
@@ -293,18 +295,18 @@ public class QLHD extends javax.swing.JPanel {
         }
         return cthd;
     }
-    
+
     private void setForm(ChiTietHD cthd) {
         cbxMASP.setSelectedItem(cthd.getMaSp());
-        
+
         txtTienCong.setText(cthd.getTienCong() + "");
         txtDonGia.setText(cthd.getDonGia() + "");
         txtSoLuong.setText(cthd.getSoLuong() + "");
         txtGiamGia.setText(cthd.getGiamGia() + "");
         txtThanhTien.setText(new BigDecimal(cthd.getThanhTien()) + "");
-        
+
     }
-    
+
     private void insertHDCT() {
         try {
             int sl = Integer.parseInt(txtSoLuong.getText());
@@ -324,7 +326,7 @@ public class QLHD extends javax.swing.JPanel {
             ChiTietHD ctHD = getFormCT();
             cthdd.insert(ctHD);
             fillTableCTHD();
-            
+
         } catch (Exception e) {
             e.printStackTrace();
             Msgbox.alert(this, "Hóa đơn chi tiết đã tồn tại");
@@ -333,7 +335,7 @@ public class QLHD extends javax.swing.JPanel {
             return;
         }
     }
-    
+
     private void updateHDCT() {
         try {
             int sl = Integer.parseInt(txtSoLuong.getText());
@@ -353,7 +355,7 @@ public class QLHD extends javax.swing.JPanel {
             ChiTietHD ctHD = getFormCT();
             cthdd.update(ctHD);
             fillTableCTHD();
-            
+
         } catch (Exception e) {
             Msgbox.alert(this, "Hóa đơn chi tiết đã tồn tại");
             e.printStackTrace();
@@ -362,7 +364,7 @@ public class QLHD extends javax.swing.JPanel {
             return;
         }
     }
-    
+
     private void fillTableCTHD() {
         listCTHD = cthdd.selectByMAHD(txtMaHoaDon.getText());
         DefaultTableModel model = (DefaultTableModel) tblHoaDonChiTiet.getModel();
@@ -375,7 +377,7 @@ public class QLHD extends javax.swing.JPanel {
             model.addRow(row);
         }
     }
-    
+
     private static String formatNumberForRead(double number) {
         NumberFormat nf = NumberFormat.getInstance();
         String temp = nf.format(number);
@@ -389,9 +391,9 @@ public class QLHD extends javax.swing.JPanel {
             }
         }
         return strReturn;
-        
+
     }
-    
+
     private static String numberToString(double number) {
         String sNumber = formatNumberForRead(number);
         // Tao mot bien tra ve
@@ -500,21 +502,21 @@ public class QLHD extends javax.swing.JPanel {
             } else {
                 sRead = sSo[iTemp] + sDonvi[iRe];
             }
-            
+
             sReturn = sRead + sReturn;
             iRe++;
         }
         if (sReturn.length() > 0) {
             sReturn += sPo[iPo];
         }
-        
+
         return sReturn;
     }
-    
+
     private void exportExcel() throws FileNotFoundException, IOException {
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet("Hóa đơn");
-        
+
         XSSFRow row = null;
         Cell cell = null;
         XSSFFont font = sheet.getWorkbook().createFont();
@@ -529,7 +531,7 @@ public class QLHD extends javax.swing.JPanel {
         //font2
         XSSFFont font2 = sheet.getWorkbook().createFont();
         font2.setFontName("Times New Roman");
-        
+
         font2.setFontHeightInPoints((short) 16); // font size
         font2.setColor(IndexedColors.RED.getIndex()); // text color
 
@@ -544,14 +546,14 @@ public class QLHD extends javax.swing.JPanel {
 //style 3
         CellStyle cellStyle3 = sheet.getWorkbook().createCellStyle();
         cellStyle3.setFont(font3);
-        
+
         row = sheet.createRow(2);
         cell = row.createCell(1, CellType.STRING);
         cell.setCellValue("Công ty TNHH Vàng Bạc");
         cell.setCellStyle(cellStyle);
         cell = row.createCell(11, CellType.STRING);
         cell.setCellValue("Giấy đảm bảo vàng");
-        
+
         cell.setCellStyle(cellStyle);
 
         //dòng 3
@@ -595,12 +597,12 @@ public class QLHD extends javax.swing.JPanel {
         cell = row.createCell(1, CellType.STRING);
         cell.setCellValue("Tổng tiền:" + txtTongTien.getText() + "đ");
         cell.setCellStyle(cellStyle3);
-        
+
         row = sheet.createRow(10);
         cell = row.createCell(1, CellType.STRING);
         cell.setCellValue("Bằng chữ :" + lblBangChu.getText());
         cell.setCellStyle(cellStyle3);
-        
+
         row = sheet.createRow(12);
         cell = row.createCell(0, CellType.STRING);
         cell.setCellValue("STT");
@@ -618,7 +620,7 @@ public class QLHD extends javax.swing.JPanel {
         cell.setCellValue("Số lượng");
         cell = row.createCell(7, CellType.STRING);
         cell.setCellValue("Thành tiền");
-        
+
         listCTHD = cthdd.selectByMAHD(txtMaHoaDon.getText());
         for (int i = 0; i < listCTHD.size(); i++) {
             ChiTietHD hdct = listCTHD.get(i);
@@ -639,7 +641,7 @@ public class QLHD extends javax.swing.JPanel {
             cell.setCellValue(hdct.getSoLuong());
             cell = row.createCell(7, CellType.STRING);
             cell.setCellValue(hdct.getThanhTien());
-            
+
         }
         //dòng 20
         row = sheet.createRow(20);
@@ -677,17 +679,17 @@ public class QLHD extends javax.swing.JPanel {
         //////////--------------------------\\\\\\\\\\
         JFileChooser jFileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
         jFileChooser.setDialogTitle("Chọn thư mục: ");
-        
+
         int result = jFileChooser.showSaveDialog(null);
         if (result == JFileChooser.APPROVE_OPTION) {
             File file = new File(jFileChooser.getSelectedFile() + txtMaHoaDon.getText() + ".xlsx");
-            
+
             FileOutputStream fos = new FileOutputStream(file);
             workbook.write(fos);
             fos.close();
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -1052,7 +1054,7 @@ public class QLHD extends javax.swing.JPanel {
             if (khachTra < 0) {
                 Msgbox.alert(this, "Số tiền trả cần tối thiểu bằng tổng tiền");
                 return;
-                
+
             }
         } catch (Exception e) {
             Msgbox.alert(this, "sai định dạng số tiền trả");
@@ -1131,7 +1133,7 @@ public class QLHD extends javax.swing.JPanel {
                     }
                 }
             }
-            
+
             int sl = Integer.parseInt(txtSoLuong.getText());
             if (sl <= 0) {
                 Msgbox.alert(this, "Số lượng là số nguyên dương");
@@ -1142,7 +1144,7 @@ public class QLHD extends javax.swing.JPanel {
         } catch (Exception e) {
             Msgbox.alert(this, "Nhập đúng định dạng số");
             txtSoLuong.setText("");
-            
+
             return;
         }
     }//GEN-LAST:event_txtSoLuongKeyReleased
@@ -1157,7 +1159,7 @@ public class QLHD extends javax.swing.JPanel {
         try {
             HoaDon hd = hdd.selectById(txtMaHoaDon.getText());
             double tongTien = 0;
-            
+
             if (hd == null) {
                 Msgbox.alert(this, "Mã hóa đơn chưa tồn tại");
                 return;
@@ -1166,8 +1168,8 @@ public class QLHD extends javax.swing.JPanel {
             for (ChiTietHD cthoadon : listCTHD) {
                 tongTien += cthoadon.getThanhTien();
             }
-           
-            txtTongTien.setText(new BigDecimal(tongTien)+"");
+
+            txtTongTien.setText(new BigDecimal(tongTien) + "");
             lblBangChu.setText(numberToString(tongTien));
             HoaDon TTHD = getForm();
             hdd.updatetongTien(TTHD);
@@ -1182,7 +1184,7 @@ public class QLHD extends javax.swing.JPanel {
         try {
             double tongTien = 0;
             updateHDCT();
-            
+
             for (ChiTietHD cthoadon : listCTHD) {
                 tongTien += cthoadon.getThanhTien();
             }

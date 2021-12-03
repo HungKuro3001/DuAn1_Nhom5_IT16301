@@ -12,6 +12,9 @@ import GUI.BaoCaoThongKe;
 import GUI.Chao;
 import GUI.Login;
 import GUI.QLHD;
+import GUI.QLPhieuNhap;
+import GUI.QuanLiKhachHang;
+import GUI.QuanLyDoiTra;
 import java.awt.Color;
 import java.awt.Panel;
 import java.sql.SQLException;
@@ -47,6 +50,8 @@ public class Main extends javax.swing.JFrame {
                         panelTransitions1.display(new GUI.pannelQLDMSP());
                         break;
                     case 2:  
+                        panelTransitions1.display(new QuanLiKhachHang());
+                        break;
                           
                         break;
                     case 3:  
@@ -76,6 +81,25 @@ public class Main extends javax.swing.JFrame {
                     case 6:
                         panelTransitions1.display(new GUI.QuanLyChatLieu());
                         break;
+                    case 7:
+                    {
+                        try {
+                            panelTransitions1.display(new QuanLyDoiTra());
+                        } catch (SQLException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                        break;
+
+                    case 8:
+                    {
+                        try {
+                            panelTransitions1.display(new QLPhieuNhap());
+                        } catch (SQLException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+
                 }
  
             }
