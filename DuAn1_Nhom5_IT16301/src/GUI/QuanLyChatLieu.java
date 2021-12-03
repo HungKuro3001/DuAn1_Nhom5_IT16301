@@ -48,7 +48,6 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
         jLabel7 = new javax.swing.JLabel();
         txtMota = new javax.swing.JTextField();
         btnThem = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
         btnSua = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         btnBlock = new javax.swing.JButton();
@@ -75,8 +74,15 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
         txtTenLCL = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         txtTuoi = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        add(txtMaCL, new org.netbeans.lib.awtextra.AbsoluteConstraints(196, 115, 212, -1));
+        add(txtTenCL, new org.netbeans.lib.awtextra.AbsoluteConstraints(196, 156, 212, -1));
 
         jLabel7.setText("Mô tả");
+        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 201, -1, -1));
+        add(txtMota, new org.netbeans.lib.awtextra.AbsoluteConstraints(196, 198, 212, -1));
 
         btnThem.setText("Thêm");
         btnThem.addActionListener(new java.awt.event.ActionListener() {
@@ -84,8 +90,7 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
                 btnThemActionPerformed(evt);
             }
         });
-
-        jLabel1.setText("Quản lí chất liệu");
+        add(btnThem, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 115, 101, -1));
 
         btnSua.setText("Sửa");
         btnSua.addActionListener(new java.awt.event.ActionListener() {
@@ -93,8 +98,10 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
                 btnSuaActionPerformed(evt);
             }
         });
+        add(btnSua, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 156, 101, -1));
 
         jLabel2.setText("Mã chất liệu");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 118, -1, -1));
 
         btnBlock.setText("Khóa/Mở khóa");
         btnBlock.addActionListener(new java.awt.event.ActionListener() {
@@ -102,8 +109,10 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
                 btnBlockActionPerformed(evt);
             }
         });
+        add(btnBlock, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 197, -1, -1));
 
         jLabel3.setText("Tên tên liệu");
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 159, -1, -1));
 
         tblChatLieu.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -128,12 +137,15 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tblChatLieu);
 
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 335, 467, 135));
+
         btnNew.setText("New");
         btnNew.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNewActionPerformed(evt);
             }
         });
+        add(btnNew, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 238, 101, -1));
 
         jLabel5.setText("Giá bán");
 
@@ -289,74 +301,12 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
                 .addGap(60, 60, 60))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(253, 253, 253)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(61, 61, 61)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel7))
-                                .addGap(64, 64, 64)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(txtTenCL, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
-                                        .addComponent(txtMaCL))
-                                    .addComponent(txtMota, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(102, 102, 102)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(btnBlock, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnSua, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnNew, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnThem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
-                .addComponent(panLCL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(261, 261, 261))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panLCL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel2)
-                                    .addComponent(txtMaCL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(17, 17, 17))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(btnThem)
-                                .addGap(18, 18, 18)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnSua)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(txtTenCL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel3)))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(txtMota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBlock))
-                        .addGap(18, 18, 18)
-                        .addComponent(btnNew)
-                        .addGap(74, 74, 74)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(196, Short.MAX_VALUE))
-        );
+        add(panLCL, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 80, -1, -1));
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(0, 204, 204));
+        jLabel12.setText("Quản lý chất liệu");
+        add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 30, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblLCLMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblLCLMouseClicked
@@ -685,9 +635,9 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
     javax.swing.JButton btnSua;
     private javax.swing.JButton btnThem;
     private javax.swing.JButton btnUpdateLCL;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;

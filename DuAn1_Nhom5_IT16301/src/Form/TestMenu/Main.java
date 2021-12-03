@@ -11,6 +11,7 @@ package Form.TestMenu;
 import GUI.BaoCaoThongKe;
 import GUI.Chao;
 import GUI.Login;
+import GUI.QLBH;
 import GUI.QLHD;
 import GUI.QLPhieuNhap;
 import GUI.QuanLiKhachHang;
@@ -53,7 +54,7 @@ public class Main extends javax.swing.JFrame {
                         panelTransitions1.display(new QuanLiKhachHang());
                         break;
                           
-                        break;
+
                     case 3:  
                         panelTransitions1.display(new GUI.QLSP());
                         break;  
@@ -99,6 +100,9 @@ public class Main extends javax.swing.JFrame {
                             ex.printStackTrace();
                         }
                     }
+                    case 9:
+                        panelTransitions1.display(new QLBH());
+                        break;
 
                 }
  
