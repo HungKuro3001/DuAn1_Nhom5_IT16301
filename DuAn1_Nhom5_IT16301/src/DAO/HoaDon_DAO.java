@@ -53,7 +53,7 @@ public class HoaDon_DAO extends Dao<HoaDon, String>{
 
     @Override
     public HoaDon selectById(String key) {
-        List<HoaDon> list= this.selectBySql(selectAll);
+        List<HoaDon> list= this.selectBySql(selectById,key);
         if (list.isEmpty()) {
             return null;
         }
