@@ -6,11 +6,16 @@
 package GUI;
 
 import DAO.PhieuNhap_DAO;
+import DAO.SanPham_DAO;
 import DAO.chiTietPhieuNhap_DAO;
 import Entity.ChiTietPhieuNhap;
 import Entity.PhieuNhap;
+import Entity.SanPham;
 import Utils.Msgbox;
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -28,27 +33,39 @@ public class QLPhieuNhap extends javax.swing.JPanel {
 
     private PhieuNhap_DAO pnDao = new PhieuNhap_DAO();
     private List<PhieuNhap> listPn = new ArrayList<>();
-    private chiTietPhieuNhap_DAO ctPNDao= new chiTietPhieuNhap_DAO();
-    private List<ChiTietPhieuNhap> listCTPn= new ArrayList<>();
+    private chiTietPhieuNhap_DAO ctPNDao = new chiTietPhieuNhap_DAO();
+    private List<ChiTietPhieuNhap> listCTPn = new ArrayList<>();
+    private SanPham_DAO spDao = new SanPham_DAO();
+    private List<SanPham> listSP = new ArrayList<>();
 
     /**
      * Creates new form QLPhieuNhap
      */
     public QLPhieuNhap() throws SQLException {
         initComponents();
+        fillComboboxSP();
         String maPn = pnDao.maPDT_TuSinh();
         txtMaPn.setText(maPn);
         txtThanhTien.setText("0");
         fillTable();
     }
-    
-    public void Clear() throws SQLException{
+
+    public void Clear() throws SQLException {
         String maPn = pnDao.maPDT_TuSinh();
         txtMaPn.setText(maPn);
+
         txtThanhTien.setText("0");
         txtNgayNhap.setText("");
         txtNoiNhap.setText("");
         txtGhiChu.setText("");
+        fillTableChiTiet();
+    }
+
+    public void fillComboboxSP() {
+        listSP = spDao.selectAll();
+        for (SanPham sp : listSP) {
+            cbxMaSp.addItem(sp.getMaSP());
+        }
     }
 
     public PhieuNhap getForm() throws ParseException {
@@ -62,10 +79,11 @@ public class QLPhieuNhap extends javax.swing.JPanel {
         pn.setGhiChu(txtGhiChu.getText());
         return pn;
     }
-    public ChiTietPhieuNhap getFormCT(){
-        ChiTietPhieuNhap ctpn= new ChiTietPhieuNhap();
+
+    public ChiTietPhieuNhap getFormCT() {
+        ChiTietPhieuNhap ctpn = new ChiTietPhieuNhap();
         ctpn.setMaPN(txtMaPn.getText());
-        ctpn.setMaSp(cbxMaSp.getSelectedItem()+"");
+        ctpn.setMaSp(cbxMaSp.getSelectedItem() + "");
         ctpn.setSoLuong(Integer.parseInt(txtSoLuong.getText()));
         ctpn.setDonGia(Double.parseDouble(txtDonGia.getText()));
         ctpn.setCong(Double.parseDouble(txtTienCong.getText()));
@@ -80,40 +98,47 @@ public class QLPhieuNhap extends javax.swing.JPanel {
         txtNoiNhap.setText(pn.getNoiNhap());
         txtGhiChu.setText(pn.getGhiChu());
     }
-    public void setFormCTPN(ChiTietPhieuNhap ctpn){
-        cbxMaSp.setSelectedItem(ctpn.getMaPN());
-        txtSoLuong.setText(ctpn.getSoLuong()+"");
-        txtDonGia.setText(ctpn.getDonGia()+"");
-        txtTienCong.setText(ctpn.getCong()+"");
-        txtTien.setText(ctpn.getThanhTien()+"");
+
+    public void setFormCTPN(ChiTietPhieuNhap ctpn) {
+        txtMaPn.setText(ctpn.getMaPN());
+        cbxMaSp.setSelectedItem(ctpn.getMaSp());
+        txtSoLuong.setText(ctpn.getSoLuong() + "");
+        txtDonGia.setText(ctpn.getDonGia() + "");
+        txtTienCong.setText(ctpn.getCong() + "");
+        txtTien.setText(ctpn.getThanhTien() + "");
     }
 
     public void fillTable() {
         listPn = pnDao.selectAll();
         DefaultTableModel model = (DefaultTableModel) tblPhieuNhap.getModel();
         model.setRowCount(0);
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(2);
         for (PhieuNhap phieuNhap : listPn) {
             Object[] row = new Object[]{
-                phieuNhap.getMaPN(), phieuNhap.getThanhtien(), phieuNhap.getNgayNhap(),
+                phieuNhap.getMaPN(), df.format(phieuNhap.getThanhtien()), phieuNhap.getNgayNhap(),
                 phieuNhap.getNoiNhap(), phieuNhap.getGhiChu()
             };
             model.addRow(row);
         }
     }
-    public void fillTableChiTiet(){
-        listCTPn= ctPNDao.selectByMAPN(txtMaPn.getText());
+
+    public void fillTableChiTiet() {
+        listCTPn = ctPNDao.selectByMAPN(txtMaPn.getText());
         DefaultTableModel model = (DefaultTableModel) tblChiTietPN.getModel();
         model.setRowCount(0);
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(2);
         for (ChiTietPhieuNhap ctpn : listCTPn) {
-            Object[] row= new Object[]{
-                ctpn.getMaPN(),ctpn.getMaSp(),ctpn.getSoLuong(),ctpn.getDonGia(),
-                ctpn.getCong(),ctpn.getThanhTien()
+            Object[] row = new Object[]{
+                ctpn.getMaPN(), ctpn.getMaSp(), ctpn.getSoLuong(), df.format(ctpn.getDonGia()),
+                df.format(ctpn.getCong()), df.format(ctpn.getThanhTien())
             };
             model.addRow(row);
         }
     }
 
-    public void insert() {
+    public void insertPN() {
         try {
             SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
             Date ngayNhap = sfd.parse(txtNgayNhap.getText());
@@ -127,7 +152,7 @@ public class QLPhieuNhap extends javax.swing.JPanel {
             }
             PhieuNhap pn = getForm();
             pnDao.insert(pn);
-             Msgbox.alert(this, "Thêm thành công");
+            Msgbox.alert(this, "Thêm thành công");
             fillTable();
             Clear();
         } catch (Exception e) {
@@ -138,7 +163,124 @@ public class QLPhieuNhap extends javax.swing.JPanel {
 
     }
 
-    public void update() {
+    public void insertCTPN() throws ParseException {
+//        int row = tblPhieuNhap.getSelectedRow();
+//        if (row < 0) {
+//            Msgbox.alert(this, "chọn phiếu nhập để thêm phiếu nhập chi tiết ");
+//            return;
+//        }
+        PhieuNhap pn = pnDao.selectById(txtMaPn.getText());
+        if (pn == null) {
+            Msgbox.alert(this, "Phiếu nhập này chưa tồn tại");
+            return;
+        }
+        for (ChiTietPhieuNhap ctpn : listCTPn) {
+            if (txtMaPn.getText().equals(ctpn.getMaPN()) && cbxMaSp.getSelectedItem().toString().equals(ctpn.getMaSp())) {
+                Msgbox.alert(this, "Sản phẩm này đã tồn tại trong phiếu nhập này");
+                return;
+            }
+        }
+        try {
+            if (txtSoLuong.getText().isEmpty()) {
+                Msgbox.alert(this, "Không để trống số lượng ");
+                return;
+            }
+            int sl = Integer.parseInt(txtSoLuong.getText());
+            if (sl <= 0) {
+                Msgbox.alert(this, "Số lượng >0");
+                return;
+            }
+        } catch (Exception e) {
+            Msgbox.alert(this, "Số lượng là số nguyên dương");
+            return;
+        }
+        try {
+            if (txtDonGia.getText().isEmpty()) {
+                Msgbox.alert(this, "Không để trống đơn giá ");
+                return;
+            }
+            double donGia = Double.parseDouble(txtSoLuong.getText());
+            if (donGia <= 0) {
+                Msgbox.alert(this, "Đơn giá >0");
+                return;
+            }
+        } catch (Exception e) {
+            Msgbox.alert(this, "Đơn giá là số  dương");
+            return;
+        }
+        try {
+            if (txtTienCong.getText().isEmpty()) {
+                Msgbox.alert(this, "Không để trống tiền công ");
+                return;
+            }
+            double tienCong = Double.parseDouble(txtTienCong.getText());
+            if (tienCong <= 0) {
+                Msgbox.alert(this, "Tiền công >0");
+                return;
+            }
+        } catch (Exception e) {
+            Msgbox.alert(this, "tiền công là số  dương");
+            return;
+        }
+
+        ChiTietPhieuNhap ctpn = getFormCT();
+        ctPNDao.insert(ctpn);
+        Msgbox.alert(this, "Thêm thành công");
+        fillTableChiTiet();
+        Thanhtien();
+    }
+
+    public void tienPNCT() {
+        try {
+            if (txtSoLuong.getText().isEmpty()) {
+                Msgbox.alert(this, "Không để trống số lượng ");
+                return;
+            }
+            int sl = Integer.parseInt(txtSoLuong.getText());
+            if (sl <= 0) {
+                Msgbox.alert(this, "Số lượng >0");
+                return;
+            }
+        } catch (Exception e) {
+            Msgbox.alert(this, "Số lượng là số nguyên dương");
+            return;
+        }
+        try {
+            if (txtDonGia.getText().isEmpty()) {
+                Msgbox.alert(this, "Không để trống đơn giá ");
+                return;
+            }
+            double donGia = Double.parseDouble(txtSoLuong.getText());
+            if (donGia <= 0) {
+                Msgbox.alert(this, "Đơn giá >0");
+                return;
+            }
+        } catch (Exception e) {
+            Msgbox.alert(this, "Đơn giá là số  dương");
+            return;
+        }
+        try {
+            if (txtTienCong.getText().isEmpty()) {
+                Msgbox.alert(this, "Không để trống tiền công ");
+                return;
+            }
+            double tienCong = Double.parseDouble(txtTienCong.getText());
+            if (tienCong <= 0) {
+                Msgbox.alert(this, "Tiền công >0");
+                return;
+            }
+        } catch (Exception e) {
+            Msgbox.alert(this, "tiền công là số  dương");
+            return;
+        }
+        int sl = Integer.parseInt(txtSoLuong.getText());
+        double donGia = Double.parseDouble(txtDonGia.getText());
+        double tienCong = Double.parseDouble(txtTienCong.getText());
+        double thanhTien = sl * donGia + tienCong;
+        txtTien.setText(thanhTien + "");
+    }
+
+    public void updatePN() {
         try {
             SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
             Date ngayNhap = sfd.parse(txtNgayNhap.getText());
@@ -161,6 +303,102 @@ public class QLPhieuNhap extends javax.swing.JPanel {
             return;
         }
 
+    }
+
+    public void updateCTPN() throws ParseException {
+//        PhieuNhap pn = pnDao.selectById(txtMaPn.getText());
+//        if (pn == null) {
+//            Msgbox.alert(this, "Phiếu nhập này chưa tồn tại");
+//            return;
+//        }
+        int row = tblChiTietPN.getSelectedRow();
+        if (row < 0) {
+            Msgbox.alert(this, "chọn phiếu nhập chi tiết để cập nhật");
+            return;
+        }
+        int check = 0;
+        for (ChiTietPhieuNhap ctpn : listCTPn) {
+            if (cbxMaSp.getSelectedItem().toString().equals(ctpn.getMaSp())) {
+                check++;
+            }
+        }
+        if (check == 0) {
+            Msgbox.alert(this, "Sản phẩm chưa tồn tại trong phiếu nhập");
+            return;
+        }
+        try {
+            if (txtSoLuong.getText().isEmpty()) {
+                Msgbox.alert(this, "Không để trống số lượng ");
+                return;
+            }
+            int sl = Integer.parseInt(txtSoLuong.getText());
+            if (sl <= 0) {
+                Msgbox.alert(this, "Số lượng >0");
+                return;
+            }
+        } catch (Exception e) {
+            Msgbox.alert(this, "Số lượng là số nguyên dương");
+            return;
+        }
+        try {
+            if (txtDonGia.getText().isEmpty()) {
+                Msgbox.alert(this, "Không để trống đơn giá ");
+                return;
+            }
+            double donGia = Double.parseDouble(txtSoLuong.getText());
+            if (donGia <= 0) {
+                Msgbox.alert(this, "Đơn giá >0");
+                return;
+            }
+        } catch (Exception e) {
+            Msgbox.alert(this, "Đơn giá là số  dương");
+            return;
+        }
+        try {
+            if (txtTienCong.getText().isEmpty()) {
+                Msgbox.alert(this, "Không để trống tiền công ");
+                return;
+            }
+            double tienCong = Double.parseDouble(txtTienCong.getText());
+            if (tienCong <= 0) {
+                Msgbox.alert(this, "Tiền công >0");
+                return;
+            }
+        } catch (Exception e) {
+            Msgbox.alert(this, "tiền công là số  dương");
+            return;
+        }
+
+        ChiTietPhieuNhap ctpn = getFormCT();
+        ctPNDao.update(ctpn);
+        Msgbox.alert(this, "Cập nhật thành công");
+        fillTableChiTiet();
+        Thanhtien();
+    }
+
+    public void Thanhtien() throws ParseException {
+        double tong = 0.0;
+        for (ChiTietPhieuNhap chiTietPhieuNhap : listCTPn) {
+            tong += chiTietPhieuNhap.getThanhTien();
+        }
+        DecimalFormat df = new DecimalFormat("#.####");
+        txtThanhTien.setText(df.format(tong) + "");
+        PhieuNhap pn = getForm();
+        pnDao.update(pn);
+        fillTable();
+    }
+
+    public void xoaCTPN() throws ParseException {
+        int row = tblChiTietPN.getSelectedRow();
+        if (row < 0) {
+            Msgbox.alert(this, "chọn phiếu nhập chi tiết để xóa");
+            return;
+        }
+        ChiTietPhieuNhap ctpn = getFormCT();
+        ctPNDao.deletePNCT(ctpn);
+        Msgbox.alert(this, "Xóa thành công");
+        fillTableChiTiet();
+        Thanhtien();
     }
 
     /**
@@ -203,9 +441,9 @@ public class QLPhieuNhap extends javax.swing.JPanel {
         txtTien = new javax.swing.JTextField();
         jScrollPane4 = new javax.swing.JScrollPane();
         tblChiTietPN = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnThemCTPN = new javax.swing.JButton();
+        btnCapNhatCTPN = new javax.swing.JButton();
+        btnXoa = new javax.swing.JButton();
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(0, 204, 204));
@@ -293,6 +531,20 @@ public class QLPhieuNhap extends javax.swing.JPanel {
 
         jLabel12.setText("Thành tiền");
 
+        cbxMaSp.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxMaSpItemStateChanged(evt);
+            }
+        });
+
+        txtTienCong.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTienCongKeyReleased(evt);
+            }
+        });
+
+        txtTien.setEditable(false);
+
         tblChiTietPN.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -305,20 +557,40 @@ public class QLPhieuNhap extends javax.swing.JPanel {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                true, false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
+        tblChiTietPN.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblChiTietPNMouseClicked(evt);
+            }
+        });
         jScrollPane4.setViewportView(tblChiTietPN);
 
-        jButton1.setText("Thêm");
+        btnThemCTPN.setText("Thêm");
+        btnThemCTPN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemCTPNActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Cập nhật");
+        btnCapNhatCTPN.setText("Cập nhật");
+        btnCapNhatCTPN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCapNhatCTPNActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("new");
+        btnXoa.setText("Xóa");
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -376,11 +648,11 @@ public class QLPhieuNhap extends javax.swing.JPanel {
                                         .addComponent(txtSoLuong, javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addComponent(txtTien))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jButton1)
+                                        .addComponent(btnThemCTPN)
                                         .addGap(27, 27, 27)
-                                        .addComponent(jButton2)
+                                        .addComponent(btnCapNhatCTPN)
                                         .addGap(31, 31, 31)
-                                        .addComponent(jButton3)))))
+                                        .addComponent(btnXoa)))))
                         .addGap(10, 10, 10)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(333, Short.MAX_VALUE))
@@ -446,23 +718,25 @@ public class QLPhieuNhap extends javax.swing.JPanel {
                     .addComponent(txtTien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(btnThemCTPN)
+                    .addComponent(btnCapNhatCTPN)
+                    .addComponent(btnXoa))
                 .addContainerGap(156, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-        insert();
+        insertPN();
+        fillTableChiTiet();
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnCapNhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatActionPerformed
-        update();
+        updatePN();
+        fillTableChiTiet();
     }//GEN-LAST:event_btnCapNhatActionPerformed
 
     private void tblPhieuNhapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPhieuNhapMouseClicked
-       int row= tblPhieuNhap.getSelectedRow();
+        int row = tblPhieuNhap.getSelectedRow();
         PhieuNhap pn = listPn.get(row);
         setForm(pn);
         fillTableChiTiet();
@@ -472,19 +746,75 @@ public class QLPhieuNhap extends javax.swing.JPanel {
         try {
             Clear();
         } catch (SQLException ex) {
-          ex.printStackTrace();
+            ex.printStackTrace();
         }
     }//GEN-LAST:event_btnNewActionPerformed
+
+    private void txtTienCongKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTienCongKeyReleased
+        tienPNCT();
+    }//GEN-LAST:event_txtTienCongKeyReleased
+
+    private void btnThemCTPNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemCTPNActionPerformed
+
+        try {
+            insertCTPN();
+            txtSoLuong.setText("");
+            txtDonGia.setText("");
+            txtTienCong.setText("");
+            txtTien.setText("");
+
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_btnThemCTPNActionPerformed
+
+    private void tblChiTietPNMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblChiTietPNMouseClicked
+        int row = tblChiTietPN.getSelectedRow();
+        ChiTietPhieuNhap ctpn = listCTPn.get(row);
+        setFormCTPN(ctpn);
+    }//GEN-LAST:event_tblChiTietPNMouseClicked
+
+    private void cbxMaSpItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxMaSpItemStateChanged
+        txtSoLuong.setText("");
+        txtDonGia.setText("");
+        txtTienCong.setText("");
+        txtTien.setText("");
+    }//GEN-LAST:event_cbxMaSpItemStateChanged
+
+    private void btnCapNhatCTPNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatCTPNActionPerformed
+
+        try {
+            updateCTPN();
+            txtSoLuong.setText("");
+            txtDonGia.setText("");
+            txtTienCong.setText("");
+            txtTien.setText("");
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_btnCapNhatCTPNActionPerformed
+
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
+        try {
+            xoaCTPN();
+            txtSoLuong.setText("");
+            txtDonGia.setText("");
+            txtTienCong.setText("");
+            txtTien.setText("");
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_btnXoaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCapNhat;
+    private javax.swing.JButton btnCapNhatCTPN;
     private javax.swing.JButton btnNew;
     private javax.swing.JButton btnThem;
+    private javax.swing.JButton btnThemCTPN;
+    private javax.swing.JButton btnXoa;
     private javax.swing.JComboBox<String> cbxMaSp;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

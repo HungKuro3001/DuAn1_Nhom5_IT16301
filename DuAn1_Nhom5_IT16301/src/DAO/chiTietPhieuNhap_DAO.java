@@ -20,7 +20,7 @@ public class chiTietPhieuNhap_DAO extends Dao<ChiTietPhieuNhap, String>{
     String insert ="INSERT CHITIETPHIEUNHAP VALUES (?,?,?,?,?,?)";
     String update="UPDATE CHITIETPHIEUNHAP SET SL=?,DONGIA=?,CONG=?,THANHTIEN=? where MAPN=? and MASP=?";
     String selectByMAPN= "SELECT * FROM CHITIETPHIEUNHAP WHERE MAPN=?";
-    String delete="DELETE FROM CHITIETPHIEUNHAP WHERE where MAPN=? and MASP=?";
+    String delete="DELETE FROM CHITIETPHIEUNHAP WHERE MAPN=? and MASP=?";
     
     
     public List<ChiTietPhieuNhap> selectByMAPN(String key) {
@@ -64,12 +64,12 @@ public class chiTietPhieuNhap_DAO extends Dao<ChiTietPhieuNhap, String>{
             ResultSet rs = jdbcHelper.query(sql, args);
             while (rs.next()) {                
                 ChiTietPhieuNhap ctPn= new ChiTietPhieuNhap();
-                ctPn.setMaSp(rs.getString(1));
+                ctPn.setMaPN(rs.getString(1));
                 ctPn.setMaSp(rs.getString(2));
                 ctPn.setSoLuong(rs.getInt(3));
                 ctPn.setDonGia(rs.getDouble(4));
                 ctPn.setCong(rs.getDouble(5));
-                ctPn.setThanhTien(rs.getDouble(5));
+                ctPn.setThanhTien(rs.getDouble(6));
                 list.add(ctPn);
             }
             return list;
