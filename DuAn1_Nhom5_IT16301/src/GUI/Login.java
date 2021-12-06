@@ -28,7 +28,7 @@ public class Login extends javax.swing.JFrame {
 
     public Login() {
         initComponents();
-        new Chao(this, true).setVisible(true);
+        //new Chao(this, true).setVisible(true);
         setBackground(new Color(0, 0, 0, 0));    // (1)
         jPanel1.setBackground(new Color(0, 0, 0, 0));//(2)   (1) VÀ (2) CÙNG NHAU ĐỂ tắt nền
         setLocationRelativeTo(null);

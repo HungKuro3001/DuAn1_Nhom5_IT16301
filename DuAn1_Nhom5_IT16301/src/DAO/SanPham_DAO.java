@@ -39,6 +39,7 @@ public class SanPham_DAO extends Dao<SanPham, String> {
         return maCL;
     }
     
+    
     public List<SanPham> selectByTT(String trangThai) {
         List<SanPham> list = this.selectBySql(selectByTT, trangThai);
         if (list.isEmpty()) {
@@ -66,6 +67,23 @@ public class SanPham_DAO extends Dao<SanPham, String> {
             giaMuaVao = rs.getDouble(2);
         }
         return new double[]{giaBanRa, giaMuaVao};
+    }
+    public List<SanPham> top5SP(String ngayBatDau,String ngayKetThuc) throws SQLException{
+        List<SanPham> listSP= new ArrayList<>();
+        String top5SP ="";
+        int soLuong;
+        String sql ="exec SP_BCTK1 @NGAYBATDAU = '"+ngayBatDau+"',@NGAYKETTHUC ='"+ngayKetThuc+" 23:59:59.999'";
+       // System.out.println(sql);
+        ResultSet rs = jdbcHelper.query(sql);
+        while(rs.next()){
+            SanPham sp =new SanPham();
+            top5SP =rs.getString(1);
+            soLuong =rs.getInt(2);
+            sp.setTenSP(top5SP);
+            sp.setSoLuong(soLuong);
+            listSP.add(sp);
+        }
+      return listSP;
     }
 
     @Override

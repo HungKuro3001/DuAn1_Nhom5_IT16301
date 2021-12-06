@@ -5,9 +5,13 @@
  */
 package GUI;
 
+import DAO.HoaDon_DAO;
 import DAO.KhachHang_DAO;
+import Entity.HoaDon;
 import Entity.KhachHang;
 import Utils.Msgbox;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
@@ -17,9 +21,11 @@ import javax.swing.table.DefaultTableModel;
  * @author Administrator
  */
 public class QuanLiKhachHang extends javax.swing.JFrame {
-    
+
     private KhachHang_DAO dao = new KhachHang_DAO();
     private List<KhachHang> list = new ArrayList();
+    private List<HoaDon> listHd = new ArrayList<>();
+    private HoaDon_DAO hdDao = new HoaDon_DAO();
 
     /**
      * Creates new form QuanLiKhachHang
@@ -61,6 +67,7 @@ public class QuanLiKhachHang extends javax.swing.JFrame {
         btnThem = new javax.swing.JButton();
         btnCapNhat = new javax.swing.JButton();
         btnKhoa = new javax.swing.JButton();
+        btnXemLS = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         txtTimKiem = new javax.swing.JTextField();
 
@@ -173,6 +180,14 @@ public class QuanLiKhachHang extends javax.swing.JFrame {
         });
         jPanel1.add(btnKhoa);
 
+        btnXemLS.setText("Xem lịch sử GD");
+        btnXemLS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXemLSActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnXemLS);
+
         jLabel8.setText("TÌM KIẾM");
         jLabel8.setToolTipText("");
 
@@ -226,8 +241,8 @@ public class QuanLiKhachHang extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtGhiChu, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 683, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
@@ -330,11 +345,11 @@ public class QuanLiKhachHang extends javax.swing.JFrame {
     private void btnKhoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhoaActionPerformed
         // TODO add your handling code here:
         int row = tblKhachHang.getSelectedRow();
-        
+
         KhachHang kh = list.get(row);
         if (kh.isTrangThai() == true) {
             kh.setTrangThai(false);
-            
+
         } else {
             kh.setTrangThai(true);
         }
@@ -345,12 +360,38 @@ public class QuanLiKhachHang extends javax.swing.JFrame {
     private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased
         // TODO add your handling code here:
         search();
-        
+
     }//GEN-LAST:event_txtTimKiemKeyReleased
 
     private void txtTimKiemKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyTyped
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTimKiemKeyTyped
+
+    private void btnXemLSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXemLSActionPerformed
+        xemLS();
+    }//GEN-LAST:event_btnXemLSActionPerformed
+    public void xemLS() {
+        int row = tblKhachHang.getSelectedRow();
+        if (row < 0) {
+            Msgbox.alert(this, "Chọn khách hàng để xem lịch sử mua hàng");
+            return;
+        }
+        KhachHang kh = list.get(row);
+        listHd = hdDao.selectByKH(kh.getMaKh());
+
+        Double tt = 0.0;
+        for (HoaDon hoaDon : listHd) {
+            tt += hoaDon.getTongTien();
+        }
+
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(2);
+        
+        XemLichSu xemLS = new XemLichSu();
+        xemLS.setVisible(true);
+        xemLS.setForm(kh.getMaKh(), kh.getHoTen(), listHd.size() + "", df.format(tt) + "");
+        xemLS.fillTable(kh.getMaKh());
+    }
 
     /**
      * @param args the command line arguments
@@ -378,6 +419,7 @@ public class QuanLiKhachHang extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(QuanLiKhachHang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -392,6 +434,7 @@ public class QuanLiKhachHang extends javax.swing.JFrame {
     private javax.swing.JButton btnKhoa;
     private javax.swing.JButton btnLamMoi;
     private javax.swing.JButton btnThem;
+    private javax.swing.JButton btnXemLS;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -446,9 +489,9 @@ public class QuanLiKhachHang extends javax.swing.JFrame {
         dao.insert(kh);
         fillTable();
     }
-    
+
     public void fillTable() {
-        
+
         list = dao.selectAll();
         DefaultTableModel model = (DefaultTableModel) tblKhachHang.getModel();
         model.setRowCount(0);
@@ -458,9 +501,9 @@ public class QuanLiKhachHang extends javax.swing.JFrame {
             };
             model.addRow(row);
         }
-        
+
     }
-    
+
     private void setForm(KhachHang kh) {
         txtMaKH.setText(kh.getMaKh());
         txtHoTen.setText(kh.getHoTen());
@@ -473,7 +516,7 @@ public class QuanLiKhachHang extends javax.swing.JFrame {
         txtDiaChi.setText(kh.getDiaChi());
         txtGhiChu.setText(kh.getGhiChu());
     }
-    
+
     public KhachHang getForm() {
         KhachHang KH = new KhachHang();
         KH.setMaKh(txtMaKH.getText());
@@ -488,7 +531,7 @@ public class QuanLiKhachHang extends javax.swing.JFrame {
         KH.setGhiChu(txtGhiChu.getText());
         return KH;
     }
-    
+
     private void update() {
         if (txtHoTen.getText().isEmpty()) {
             Msgbox.alert(this, "Họ tên không được để trống");
@@ -507,28 +550,27 @@ public class QuanLiKhachHang extends javax.swing.JFrame {
             Msgbox.alert(this, "Địa chỉ không được để trống");
             return;
         }
-        
+
         KhachHang kh = getForm();
         dao.update(kh);
         fillTable();
     }
 
-     private void search(){
-        if(txtTimKiem.getText().trim().equals("")){
+    private void search() {
+        if (txtTimKiem.getText().trim().equals("")) {
             fillTable();
+        } else {
+            String SDT = txtTimKiem.getText();
+            list = dao.search(SDT);
+            DefaultTableModel model = (DefaultTableModel) tblKhachHang.getModel();
+            model.setRowCount(0);
+            for (KhachHang khachHang : list) {
+                Object[] row = new Object[]{
+                    khachHang.getMaKh(), khachHang.getHoTen(), khachHang.getSdt(), khachHang.isGioiTinh() == false ? "Nữ" : "Nam", khachHang.getDiaChi(), khachHang.getGhiChu(), khachHang.isTrangThai() == false ? "Mở" : "Khóa"
+                };
+                model.addRow(row);
+            }
         }
-        else{
-            String SDT =txtTimKiem.getText();
-        list = dao.search(SDT);
-        DefaultTableModel model = (DefaultTableModel) tblKhachHang.getModel();
-        model.setRowCount(0);
-        for (KhachHang khachHang : list) {
-            Object[] row = new Object[]{
-                khachHang.getMaKh(), khachHang.getHoTen(), khachHang.getSdt(), khachHang.isGioiTinh() == false ? "Nữ" : "Nam", khachHang.getDiaChi(), khachHang.getGhiChu(), khachHang.isTrangThai() == false ? "Mở" : "Khóa"
-            };
-            model.addRow(row);
-        }
-        }
-        
+
     }
 }

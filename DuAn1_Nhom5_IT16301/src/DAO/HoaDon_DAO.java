@@ -16,25 +16,30 @@ import java.util.List;
  *
  * @author Admin
  */
-public class HoaDon_DAO extends Dao<HoaDon, String>{
-      
-    String insertHD ="INSERT INTO HOADON VALUES (?,?,?,?,?,?,?,?,?)";
-    String updateHD ="UPDATE HOADON SET MAKH=?, HINHTHUCTHANHTOAN=?, HINHTHUCMUA=?, KHACHTRA=?, TRANGTHAIHD=? WHERE MAHD=?";
-    String selectAll="SELECT * FROM HOADON";
-    String selectById="SELECT * FROM HOADON WHERE MAHD=?";
-    
+public class HoaDon_DAO extends Dao<HoaDon, String> {
+
+    String insertHD = "INSERT INTO HOADON VALUES (?,?,?,?,?,?,?,?,?)";
+    String updateHD = "UPDATE HOADON SET MAKH=?,KHACHTRA=?, HINHTHUCTHANHTOAN=?, HINHTHUCMUA=?, TRANGTHAIHD=? WHERE MAHD=?";
+    String selectAll = "SELECT * FROM HOADON";
+    String selectById = "SELECT * FROM HOADON WHERE MAHD=?";
+    String updateTT = "UPDATE HOADON SET TONGTIEN=? WHERE MAHD=?";
+    String selectByKH = "SELECT * FROM HOADON WHERE MAKH=?";
+
     @Override
     public void insert(HoaDon entity) {
-        jdbcHelper.Update(insertHD, entity.getMaHD(),entity.getMaNV(),entity.getMaKH(),entity.getNgayGD(),
-                entity.isHinhThucThanhToan(),entity.isHinhthucmua(),entity.getKhachTra(),entity.getTongTien(),
+        jdbcHelper.Update(insertHD, entity.getMaHD(), entity.getMaNV(), entity.getMaKH(), entity.getNgayGD(),
+                entity.isHinhThucThanhToan(), entity.isHinhthucmua(), entity.getKhachTra(), entity.getTongTien(),
                 entity.getTrangThaiHD());
     }
 
     @Override
     public void update(HoaDon entity) {
-        jdbcHelper.Update(updateHD,entity.getMaKH(),entity.isHinhThucThanhToan(),
-                entity.isHinhthucmua(),entity.getKhachTra(),
-                entity.getTrangThaiHD(), entity.getMaHD());
+        jdbcHelper.Update(updateHD, entity.getMaKH(), entity.getKhachTra(), entity.isHinhThucThanhToan(),
+                entity.isHinhthucmua(), entity.getTrangThaiHD(), entity.getMaHD());
+    }
+
+    public void updatetongTien(HoaDon entity) {
+        jdbcHelper.Update(updateTT, entity.getTongTien(), entity.getMaHD());
     }
 
     @Override
@@ -44,27 +49,33 @@ public class HoaDon_DAO extends Dao<HoaDon, String>{
 
     @Override
     public List<HoaDon> selectAll() {
-        List<HoaDon> list= this.selectBySql(selectAll);
+        List<HoaDon> list = this.selectBySql(selectAll);
+        return list;
+    }
+
+    public List<HoaDon> selectByKH(String makh) {
+        List<HoaDon> list = this.selectBySql(selectByKH,makh);
         return list;
     }
 
     @Override
     public HoaDon selectById(String key) {
-        List<HoaDon> list= this.selectBySql(selectAll);
+        List<HoaDon> list = this.selectBySql(selectById,key);
         if (list.isEmpty()) {
             return null;
         }
         return list.get(0);
     }
+
     public String maSP_TuSinh() throws SQLException {
         String ma = null;
         String sql = "{CALL SP_MAHD}";
         ResultSet rs = jdbcHelper.query(sql);
         while (rs.next()) {
-             ma =rs.getString(1);
+            ma = rs.getString(1);
         }
         return ma;
-    } 
+    }
 
     @Override
     protected List<HoaDon> selectBySql(String sql, Object... args) {
@@ -90,5 +101,5 @@ public class HoaDon_DAO extends Dao<HoaDon, String>{
             throw new RuntimeException(e);
         }
     }
-    
+
 }
