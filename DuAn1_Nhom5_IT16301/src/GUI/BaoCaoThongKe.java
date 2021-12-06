@@ -35,29 +35,32 @@ import org.jfree.data.general.DefaultPieDataset;
  * @author Tiến Mạnh
  */
 public class BaoCaoThongKe extends javax.swing.JPanel {
-     SanPham_DAO SPD =new SanPham_DAO();
-    List<SanPham> listSP =new ArrayList<>();
-    List<DanhMuc> listDM =new ArrayList<>();
-    DanhMuc_DAO DDM =new DanhMuc_DAO();
-    ChiTietHD_DAO CTHDD =new ChiTietHD_DAO();
+
+    SanPham_DAO SPD = new SanPham_DAO();
+    List<SanPham> listSP = new ArrayList<>();
+    List<DanhMuc> listDM = new ArrayList<>();
+    DanhMuc_DAO DDM = new DanhMuc_DAO();
+    ChiTietHD_DAO CTHDD = new ChiTietHD_DAO();
+
     public BaoCaoThongKe() throws SQLException {
         initComponents();
         init();
         setBackground(new Color(240, 240, 240));
     }
-     private void showBieuDoCot() throws SQLException {
+
+    private void showBieuDoCot() throws SQLException {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        
-         SimpleDateFormat sdf =new SimpleDateFormat("MM/dd/yyyy");
-         String ngayBatDau=sdf.format(jDCNgayBatDau.getDate());
-          String ngayKetThuc=sdf.format(jDCNgayKetThuc.getDate());
+
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+        String ngayBatDau = sdf.format(jDCNgayBatDau.getDate());
+        String ngayKetThuc = sdf.format(jDCNgayKetThuc.getDate());
         // System.out.println(""+ngayBatDau+" ccc"+ngayKetThuc);
-        listSP = SPD.top5SP(""+ngayBatDau, ""+ngayKetThuc);
+        listSP = SPD.top5SP("" + ngayBatDau, "" + ngayKetThuc);
 
         for (int i = 0; i < listSP.size(); i++) {
             SanPham sp = listSP.get(i);
             String tenSP = sp.getTenSP();
-            int soLuong =sp.getSoLuong();
+            int soLuong = sp.getSoLuong();
             dataset.setValue(soLuong, "Số sản phẩm", tenSP);
         }
         JFreeChart chart = ChartFactory.createBarChart("Biểu đồ số top 5 sản phẩm bán chạy", "Tên sản phẩm", "Số sản phẩm",
@@ -65,7 +68,7 @@ public class BaoCaoThongKe extends javax.swing.JPanel {
 
         //tạo biểu đồ 
         CategoryPlot categoryPlot = chart.getCategoryPlot();
-         
+
         categoryPlot.setBackgroundPaint(Color.white);
 
         //create render object to change the moficy the line properties like color
@@ -80,19 +83,20 @@ public class BaoCaoThongKe extends javax.swing.JPanel {
         panelBDCot.validate();
 
     }
-     public void showPieChart() throws SQLException {
+
+    public void showPieChart() throws SQLException {
 
         //Tạo dữ liệu
         DefaultPieDataset barDataset = new DefaultPieDataset();
-        listDM =DDM.selectAll();
+        listDM = DDM.selectAll();
         for (int i = 0; i < listDM.size(); i++) {
             DanhMuc danhMuc = listDM.get(i);
             String tenDM = danhMuc.getTenDm();
             String maDM = danhMuc.getMaDM();
-            SimpleDateFormat sdf =new SimpleDateFormat("MM/dd/yyyy");
-         String ngayBatDau=sdf.format(jDCNgayBatDau.getDate());
-          String ngayKetThuc=sdf.format(jDCNgayKetThuc.getDate());
-            barDataset.setValue(tenDM,CTHDD.duLieu(maDM, ngayBatDau, ngayKetThuc));
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+            String ngayBatDau = sdf.format(jDCNgayBatDau.getDate());
+            String ngayKetThuc = sdf.format(jDCNgayKetThuc.getDate());
+            barDataset.setValue(tenDM, CTHDD.duLieu(maDM, ngayBatDau, ngayKetThuc));
         }
 
         //tạo biểu đồ
@@ -100,7 +104,6 @@ public class BaoCaoThongKe extends javax.swing.JPanel {
 
         PiePlot piePlot = (PiePlot) piechart.getPlot();
 
-       
         piePlot.setBackgroundPaint(Color.white);
 
         //tạo panel để hiển thị biểu đồ
@@ -109,63 +112,66 @@ public class BaoCaoThongKe extends javax.swing.JPanel {
         panelBarChart.add(barChartPanel, BorderLayout.CENTER);
         panelBarChart.validate();
     }
-     private void hienThiTS() throws SQLException{
-         SimpleDateFormat sdf =new SimpleDateFormat("MM/dd/yyyy");
-         String ngayBatDau=sdf.format(jDCNgayBatDau.getDate());
-          String ngayKetThuc=sdf.format(jDCNgayKetThuc.getDate());
-         // System.out.println(""+ngayBatDau);
-        double[] result= thongSo(ngayBatDau, ngayKetThuc);
+
+    private void hienThiTS() throws SQLException {
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+        String ngayBatDau = sdf.format(jDCNgayBatDau.getDate());
+        String ngayKetThuc = sdf.format(jDCNgayKetThuc.getDate());
+        // System.out.println(""+ngayBatDau);
+        double[] result = thongSo(ngayBatDau, ngayKetThuc);
         DecimalFormat df = new DecimalFormat();
         df.setMaximumFractionDigits(2);
-        lblDoanhTHu.setText(""+df.format(result[0]));
-        lblSoHoaDon.setText(""+df.format(result[1]));
-        lblGiamGia.setText(""+df.format(result[2]));
+        lblDoanhTHu.setText("" + df.format(result[0]));
+        lblSoHoaDon.setText("" + df.format(result[1]));
+        lblGiamGia.setText("" + df.format(result[2]));
 
-        
-        lblDoanhTHuBan.setText(""+df.format(doanhThuBan(ngayBatDau, ngayKetThuc)));
-       lblTienMua.setText(""+df.format(tienMua(ngayBatDau, ngayKetThuc)));
-     }
-     private double doanhThuBan(String ngayBatDau,String ngayKetThuc) throws SQLException{
-         String query ="select SUM(TONGTIEN) from HOADON HD\n" +
-"where HINHTHUCMUA =0 AND HD.NGAYGD BETWEEN '"+ngayBatDau+"' AND '"+ngayKetThuc+" 23:59:59.999'";
-         ResultSet rs =jdbcHelper.query(query);
-         double doanhThuBan =0;
-         
-        while(rs.next()){
-           doanhThuBan = rs.getDouble(1);
+        lblDoanhTHuBan.setText("" + df.format(doanhThuBan(ngayBatDau, ngayKetThuc)));
+        lblTienMua.setText("" + df.format(tienMua(ngayBatDau, ngayKetThuc)));
+    }
+
+    private double doanhThuBan(String ngayBatDau, String ngayKetThuc) throws SQLException {
+        String query = "select SUM(TONGTIEN) from HOADON HD\n"
+                + "where HINHTHUCMUA =0 AND HD.NGAYGD BETWEEN '" + ngayBatDau + "' AND '" + ngayKetThuc + " 23:59:59.999'";
+        ResultSet rs = jdbcHelper.query(query);
+        double doanhThuBan = 0;
+
+        while (rs.next()) {
+            doanhThuBan = rs.getDouble(1);
         }
         return doanhThuBan;
-     }
-          private double tienMua(String ngayBatDau,String ngayKetThuc) throws SQLException{
-         String query ="select SUM(TONGTIEN) from HOADON HD\n" +
-"where HINHTHUCMUA =1 AND HD.NGAYGD BETWEEN '"+ngayBatDau+"' AND '"+ngayKetThuc+" 23:59:59.999'";
-              System.out.println(""+query);
-         ResultSet rs =jdbcHelper.query(query);
-         double tienMua =0;
-         
-        while(rs.next()){
-           tienMua = rs.getDouble(1);
+    }
+
+    private double tienMua(String ngayBatDau, String ngayKetThuc) throws SQLException {
+        String query = "select SUM(TONGTIEN) from HOADON HD\n"
+                + "where HINHTHUCMUA =1 AND HD.NGAYGD BETWEEN '" + ngayBatDau + "' AND '" + ngayKetThuc + " 23:59:59.999'";
+        System.out.println("" + query);
+        ResultSet rs = jdbcHelper.query(query);
+        double tienMua = 0;
+
+        while (rs.next()) {
+            tienMua = rs.getDouble(1);
         }
         return tienMua;
-     }
-              private double[] thongSo(String ngayBatDau,String ngayKetThuc) throws SQLException { //lấy số lượng theo danh mục
-        String query ="exec SP_BCTK3 @NGAYBATDAU = '"+ngayBatDau+"',@NGAYKETTHUC ='"+ngayKetThuc+" 23:59:59.999'";
-             //System.out.println(""+query);
-        double doanhThu = 0 ,soHoaDon = 0, giamGia = 0;
-        ResultSet rs =jdbcHelper.query(query);
-        while(rs.next()){
-            doanhThu =rs.getDouble(1);
-            soHoaDon =rs.getDouble(2);
-            giamGia =rs.getDouble(3);
+    }
+
+    private double[] thongSo(String ngayBatDau, String ngayKetThuc) throws SQLException { //lấy số lượng theo danh mục
+        String query = "exec SP_BCTK3 @NGAYBATDAU = '" + ngayBatDau + "',@NGAYKETTHUC ='" + ngayKetThuc + " 23:59:59.999'";
+        //System.out.println(""+query);
+        double doanhThu = 0, soHoaDon = 0, giamGia = 0;
+        ResultSet rs = jdbcHelper.query(query);
+        while (rs.next()) {
+            doanhThu = rs.getDouble(1);
+            soHoaDon = rs.getDouble(2);
+            giamGia = rs.getDouble(3);
         }
-        
-        return new double[]{doanhThu,soHoaDon,giamGia};
-    }
-  
 
-    private void init() throws SQLException{
+        return new double[]{doanhThu, soHoaDon, giamGia};
+    }
+
+    private void init() throws SQLException {
 
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -294,13 +300,13 @@ public class BaoCaoThongKe extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-         try {
-             showBieuDoCot();
-             showPieChart();
-             hienThiTS();
-         } catch (SQLException ex) {
-             ex.printStackTrace();
-         }
+        try {
+            showBieuDoCot();
+            showPieChart();
+            hienThiTS();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

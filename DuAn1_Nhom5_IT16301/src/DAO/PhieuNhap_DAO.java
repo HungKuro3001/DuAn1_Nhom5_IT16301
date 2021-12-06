@@ -18,8 +18,9 @@ import java.util.List;
  */
 public class PhieuNhap_DAO extends Dao<PhieuNhap, String>{
       String insert ="INSERT PHIEUNHAP VALUES (?,?,?,?,?)";
-      String update ="UPDATE PHIEUNHAP SET NGAYNHAP=?, NOINHAP=?,GHICHU=? WHERE MAPN=?";
+      String update ="UPDATE PHIEUNHAP SET THANHTIEN =?, NGAYNHAP=?, NOINHAP=?,GHICHU=? WHERE MAPN=?";
       String selectAll= "SELECT * FROM PHIEUNHAP ";
+      String selectByMaPN="select * from PHIEUNHAP WHERE MAPN=?";
     @Override
     public void insert(PhieuNhap entity) {
         jdbcHelper.Update(insert, entity.getMaPN(),entity.getThanhtien(),entity.getNgayNhap(),
@@ -28,7 +29,7 @@ public class PhieuNhap_DAO extends Dao<PhieuNhap, String>{
 
     @Override
     public void update(PhieuNhap entity) {
-        jdbcHelper.Update(update, entity.getNgayNhap(),entity.getNoiNhap(),entity.getGhiChu(),
+        jdbcHelper.Update(update, entity.getThanhtien(), entity.getNgayNhap(),entity.getNoiNhap(),entity.getGhiChu(),
                 entity.getMaPN());
     }
 
@@ -45,7 +46,11 @@ public class PhieuNhap_DAO extends Dao<PhieuNhap, String>{
 
     @Override
     public PhieuNhap selectById(String key) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<PhieuNhap> list = this.selectBySql(selectByMaPN,key);
+        if (list.isEmpty()) {
+            return null;
+        }
+        return list.get(0);
     }
     public String maPDT_TuSinh() throws SQLException {
         String ma = null;
