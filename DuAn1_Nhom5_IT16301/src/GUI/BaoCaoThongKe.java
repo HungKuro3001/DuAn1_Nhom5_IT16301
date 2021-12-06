@@ -196,6 +196,7 @@ public class BaoCaoThongKe extends javax.swing.JPanel {
         jDCNgayBatDau = new com.toedter.calendar.JDateChooser();
         jButton1 = new javax.swing.JButton();
         panelBarChart = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -203,76 +204,76 @@ public class BaoCaoThongKe extends javax.swing.JPanel {
         lblDoanhTHu.setForeground(new java.awt.Color(255, 255, 255));
         lblDoanhTHu.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblDoanhTHu.setText("0");
-        add(lblDoanhTHu, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, 180, -1));
+        add(lblDoanhTHu, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 160, 180, -1));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Doanh Thu ");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 40, -1, -1));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 120, -1, -1));
 
         lblMau1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/AnhBCTK1.png"))); // NOI18N
         lblMau1.setText("jLabel3");
-        add(lblMau1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, 190, 110));
+        add(lblMau1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 190, 110));
 
         lblDoanhTHuBan.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lblDoanhTHuBan.setForeground(new java.awt.Color(255, 255, 255));
         lblDoanhTHuBan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblDoanhTHuBan.setText("0");
-        add(lblDoanhTHuBan, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 80, 180, -1));
+        add(lblDoanhTHuBan, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 160, 180, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Doanh Thu Bán ");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 40, -1, -1));
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 120, -1, -1));
 
         lblMau2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/AnhBCTK2.png"))); // NOI18N
         lblMau2.setText("jLabel3");
-        add(lblMau2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 20, 190, 110));
+        add(lblMau2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 100, 190, 110));
 
         lblTienMua.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lblTienMua.setForeground(new java.awt.Color(255, 255, 255));
         lblTienMua.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTienMua.setText("0");
-        add(lblTienMua, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 80, 180, -1));
+        add(lblTienMua, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 160, 180, -1));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Tiền Mua ");
-        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 40, -1, -1));
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 120, -1, -1));
 
         lblMau3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/AnhBCTK3.png"))); // NOI18N
         lblMau3.setText("jLabel3");
-        add(lblMau3, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 20, 190, 110));
+        add(lblMau3, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 100, 190, 110));
 
         lblSoHoaDon.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lblSoHoaDon.setForeground(new java.awt.Color(255, 255, 255));
         lblSoHoaDon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblSoHoaDon.setText("0");
-        add(lblSoHoaDon, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 260, 180, -1));
+        add(lblSoHoaDon, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 340, 180, -1));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Số hóa đơn ");
-        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 220, -1, -1));
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 300, -1, -1));
 
         lblMau4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/AnhBCTK4.png"))); // NOI18N
         lblMau4.setText("jLabel3");
-        add(lblMau4, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 200, 190, 110));
+        add(lblMau4, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 280, 190, 110));
 
         lblGiamGia.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lblGiamGia.setForeground(new java.awt.Color(255, 255, 255));
         lblGiamGia.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblGiamGia.setText("0");
-        add(lblGiamGia, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 260, 180, -1));
+        add(lblGiamGia, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 340, 180, -1));
 
         lbl.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
         lbl.setForeground(new java.awt.Color(255, 255, 255));
         lbl.setText("Giảm giá ");
-        add(lbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 220, -1, -1));
+        add(lbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 300, -1, -1));
 
         lblMau5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/AnhBCTK5.png"))); // NOI18N
         lblMau5.setText("jLabel3");
-        add(lblMau5, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 200, 190, 110));
+        add(lblMau5, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 280, 190, 110));
 
         panelBDCot.setBackground(new java.awt.Color(255, 255, 255));
         panelBDCot.setLayout(new java.awt.BorderLayout());
@@ -291,6 +292,11 @@ public class BaoCaoThongKe extends javax.swing.JPanel {
         panelBarChart.setBackground(new java.awt.Color(255, 255, 255));
         panelBarChart.setLayout(new java.awt.BorderLayout());
         add(panelBarChart, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 430, 410, 309));
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(0, 204, 204));
+        jLabel11.setText("Báo cáo thống kê");
+        add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 30, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -309,6 +315,7 @@ public class BaoCaoThongKe extends javax.swing.JPanel {
     private com.toedter.calendar.JDateChooser jDCNgayBatDau;
     private com.toedter.calendar.JDateChooser jDCNgayKetThuc;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

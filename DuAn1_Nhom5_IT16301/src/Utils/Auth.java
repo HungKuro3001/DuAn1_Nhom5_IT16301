@@ -5,6 +5,7 @@
  */
 package Utils;
 
+import Entity.KhachHang;
 import Entity.NhanVien;
 
 
@@ -15,6 +16,7 @@ import Entity.NhanVien;
  */
 public class Auth {
     public static NhanVien user=null;
+    public static KhachHang kh=null;
     public static void clear(){
         Auth.user=null;
     }

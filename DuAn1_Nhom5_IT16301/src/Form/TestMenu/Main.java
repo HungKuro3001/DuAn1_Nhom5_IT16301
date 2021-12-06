@@ -11,7 +11,9 @@ package Form.TestMenu;
 import GUI.BaoCaoThongKe;
 import GUI.Chao;
 import GUI.Login;
+import GUI.QLBH;
 import GUI.QLHD;
+import GUI.QLKH;
 import GUI.QLPhieuNhap;
 import GUI.QuanLiKhachHang;
 import GUI.QuanLyDoiTra;
@@ -49,9 +51,12 @@ public class Main extends javax.swing.JFrame {
                     case 1:  
                         panelTransitions1.display(new GUI.pannelQLDMSP());
                         break;
-                    case 2:  
-                        panelTransitions1.display(new QuanLiKhachHang());
+                    case 2:   
+                            panelTransitions1.display(new QLKH());
                         break;
+
+                          
+
                     case 3:  
                         panelTransitions1.display(new GUI.QLSP());
                         break;  
@@ -97,6 +102,16 @@ public class Main extends javax.swing.JFrame {
                             ex.printStackTrace();
                         }
                     }
+                    case 9:
+                    {
+                        try {
+                            panelTransitions1.display(new QLBH());
+                        } catch (SQLException ex) {
+                           ex.printStackTrace();
+                        }
+                    }
+                        break;
+
 
                 }
  

@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class DanhMuc_DAO extends Dao<DanhMuc, String> {
 
-    String insert = "Insert DANHMUCSANPHAM values (?,?,?,0)";
+    String insert = "Insert DANHMUCSANPHAM values (?,?,0,?)";
     String selectAll = "Select *from DANHMUCSANPHAM";
     String updateSql = "UPDATE DANHMUCSANPHAM SET TENDM =?,MOTA =? where MADM=?";
     String deleteSQL = "Delete from DANHMUCSANPHAM where MADM=?";
