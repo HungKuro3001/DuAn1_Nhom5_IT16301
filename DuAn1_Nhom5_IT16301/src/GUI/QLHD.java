@@ -14,7 +14,16 @@ import Entity.KhachHang;
 import Entity.SanPham;
 import Utils.Auth;
 import Utils.Msgbox;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Color;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.pdf.PdfPCell;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -34,6 +43,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.DefaultTableModel;
 import org.apache.poi.ss.usermodel.Cell;
@@ -167,7 +178,7 @@ public class QLHD extends javax.swing.JPanel {
         } else {
             hd.setHinhThucThanhToan(false);
         }
-        if (cbxHinhThucMua.getSelectedItem().equals("Trực tiếp")) {
+        if (cbxHinhThucMua.getSelectedItem().equals("Mua")) {
             hd.setHinhthucmua(true);
         } else {
             hd.setHinhthucmua(false);
@@ -690,6 +701,79 @@ public class QLHD extends javax.swing.JPanel {
         }
     }
 
+    private void exportPdf() throws FileNotFoundException, DocumentException, IOException {
+        // Tạo đối tượng tài liệu
+        Document document = new Document(PageSize.A4, 50, 50, 50, 50);
+
+        JFileChooser jFileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+        jFileChooser.setDialogTitle("Chọn thư mục: ");
+
+        int result = jFileChooser.showSaveDialog(null);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File file = new File(jFileChooser.getSelectedFile() + "mã hóa đơn" + ".pdf");
+
+            FileOutputStream fos = new FileOutputStream(file);
+            PdfWriter.getInstance(document, fos);
+            document.open();
+            
+              BaseFont bf = BaseFont.createFont("C:\\Users\\vuong\\Desktop\\VnArial_Font_VnUnikey.com_\\VNARIALB.TTF",
+                      BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+              Font font1 = new Font(bf, 10, Font.NORMAL); 
+              Font font11_bold= new Font(bf, 11, Font.BOLD);
+
+              
+            
+          
+            document.add(new Paragraph("This is fontname_Times cay thế nhờ", font11_bold));
+            document.add(new Paragraph("This is fontname_Times vẫn bị thế", font1));
+
+   // p.setAlignment(Paragraph.ALIGN_CENTER);
+
+            PdfPTable tbl = new PdfPTable(8);
+            PdfPCell cell;
+
+
+            cell = new PdfPCell ( new Paragraph("STT",font1));
+            tbl.addCell(cell);
+            cell = new PdfPCell ( new Paragraph("Mã hóa đơn",font1));
+            tbl.addCell(cell);
+            tbl.addCell("Mã sản phẩm");
+            tbl.addCell("Tiền công");
+            tbl.addCell("Đơn giá");
+            tbl.addCell("Giảm giá");
+            tbl.addCell("Số lượng");
+            tbl.addCell("Thành tiền");
+            
+            //font11_bold)); cell.setPaddingLeft(5.0f); cell.setBorder(0);
+            
+            for (int i = 0; i < tblHoaDonChiTiet.getRowCount(); i++) {
+                int STT =i+1;
+                tbl.addCell(""+ STT);
+                String maHD = tblHoaDonChiTiet.getValueAt(i, 0).toString();
+                String maSP = tblHoaDonChiTiet.getValueAt(i, 1).toString();
+                String tienCong = tblHoaDonChiTiet.getValueAt(i, 2).toString();
+                String donGia = tblHoaDonChiTiet.getValueAt(i, 3).toString();
+                String giamGia = tblHoaDonChiTiet.getValueAt(i, 4).toString();
+                String soLuong = tblHoaDonChiTiet.getValueAt(i, 5).toString();
+                String thanhTien = tblHoaDonChiTiet.getValueAt(i, 6).toString();
+                tbl.addCell(maHD);
+                tbl.addCell(maSP);
+                tbl.addCell(tienCong);
+                tbl.addCell(donGia);
+                tbl.addCell(giamGia);
+                tbl.addCell(soLuong);
+                tbl.addCell(thanhTien);
+            }
+
+            document.add(tbl);
+            
+            
+            document.close();
+            // workbook.write(fos);
+            // fos.close();
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -749,7 +833,7 @@ public class QLHD extends javax.swing.JPanel {
         btnNew = new javax.swing.JButton();
         btnThem = new javax.swing.JButton();
         btnCapNhatCTHD = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnExport = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -1009,13 +1093,13 @@ public class QLHD extends javax.swing.JPanel {
         });
         add(btnCapNhatCTHD, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 710, -1, -1));
 
-        jButton2.setText("Export");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnExport.setText("Export");
+        btnExport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnExportActionPerformed(evt);
             }
         });
-        add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(491, 371, -1, -1));
+        add(btnExport, new org.netbeans.lib.awtextra.AbsoluteConstraints(491, 371, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbxMaKHItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxMaKHItemStateChanged
@@ -1198,18 +1282,36 @@ public class QLHD extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnCapNhatCTHDActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
+        if (tblHoaDon.getSelectedRow() < 0) {
+            Msgbox.alert(this, "Chọn 1 dòng hóa đơn rồi xuất");
+            return;
+        }
         try {
-            exportExcel();
+            JFrame frame = new JFrame();
+            String[] options = new String[3];
+            options[0] = "Export Excel";
+            options[1] = "Export PDF";
+            options[2] = "Cancel";
+            int result = JOptionPane.showOptionDialog(frame.getContentPane(), "Chọn kiểu bạn muốn xuất!", "Xuất file", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, null);
+            if (result == JOptionPane.YES_OPTION) {
+                exportExcel();
+            } else if (result == JOptionPane.NO_OPTION) {
+                exportPdf();
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (DocumentException ex) {
+            Logger.getLogger(QLHD.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnExportActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCapNhat;
     private javax.swing.JButton btnCapNhatCTHD;
+    private javax.swing.JButton btnExport;
     private javax.swing.JButton btnNew;
     private javax.swing.JButton btnThem;
     private javax.swing.ButtonGroup buttonGroup1;
@@ -1219,7 +1321,6 @@ public class QLHD extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> cbxMaKH;
     private javax.swing.JComboBox<String> cbxTrangThaiHD;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
