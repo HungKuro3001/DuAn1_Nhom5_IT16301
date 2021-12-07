@@ -24,6 +24,7 @@ public class DoiMatKhau extends javax.swing.JFrame {
     public DoiMatKhau() {
         initComponents();
         txtManv.setText(Auth.user.getMaNV());
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
     /**
