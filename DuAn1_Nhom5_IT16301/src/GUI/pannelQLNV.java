@@ -77,6 +77,7 @@ public class pannelQLNV extends javax.swing.JPanel {
         rdoNam = new javax.swing.JRadioButton();
         rdoNu = new javax.swing.JRadioButton();
         jLabel11 = new javax.swing.JLabel();
+        btnDoiiMk = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -205,6 +206,14 @@ public class pannelQLNV extends javax.swing.JPanel {
         jLabel11.setForeground(new java.awt.Color(0, 204, 204));
         jLabel11.setText("Quản lý nhân viên");
         add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 30, -1, -1));
+
+        btnDoiiMk.setText("Đổi mật khẩu");
+        btnDoiiMk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDoiiMkActionPerformed(evt);
+            }
+        });
+        add(btnDoiiMk, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 380, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblNhanVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNhanVienMouseClicked
@@ -238,6 +247,11 @@ public class pannelQLNV extends javax.swing.JPanel {
         dao.khoaTk(nv);
         fillTable();
     }//GEN-LAST:event_btnKhoaActionPerformed
+
+    private void btnDoiiMkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoiiMkActionPerformed
+       DoiMatKhau dmk= new DoiMatKhau();
+       dmk.setVisible(true);
+    }//GEN-LAST:event_btnDoiiMkActionPerformed
 
     public void insert() throws ParseException {
         if (txtTen.getText().isEmpty() || txtTen.getText().length() > 10) {
@@ -388,6 +402,7 @@ public class pannelQLNV extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton RdoChuCH;
+    private javax.swing.JButton btnDoiiMk;
     private javax.swing.JButton btnInsert;
     private javax.swing.JButton btnKhoa;
     private javax.swing.JButton btnUpdate;
