@@ -50,10 +50,6 @@
                           </Group>
                       </Group>
                   </Group>
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="748" max="-2" attributes="0"/>
-                      <Component id="btnCapNhat" min="-2" pref="131" max="-2" attributes="0"/>
-                  </Group>
               </Group>
               <EmptySpace pref="523" max="32767" attributes="0"/>
           </Group>
@@ -86,9 +82,7 @@
               </Group>
               <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
               <Component id="jScrollPane1" pref="263" max="32767" attributes="0"/>
-              <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
-              <Component id="btnCapNhat" min="-2" pref="32" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="193" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="268" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -199,13 +193,5 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="btnCapNhat">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="&#x110;&#xf3;ng"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCapNhatActionPerformed"/>
-      </Events>
-    </Component>
   </SubComponents>
 </Form>
