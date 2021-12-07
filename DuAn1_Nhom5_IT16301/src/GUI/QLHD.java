@@ -1272,6 +1272,10 @@ public class QLHD extends javax.swing.JPanel {
                 Msgbox.alert(this, "Mã hóa đơn chưa tồn tại");
                 return;
             }
+            if (hd.getTrangThaiHD().equals("Đã thanh toán")) {
+                Msgbox.alert(this, "Mã hóa đơn này đã hoàn tất thanh toán");
+                return;
+            }
             insertHDCT();
             for (ChiTietHD cthoadon : listCTHD) {
                 tongTien += cthoadon.getThanhTien();
@@ -1294,7 +1298,11 @@ public class QLHD extends javax.swing.JPanel {
         try {
             double tongTien = 0;
             updateHDCT();
-
+            HoaDon hd = hdd.selectById(txtMaHoaDon.getText());
+            if (hd.getTrangThaiHD().equals("Đã thanh toán")) {
+                Msgbox.alert(this, "Mã hóa đơn này đã hoàn tất thanh toán");
+                return;
+            }
             for (ChiTietHD cthoadon : listCTHD) {
                 tongTien += cthoadon.getThanhTien();
             }
