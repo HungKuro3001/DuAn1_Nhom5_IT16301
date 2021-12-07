@@ -80,7 +80,7 @@ public class QLBH extends javax.swing.JPanel {
         //AutoCompleteDecorator.decorate(cbxMaKH);
         // AutoCompleteDecorator.decorate(cbxTenSP);
         fillCBX();
-        String maHD = hdd.maSP_TuSinh();
+        String maHD = hdd.maHD_TuSinh();
         txtMaHoaDon.setText(maHD);
         rdoTienMat.setSelected(true);
         txtKhachTra.setText("0");
@@ -1187,7 +1187,7 @@ public class QLBH extends javax.swing.JPanel {
         model.setRowCount(0);
 
         try {
-            String maHD = hdd.maSP_TuSinh();
+            String maHD = hdd.maHD_TuSinh();
             txtMaHoaDon.setText(maHD);
         } catch (Exception e) {
             e.printStackTrace();

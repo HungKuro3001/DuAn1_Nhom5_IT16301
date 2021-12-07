@@ -92,6 +92,7 @@ public class Main extends javax.swing.JFrame {
                             ex.printStackTrace();
                         }
                     }
+                    break;
                     case 9: {
                         try {
                             panelTransitions1.display(new QLBH());

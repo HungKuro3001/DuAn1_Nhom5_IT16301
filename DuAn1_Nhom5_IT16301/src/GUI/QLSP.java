@@ -40,6 +40,7 @@ public class QLSP extends javax.swing.JPanel {
     public QLSP() {
         initComponents();
         init();
+        txtSoLuong.setText("0");
     }
     private void fillCBX(){
         listDM = dmd.selectAll();
