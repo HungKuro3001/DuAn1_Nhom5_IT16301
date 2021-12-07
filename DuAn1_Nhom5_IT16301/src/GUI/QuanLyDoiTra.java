@@ -365,6 +365,7 @@ public class QuanLyDoiTra extends javax.swing.JPanel {
     private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
         try {
             New();
+            btnthem.setEnabled(true);
         } catch (SQLException ex) {
            ex.printStackTrace();
         }
@@ -374,6 +375,7 @@ public class QuanLyDoiTra extends javax.swing.JPanel {
       int row= tblDoiTra.getSelectedRow();
       DoiTra dt = listDt.get(row);
         setForm(dt);
+        btnthem.setEnabled(false);
 
     }//GEN-LAST:event_tblDoiTraMouseClicked
 

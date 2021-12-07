@@ -854,7 +854,7 @@ public class QLHD extends javax.swing.JPanel {
         lblBangChu = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
         txtTraLaiKhach = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnThemHD = new javax.swing.JButton();
         btnCapNhat = new javax.swing.JButton();
         btnNew = new javax.swing.JButton();
         btnThem = new javax.swing.JButton();
@@ -1079,13 +1079,13 @@ public class QLHD extends javax.swing.JPanel {
         txtTraLaiKhach.setEditable(false);
         add(txtTraLaiKhach, new org.netbeans.lib.awtextra.AbsoluteConstraints(131, 325, 124, -1));
 
-        jButton1.setText("Thêm");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnThemHD.setText("Thêm");
+        btnThemHD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnThemHDActionPerformed(evt);
             }
         });
-        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(276, 371, -1, -1));
+        add(btnThemHD, new org.netbeans.lib.awtextra.AbsoluteConstraints(276, 371, -1, -1));
 
         btnCapNhat.setText("Cập nhật");
         btnCapNhat.addActionListener(new java.awt.event.ActionListener() {
@@ -1132,7 +1132,7 @@ public class QLHD extends javax.swing.JPanel {
         fillNameCustomer();
     }//GEN-LAST:event_cbxMaKHItemStateChanged
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnThemHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemHDActionPerformed
         try {
             insert();
 
@@ -1140,7 +1140,7 @@ public class QLHD extends javax.swing.JPanel {
             ex.printStackTrace();
         }
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnThemHDActionPerformed
 
     private void tblHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHoaDonMouseClicked
         try {
@@ -1154,6 +1154,7 @@ public class QLHD extends javax.swing.JPanel {
                 txtTraLaiKhach.setText(df.format(tralai) + "");
             }
             fillTableCTHD();
+            btnThemHD.setEnabled(false);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -1205,6 +1206,7 @@ public class QLHD extends javax.swing.JPanel {
         cbxTrangThaiHD.setSelectedIndex(0);
         txtTongTien.setText("0");
         txtKhachTra.setText("0");
+        btnThemHD.setEnabled(true);
         try {
             String maHD = hdd.maHD_TuSinh();
             txtMaHoaDon.setText(maHD);
@@ -1380,13 +1382,13 @@ public class QLHD extends javax.swing.JPanel {
     private javax.swing.JButton btnExport;
     private javax.swing.JButton btnNew;
     private javax.swing.JButton btnThem;
+    private javax.swing.JButton btnThemHD;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cbxHTTT;
     private javax.swing.JComboBox<String> cbxHinhThucMua;
     private javax.swing.JComboBox<String> cbxMASP;
     private javax.swing.JComboBox<String> cbxMaKH;
     private javax.swing.JComboBox<String> cbxTrangThaiHD;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
