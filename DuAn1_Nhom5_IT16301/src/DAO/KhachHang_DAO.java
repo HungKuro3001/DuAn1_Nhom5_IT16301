@@ -42,6 +42,12 @@ public class KhachHang_DAO extends Dao<KhachHang , String>{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    public List<KhachHang> selectAllKH() {//select những khach hàng không bị khóa
+        String selectAllKH ="SELECT * FROM KHACHHANG where TRANGTHAI=0";
+        List<KhachHang> list = this.selectBySql(selectAllKH);
+        return list;
+    }
+    
     @Override
     public List<KhachHang> selectAll() {
         List<KhachHang> list = this.selectBySql(selectAll);

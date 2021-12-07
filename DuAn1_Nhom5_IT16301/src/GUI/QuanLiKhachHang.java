@@ -16,6 +16,7 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -37,6 +38,8 @@ public class QuanLiKhachHang extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(this);
         fillTable();
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        setResizable(false);
     }
     public String getmaKH(){
         return txtMaKH.getText();
@@ -335,15 +338,13 @@ public class QuanLiKhachHang extends javax.swing.JFrame {
     }//GEN-LAST:event_txtTimKiemKeyTyped
 
     private void btnVeBanHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVeBanHangActionPerformed
-        if(txtMaKH.getText().equals("")){
-            Msgbox.alert(this, "Hãy chọn khách hàng");
-            return;  
-        }  
-        //String maKH =qlbh.getMaKH(txtMaKH.getText());
-        //getmaKH();
-        Auth.kh =getForm();
-        //qlbh.setCBX(txtMaKH.getText());
+//        if(txtMaKH.getText().equals("")){
+//            Msgbox.alert(this, "Hãy chọn khách hàng");
+//            return;  
+//        }  
+        Auth.kh =getForm(); 
         this.dispose();
+
     }//GEN-LAST:event_btnVeBanHangActionPerformed
     
 
