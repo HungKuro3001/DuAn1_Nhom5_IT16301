@@ -237,7 +237,10 @@ public class pannelQLNV extends javax.swing.JPanel {
 
     private void btnKhoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhoaActionPerformed
         int row = tblNhanVien.getSelectedRow();
-
+        if (row < 0) {
+            Msgbox.alert(this, "Chọn nhân viên để thực hiện thao tác");
+            return;
+        }
         NhanVien nv = list.get(row);
         if (nv.isTrangThai() == true) {
             nv.setTrangThai(false);
@@ -247,9 +250,10 @@ public class pannelQLNV extends javax.swing.JPanel {
         }
         dao.khoaTk(nv);
         if (nv.isTrangThai() == true) {
-            Msgbox.alert(this, "Khóa nhân viên thành công");
-        } else {
+
             Msgbox.alert(this, "Mở khóa nhân viên thành công");
+        } else {
+            Msgbox.alert(this, "Khóa nhân viên thành công");
         }
         fillTable();
     }//GEN-LAST:event_btnKhoaActionPerformed
@@ -336,6 +340,11 @@ public class pannelQLNV extends javax.swing.JPanel {
             return;
         }
         NhanVien nv = getForm();
+        NhanVien nvcheck = dao.selectByManv(nv.getMaNV());
+        if (nvcheck == null) {
+            Msgbox.alert(this, "Mã nhân viên không tồn tại");
+            return;
+        }
         dao.update(nv);
         fillTable();
         Msgbox.alert(this, "Cập nhật nhân viên thành công");
