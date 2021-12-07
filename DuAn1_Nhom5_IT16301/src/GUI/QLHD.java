@@ -321,7 +321,8 @@ public class QLHD extends javax.swing.JPanel {
         txtTienCong.setText(cthd.getTienCong() + "");
         txtDonGia.setText(cthd.getDonGia() + "");
         txtSoLuong.setText(cthd.getSoLuong() + "");
-        txtGiamGia.setText(cthd.getGiamGia() + "");
+        txtGiamGia.setText(new BigDecimal(cthd.getGiamGia()) + "");
+
         txtThanhTien.setText(new BigDecimal(cthd.getThanhTien()) + "");
 
     }
@@ -408,10 +409,12 @@ public class QLHD extends javax.swing.JPanel {
         listCTHD = cthdd.selectByMAHD(txtMaHoaDon.getText());
         DefaultTableModel model = (DefaultTableModel) tblHoaDonChiTiet.getModel();
         model.setRowCount(0);
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(2);
         for (ChiTietHD CTHD : listCTHD) {
             Object[] row = new Object[]{
-                CTHD.getMaHD(), CTHD.getMaSp(), CTHD.getTienCong(), CTHD.getDonGia(),
-                CTHD.getGiamGia(), CTHD.getSoLuong(), new BigDecimal(CTHD.getThanhTien())
+                CTHD.getMaHD(), CTHD.getMaSp(), CTHD.getTienCong(), df.format(CTHD.getDonGia()),
+                df.format(CTHD.getGiamGia()), CTHD.getSoLuong(), df.format(CTHD.getThanhTien())
             };
             model.addRow(row);
         }
@@ -1053,11 +1056,6 @@ public class QLHD extends javax.swing.JPanel {
 
         buttonGroup1.add(rdoPhanTram);
         rdoPhanTram.setText("Phần trăm %");
-        rdoPhanTram.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                rdoPhanTramMouseClicked(evt);
-            }
-        });
         add(rdoPhanTram, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 620, -1, -1));
 
         txtGiamGia.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -1216,13 +1214,9 @@ public class QLHD extends javax.swing.JPanel {
     private void cbxMASPItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxMASPItemStateChanged
         fillNameProduct();
         txtSoLuong.setText("");
-        txtGiamGia.setText("");
+        txtGiamGia.setText("0");
         txtThanhTien.setText("");
     }//GEN-LAST:event_cbxMASPItemStateChanged
-
-    private void rdoPhanTramMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdoPhanTramMouseClicked
-
-    }//GEN-LAST:event_rdoPhanTramMouseClicked
 
     private void txtGiamGiaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtGiamGiaKeyReleased
         thanhTien();
