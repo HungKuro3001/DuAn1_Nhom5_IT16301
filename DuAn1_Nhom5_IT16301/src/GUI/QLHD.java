@@ -80,7 +80,7 @@ public class QLHD extends javax.swing.JPanel {
         initComponents();
         init();
         setBackground(new Color(240, 240, 240));
-        String maHD = hdd.maSP_TuSinh();
+        String maHD = hdd.maHD_TuSinh();
         txtMaHoaDon.setText(maHD);
 //        txtTongTien.setText("5");
         txtGiamGia.setText("0");
@@ -715,27 +715,22 @@ public class QLHD extends javax.swing.JPanel {
             FileOutputStream fos = new FileOutputStream(file);
             PdfWriter.getInstance(document, fos);
             document.open();
-            
-              BaseFont bf = BaseFont.createFont("C:\\Users\\vuong\\Desktop\\VnArial_Font_VnUnikey.com_\\VNARIALB.TTF",
-                      BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-              Font font1 = new Font(bf, 10, Font.NORMAL); 
-              Font font11_bold= new Font(bf, 11, Font.BOLD);
 
-              
-            
-          
+            BaseFont bf = BaseFont.createFont("C:\\Users\\vuong\\Desktop\\VnArial_Font_VnUnikey.com_\\VNARIALB.TTF",
+                    BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            Font font1 = new Font(bf, 10, Font.NORMAL);
+            Font font11_bold = new Font(bf, 11, Font.BOLD);
+
             document.add(new Paragraph("This is fontname_Times cay thế nhờ", font11_bold));
             document.add(new Paragraph("This is fontname_Times vẫn bị thế", font1));
 
-   // p.setAlignment(Paragraph.ALIGN_CENTER);
-
+            // p.setAlignment(Paragraph.ALIGN_CENTER);
             PdfPTable tbl = new PdfPTable(8);
             PdfPCell cell;
 
-
-            cell = new PdfPCell ( new Paragraph("STT",font1));
+            cell = new PdfPCell(new Paragraph("STT", font1));
             tbl.addCell(cell);
-            cell = new PdfPCell ( new Paragraph("Mã hóa đơn",font1));
+            cell = new PdfPCell(new Paragraph("Mã hóa đơn", font1));
             tbl.addCell(cell);
             tbl.addCell("Mã sản phẩm");
             tbl.addCell("Tiền công");
@@ -743,12 +738,11 @@ public class QLHD extends javax.swing.JPanel {
             tbl.addCell("Giảm giá");
             tbl.addCell("Số lượng");
             tbl.addCell("Thành tiền");
-            
+
             //font11_bold)); cell.setPaddingLeft(5.0f); cell.setBorder(0);
-            
             for (int i = 0; i < tblHoaDonChiTiet.getRowCount(); i++) {
-                int STT =i+1;
-                tbl.addCell(""+ STT);
+                int STT = i + 1;
+                tbl.addCell("" + STT);
                 String maHD = tblHoaDonChiTiet.getValueAt(i, 0).toString();
                 String maSP = tblHoaDonChiTiet.getValueAt(i, 1).toString();
                 String tienCong = tblHoaDonChiTiet.getValueAt(i, 2).toString();
@@ -766,8 +760,7 @@ public class QLHD extends javax.swing.JPanel {
             }
 
             document.add(tbl);
-            
-            
+
             document.close();
             // workbook.write(fos);
             // fos.close();
@@ -918,6 +911,11 @@ public class QLHD extends javax.swing.JPanel {
         add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(47, 375, -1, -1));
 
         cbxTrangThaiHD.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chưa thanh toán", "Đã thanh toán" }));
+        cbxTrangThaiHD.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxTrangThaiHDItemStateChanged(evt);
+            }
+        });
         add(cbxTrangThaiHD, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 370, 125, -1));
 
         tblHoaDon.setModel(new javax.swing.table.DefaultTableModel(
@@ -1175,7 +1173,7 @@ public class QLHD extends javax.swing.JPanel {
         txtTongTien.setText("0");
         txtKhachTra.setText("0");
         try {
-            String maHD = hdd.maSP_TuSinh();
+            String maHD = hdd.maHD_TuSinh();
             txtMaHoaDon.setText(maHD);
         } catch (Exception e) {
             e.printStackTrace();
@@ -1272,7 +1270,7 @@ public class QLHD extends javax.swing.JPanel {
             for (ChiTietHD cthoadon : listCTHD) {
                 tongTien += cthoadon.getThanhTien();
             }
-            txtTongTien.setText(tongTien + "");
+            txtTongTien.setText(new BigDecimal(tongTien) + "");
             HoaDon TTHD = getForm();
             hdd.updatetongTien(TTHD);
             fillTable();
@@ -1307,6 +1305,32 @@ public class QLHD extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnExportActionPerformed
 
+    private void cbxTrangThaiHDItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxTrangThaiHDItemStateChanged
+     checktien();
+    }//GEN-LAST:event_cbxTrangThaiHDItemStateChanged
+    public void checktien() {
+        if (cbxTrangThaiHD.getSelectedItem().toString().equals("Đã thanh toán")) {
+            try {
+                if (txtKhachTra.getText().isEmpty()) {
+                    Msgbox.alert(this, "Không để trống tiền khách trả");
+                    return;
+                }
+                double khtra = Double.parseDouble(txtKhachTra.getText());
+                double TT = Double.parseDouble(txtTongTien.getText());
+
+                if (khtra < TT) {
+                    Msgbox.alert(this, "Khách trả tối thiểu bằng Tổng tiền");
+                    cbxTrangThaiHD.setSelectedItem("Chưa thanh toán");
+                    return;
+                    
+                }
+                
+            } catch (Exception e) {
+                Msgbox.alert(this, "Tiền khách trả > 0");
+                return;
+            }
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCapNhat;
