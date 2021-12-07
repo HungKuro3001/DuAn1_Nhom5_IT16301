@@ -208,6 +208,8 @@ public class QLHD extends javax.swing.JPanel {
         }
         HoaDon hd = getForm();
         hdd.insert(hd);
+        fillTable();
+        Msgbox.alert(this, "Thêm thành công");
     }
 
     private void fillTable() {
@@ -1133,7 +1135,7 @@ public class QLHD extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
             insert();
-            fillTable();
+
         } catch (ParseException ex) {
             ex.printStackTrace();
         }
@@ -1186,6 +1188,7 @@ public class QLHD extends javax.swing.JPanel {
             HoaDon hd = getForm();
             hdd.update(hd);
             fillTable();
+            Msgbox.alert(this, "Cập nhật thành công");
         } catch (ParseException ex) {
             ex.printStackTrace();
         }
@@ -1286,6 +1289,8 @@ public class QLHD extends javax.swing.JPanel {
             HoaDon TTHD = getForm();
             hdd.updatetongTien(TTHD);
             fillTable();
+            Msgbox.alert(this, "Thêm thành công");
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1309,6 +1314,7 @@ public class QLHD extends javax.swing.JPanel {
             txtTongTien.setText(new BigDecimal(tongTien) + "");
             HoaDon TTHD = getForm();
             hdd.updatetongTien(TTHD);
+            Msgbox.alert(this, "Cập nhật thành công");
             fillTable();
         } catch (Exception e) {
             e.printStackTrace();

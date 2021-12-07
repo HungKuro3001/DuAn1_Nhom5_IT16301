@@ -105,14 +105,6 @@ public class QuanLyDoiTra extends javax.swing.JPanel {
             Msgbox.alert(this, "Chọn hình thức đổi hoặc trả");
             return;
         }
-        if (txtLiDo.getText().isEmpty() || txtGhiChu.getText().length() > 100) {
-            Msgbox.alert(this, "Lí do không được để trống và tối đa 100 kí tự");
-            return;
-        }
-        if (txtGhiChu.getText().isEmpty() || txtGhiChu.getText().length() > 100) {
-            Msgbox.alert(this, "Lí do không được để trống và tối đa 100 kí tự");
-            return;
-        }
         DoiTra dt = getForm();
         dtDao.insert(dt);
         fillTable();
@@ -122,14 +114,6 @@ public class QuanLyDoiTra extends javax.swing.JPanel {
     public void update() throws SQLException {
         if (rdoDoi.isSelected() == false && rdoTra.isSelected() == false) {
             Msgbox.alert(this, "Chọn hình thức đổi hoặc trả");
-            return;
-        }
-        if (txtLiDo.getText().isEmpty() || txtGhiChu.getText().length() > 100) {
-            Msgbox.alert(this, "Lí do không được để trống và tối đa 100 kí tự");
-            return;
-        }
-        if (txtGhiChu.getText().isEmpty() || txtGhiChu.getText().length() > 100) {
-            Msgbox.alert(this, "Lí do không được để trống và tối đa 100 kí tự");
             return;
         }
         DoiTra dt = getForm();
