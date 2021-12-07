@@ -270,6 +270,12 @@ public class QLHD extends javax.swing.JPanel {
                     txtGiamGia.setText("");
                     return;
                 }
+                if (giamGia >100) {
+                    Msgbox.alert(this, "Giảm giá không vượt 100%");
+                    txtGiamGia.setText("");
+                    return;
+                }
+              
             } catch (Exception e) {
                 Msgbox.alert(this, "Phần trăm giảm là số nguyên dương");
                 txtGiamGia.setText("");
@@ -321,6 +327,12 @@ public class QLHD extends javax.swing.JPanel {
     }
 
     private void insertHDCT() {
+        for (ChiTietHD chiTietHD : listCTHD) {
+            if (chiTietHD.getMaSp().equals(cbxMASP.getSelectedItem().toString())) {
+                Msgbox.alert(this, "Sản phẩm đã tồn tại trong hóa đơn này");
+                return;
+            }
+        }
         try {
             int sl = Integer.parseInt(txtSoLuong.getText());
             if (sl <= 0) {
@@ -1137,7 +1149,9 @@ public class QLHD extends javax.swing.JPanel {
             float tongtien = Float.parseFloat(txtTongTien.getText());
             float tralai = khachtra - tongtien;
             if (khachtra != 0) {
-                txtTraLaiKhach.setText(tralai + "");
+                DecimalFormat df = new DecimalFormat();
+                df.setMaximumFractionDigits(2);
+                txtTraLaiKhach.setText(df.format(tralai) + "");
             }
             fillTableCTHD();
         } catch (ParseException e) {
