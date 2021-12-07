@@ -277,7 +277,9 @@ public class QLHD extends javax.swing.JPanel {
             }
 
             double thanhTien = TTChưaGiamGia / 100 * (100 - giamGia);
-            txtThanhTien.setText(thanhTien + "");
+            DecimalFormat df = new DecimalFormat();
+            df.setMaximumFractionDigits(2);
+            txtThanhTien.setText(df.format(thanhTien) + "");
         }
 
     }
