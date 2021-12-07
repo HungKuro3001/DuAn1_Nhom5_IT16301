@@ -8,6 +8,7 @@ package GUI;
 import DAO.HoaDon_DAO;
 import Entity.HoaDon;
 import Entity.KhachHang;
+import Form.TestMenu.Main;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class XemLichSu extends javax.swing.JFrame {
 
     public XemLichSu() {
         initComponents();
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
     public void setForm(String makh, String tenkh, String SLGD, String STTT) {
@@ -67,7 +69,6 @@ public class XemLichSu extends javax.swing.JFrame {
         txtTT = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblHoaDon = new javax.swing.JTable();
-        btnCapNhat = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -109,13 +110,6 @@ public class XemLichSu extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblHoaDon);
 
-        btnCapNhat.setText("Đóng");
-        btnCapNhat.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCapNhatActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -140,10 +134,7 @@ public class XemLichSu extends javax.swing.JFrame {
                                     .addComponent(txtMaKH)
                                     .addComponent(txtTen)
                                     .addComponent(txtSLGD)
-                                    .addComponent(txtTT, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(748, 748, 748)
-                        .addComponent(btnCapNhat, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(txtTT, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE))))))
                 .addContainerGap(523, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -169,19 +160,11 @@ public class XemLichSu extends javax.swing.JFrame {
                     .addComponent(txtTT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(34, 34, 34)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
-                .addGap(43, 43, 43)
-                .addComponent(btnCapNhat, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(193, 193, 193))
+                .addGap(268, 268, 268))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnCapNhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatActionPerformed
-        QuanLiKhachHang qlkh = new QuanLiKhachHang();
-        this.dispose();
-        qlkh.setVisible(true);
-    }//GEN-LAST:event_btnCapNhatActionPerformed
 
     /**
      * @param args the command line arguments
@@ -220,7 +203,6 @@ public class XemLichSu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCapNhat;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
