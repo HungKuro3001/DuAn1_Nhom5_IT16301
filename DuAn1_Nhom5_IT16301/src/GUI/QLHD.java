@@ -322,58 +322,72 @@ public class QLHD extends javax.swing.JPanel {
         try {
             int sl = Integer.parseInt(txtSoLuong.getText());
             if (sl <= 0) {
-                Msgbox.alert(this, "Số lượng là số nguyên dương");
+                Msgbox.alert(this, "Số lượng lớn hơn 0");
                 txtSoLuong.setText("");
                 return;
             }
-            if (rdoPhanTram.isSelected() == false && rdoTienMat.isSelected() == false) {
-                Msgbox.alert(this, "Chọn giảm giá");
-                return;
-            }
-            if (txtGiamGia.getText().isEmpty()) {
-                Msgbox.alert(this, "nhập phần trăm hoặc số tiền cần giảm");
-                return;
-            }
-            ChiTietHD ctHD = getFormCT();
-            cthdd.insert(ctHD);
-            fillTableCTHD();
-
         } catch (Exception e) {
-            e.printStackTrace();
-            Msgbox.alert(this, "Hóa đơn chi tiết đã tồn tại");
-
-//            e.printStackTrace();
+            Msgbox.alert(this, "Số lượng là số nguyên");
             return;
         }
+
+        if (rdoPhanTram.isSelected() == false && rdoTienMat.isSelected() == false) {
+            Msgbox.alert(this, "Chọn giảm giá");
+            return;
+        }
+        try {
+            float gg = Float.parseFloat(txtGiamGia.getText());
+            if (gg < 0) {
+                Msgbox.alert(this, "giảm giá tối thiểu bằng 0");
+                return;
+            }
+        } catch (Exception e) {
+            Msgbox.alert(this, "giảm giá là số ");
+            return;
+        }
+
+        ChiTietHD ctHD = getFormCT();
+        cthdd.insert(ctHD);
+        fillTableCTHD();
+
     }
 
     private void updateHDCT() {
+        int row = tblHoaDonChiTiet.getSelectedRow();
+        if (row < 0) {
+            Msgbox.alert(this, "chọn chi tiết hóa đơn để cập nhật");
+            return;
+        }
         try {
             int sl = Integer.parseInt(txtSoLuong.getText());
             if (sl <= 0) {
-                Msgbox.alert(this, "Số lượng là số nguyên dương");
+                Msgbox.alert(this, "Số lượng lớn hơn 0");
                 txtSoLuong.setText("");
                 return;
             }
-            if (rdoPhanTram.isSelected() == false && rdoTienMat.isSelected() == false) {
-                Msgbox.alert(this, "Chọn giảm giá");
-                return;
-            }
-            if (txtGiamGia.getText().isEmpty()) {
-                Msgbox.alert(this, "nhập phần trăm hoặc số tiền cần giảm");
-                return;
-            }
-            ChiTietHD ctHD = getFormCT();
-            cthdd.update(ctHD);
-            fillTableCTHD();
-
         } catch (Exception e) {
-            Msgbox.alert(this, "Hóa đơn chi tiết đã tồn tại");
-            e.printStackTrace();
-
-//            e.printStackTrace();
+            Msgbox.alert(this, "Số lượng là số nguyên");
             return;
         }
+
+        if (rdoPhanTram.isSelected() == false && rdoTienMat.isSelected() == false) {
+            Msgbox.alert(this, "Chọn giảm giá");
+            return;
+        }
+        try {
+            float gg = Float.parseFloat(txtGiamGia.getText());
+            if (gg < 0) {
+                Msgbox.alert(this, "giảm giá tối thiểu bằng 0");
+                return;
+            }
+        } catch (Exception e) {
+            Msgbox.alert(this, "giảm giá là số ");
+            return;
+        }
+        ChiTietHD ctHD = getFormCT();
+        cthdd.update(ctHD);
+        fillTableCTHD();
+
     }
 
     private void fillTableCTHD() {
@@ -1306,7 +1320,7 @@ public class QLHD extends javax.swing.JPanel {
     }//GEN-LAST:event_btnExportActionPerformed
 
     private void cbxTrangThaiHDItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxTrangThaiHDItemStateChanged
-     checktien();
+        checktien();
     }//GEN-LAST:event_cbxTrangThaiHDItemStateChanged
     public void checktien() {
         if (cbxTrangThaiHD.getSelectedItem().toString().equals("Đã thanh toán")) {
@@ -1322,9 +1336,9 @@ public class QLHD extends javax.swing.JPanel {
                     Msgbox.alert(this, "Khách trả tối thiểu bằng Tổng tiền");
                     cbxTrangThaiHD.setSelectedItem("Chưa thanh toán");
                     return;
-                    
+
                 }
-                
+
             } catch (Exception e) {
                 Msgbox.alert(this, "Tiền khách trả > 0");
                 return;
