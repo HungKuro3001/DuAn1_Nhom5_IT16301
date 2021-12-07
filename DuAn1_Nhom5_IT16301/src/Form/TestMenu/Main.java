@@ -5,9 +5,6 @@
  */
 package Form.TestMenu;
 
-
-
-
 import GUI.BaoCaoThongKe;
 import GUI.Chao;
 import GUI.Login;
@@ -17,6 +14,7 @@ import GUI.QLKH;
 import GUI.QLPhieuNhap;
 import GUI.QuanLiKhachHang;
 import GUI.QuanLyDoiTra;
+import Utils.Msgbox;
 import java.awt.Color;
 import java.awt.Panel;
 import java.sql.SQLException;
@@ -25,105 +23,112 @@ import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 
-
 /**
  *
  * @author Tiến Mạnh
  */
 public class Main extends javax.swing.JFrame {
 
-   
     public Main() {
         initComponents();
-        
+
         setBackground(new Color(0, 0, 0, 0));
         menu1.initMoving(this);
-        panelTransitions1.setBackground(new Color(240,240,240));
+        panelTransitions1.setBackground(new Color(240, 240, 240));
         panelTransitions1.display(new GUI.pannelTrangChu());
-        menu(0);
-    }
-    public void menu(int index){
         menu1.addEventMenu(new EventMenu() {
             @Override
             public void menuIndexChange(int index) {
-                
-                switch(index){
+
+                switch (index) {
                     case 0:
-                        panelTransitions1.display(new GUI.pannelQLNV());  
+                        panelTransitions1.display(new GUI.pannelQLNV());
                         break;
-                    case 1:  
+                    case 1:
                         panelTransitions1.display(new GUI.pannelQLDMSP());
                         break;
-                    case 2:   
-                            panelTransitions1.display(new QLKH());
+                    case 2:
+                        panelTransitions1.display(new QLKH());
                         break;
-                    case 3:  
+
+                    case 3:
                         panelTransitions1.display(new GUI.QLSP());
-                        break;  
-                    case 4:
-                    {
+                        break;
+                    case 4: {
                         try {
-                            panelTransitions1.display( new QLHD());
+                            panelTransitions1.display(new QLHD());
                         } catch (SQLException ex) {
                             ex.printStackTrace();
                         }
                     }
-                       
-                        break; 
- 
-                    case 5:
-                    {
+
+                    break;
+
+                    case 5: {
                         try {
-                            panelTransitions1.display( new BaoCaoThongKe());
+                            panelTransitions1.display(new BaoCaoThongKe());
                         } catch (SQLException ex) {
-                          ex.printStackTrace();
+                            ex.printStackTrace();
                         }
                     }
-                        break;
+                    break;
 
                     case 6:
                         panelTransitions1.display(new GUI.QuanLyChatLieu());
                         break;
-                    case 7:
-                    {
+                    case 7: {
                         try {
                             panelTransitions1.display(new QuanLyDoiTra());
                         } catch (SQLException ex) {
                             ex.printStackTrace();
                         }
                     }
-                        break;
+                    break;
 
-                    case 8:
-                    {
+                    case 8: {
                         try {
                             panelTransitions1.display(new QLPhieuNhap());
                         } catch (SQLException ex) {
                             ex.printStackTrace();
                         }
-                        break;
                     }
-                    case 9:
-                    {
+                    break;
+                    case 9: {
                         try {
                             panelTransitions1.display(new QLBH());
                         } catch (SQLException ex) {
-                           ex.printStackTrace();
+                            ex.printStackTrace();
                         }
                     }
+                    break;
+
+                    case 10:
+                        int dx = JOptionPane.showConfirmDialog(null, "Bạn có muốn đăng xuất?");
+                        if (dx == JOptionPane.YES_OPTION) {
+                            thoat();
+                        }
+
                         break;
-
-
+                    case 11:
+//                        int result = JOptionPane.showOptionDialog(this, "Chọn kiểu bạn muốn xuất!", "Xuất file", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, null);
+                        int result = JOptionPane.showConfirmDialog(null, "Bạn có muốn thoát?");
+                        if (result == JOptionPane.YES_OPTION) {
+                            System.exit(0);
+                        }
+                        break;
                 }
- 
+
             }
         });
     }
-    public void thoat(){
+
+    public void thoat() {
         this.dispose();
+        Login log = new Login();
+        log.setVisible(true);
     }
-    
-    
+
+
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -180,7 +185,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
     }
-   
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private Form.TestMenu.Menu menu1;

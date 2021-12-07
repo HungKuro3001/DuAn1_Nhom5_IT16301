@@ -24,6 +24,7 @@ public class NhanVien_DAO extends Dao<NhanVien, String> {
     String updatePassWord = "UPDATE NHANVIEN SET PASSWORD=? where MANV =?";
     String selectById = "SELECT*FROM NHANVIEN WHERE USERNAME=?";
     String block="UPDATE NHANVIEN SET TRANGTHAI=? where MANV =?";
+    String selectByMaNV="SELECT*FROM NHANVIEN WHERE MANV=?";
     
 
     @Override
@@ -36,6 +37,9 @@ public class NhanVien_DAO extends Dao<NhanVien, String> {
     public void update(NhanVien entity) {
         jdbcHelper.Update(updateSql, entity.getHoTen(), entity.getNgaySinh(),
                 entity.getCCCD(), entity.getSDT(),entity.getGioiTinh(),entity.getGhiChu(),entity.getMaNV());
+    }
+    public void updatePass(String pass,String manv) {
+        jdbcHelper.Update(updatePassWord,pass,manv);
     }
     public void khoaTk(NhanVien entity){
         jdbcHelper.Update(block,entity.isTrangThai(),entity.getMaNV());
@@ -54,6 +58,13 @@ public class NhanVien_DAO extends Dao<NhanVien, String> {
     @Override
     public NhanVien selectById(String manv) {
         List<NhanVien> list = this.selectBySql(selectById, manv);
+        if (list.isEmpty()) {
+            return null;
+        }
+        return list.get(0);
+    }
+    public NhanVien selectByManv(String manv) {
+        List<NhanVien> list = this.selectBySql(selectByMaNV, manv);
         if (list.isEmpty()) {
             return null;
         }

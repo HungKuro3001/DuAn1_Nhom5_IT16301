@@ -24,12 +24,13 @@ import javax.swing.table.DefaultTableModel;
  */
 public class pannelQLNV extends javax.swing.JPanel {
 
-   private NhanVien_DAO dao = new NhanVien_DAO();
-    private List<NhanVien> list = new  ArrayList();
+    private NhanVien_DAO dao = new NhanVien_DAO();
+    private List<NhanVien> list = new ArrayList();
+
     public pannelQLNV() {
         initComponents();
         fillTable();
-        if (Auth.isManager()!=true) {
+        if (Auth.isManager() != true) {
             btnKhoa.setEnabled(false);
             btnInsert.setEnabled(false);
         } else {
@@ -77,6 +78,7 @@ public class pannelQLNV extends javax.swing.JPanel {
         rdoNam = new javax.swing.JRadioButton();
         rdoNu = new javax.swing.JRadioButton();
         jLabel11 = new javax.swing.JLabel();
+        btnDoiiMk = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -205,6 +207,14 @@ public class pannelQLNV extends javax.swing.JPanel {
         jLabel11.setForeground(new java.awt.Color(0, 204, 204));
         jLabel11.setText("Quản lý nhân viên");
         add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 30, -1, -1));
+
+        btnDoiiMk.setText("Đổi mật khẩu");
+        btnDoiiMk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDoiiMkActionPerformed(evt);
+            }
+        });
+        add(btnDoiiMk, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 380, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblNhanVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNhanVienMouseClicked
@@ -227,17 +237,31 @@ public class pannelQLNV extends javax.swing.JPanel {
 
     private void btnKhoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhoaActionPerformed
         int row = tblNhanVien.getSelectedRow();
-        
+        if (row < 0) {
+            Msgbox.alert(this, "Chọn nhân viên để thực hiện thao tác");
+            return;
+        }
         NhanVien nv = list.get(row);
-        if (nv.isTrangThai()==true) {
+        if (nv.isTrangThai() == true) {
             nv.setTrangThai(false);
 
-        }else{
+        } else {
             nv.setTrangThai(true);
         }
         dao.khoaTk(nv);
+        if (nv.isTrangThai() == true) {
+
+            Msgbox.alert(this, "Mở khóa nhân viên thành công");
+        } else {
+            Msgbox.alert(this, "Khóa nhân viên thành công");
+        }
         fillTable();
     }//GEN-LAST:event_btnKhoaActionPerformed
+
+    private void btnDoiiMkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoiiMkActionPerformed
+        DoiMatKhau dmk = new DoiMatKhau();
+        dmk.setVisible(true);
+    }//GEN-LAST:event_btnDoiiMkActionPerformed
 
     public void insert() throws ParseException {
         if (txtTen.getText().isEmpty() || txtTen.getText().length() > 10) {
@@ -279,10 +303,16 @@ public class pannelQLNV extends javax.swing.JPanel {
             Msgbox.alert(this, "Mã không được để trống và tối đa 10 kí tự");
             return;
         }
-
+        for (NhanVien nhanVien : list) {
+            if (nhanVien.getUserName().equals(txtUserName.getText())) {
+                Msgbox.alert(this, "UserName đã tồn tại");
+                return;
+            }
+        }
         NhanVien nv = getForm();
         dao.insert(nv);
-        fillTable(); 
+        fillTable();
+        Msgbox.alert(this, "Thêm nhân viên thành công");
     }
 
     public void update() {
@@ -309,23 +339,25 @@ public class pannelQLNV extends javax.swing.JPanel {
             Msgbox.alert(this, "sai định dạng SĐT");
             return;
         }
-        if (txtMoTa.getText().isEmpty() || txtMoTa.getText().length() > 100) {
-            Msgbox.alert(this, "Mã không được để trống và tối đa 100 kí tự");
+        NhanVien nv = getForm();
+        NhanVien nvcheck = dao.selectByManv(nv.getMaNV());
+        if (nvcheck == null) {
+            Msgbox.alert(this, "Mã nhân viên không tồn tại");
             return;
         }
-        NhanVien nv = getForm();
         dao.update(nv);
         fillTable();
+        Msgbox.alert(this, "Cập nhật nhân viên thành công");
     }
 
     public void fillTable() {
-        list=dao.selectAll();
+        list = dao.selectAll();
         DefaultTableModel model = (DefaultTableModel) tblNhanVien.getModel();
         model.setRowCount(0);
         for (NhanVien nhanVien : list) {
             Object[] row = new Object[]{
                 nhanVien.getMaNV(), nhanVien.getHoTen(), nhanVien.getNgaySinh(), nhanVien.getCCCD(), nhanVien.getSDT(),
-                nhanVien.getGioiTinh()==false?"Nữ":"Nam", nhanVien.getUserName(), "***", nhanVien.isRole()==true?"Chủ":"Nhân Viên", nhanVien.isTrangThai()==false?"Khóa":"Mở",
+                nhanVien.getGioiTinh() == false ? "Nữ" : "Nam", nhanVien.getUserName(), "***", nhanVien.isRole() == true ? "Chủ" : "Nhân Viên", nhanVien.isTrangThai() == false ? "Khóa" : "Mở",
                 nhanVien.getGhiChu()
             };
             model.addRow(row);
@@ -341,13 +373,12 @@ public class pannelQLNV extends javax.swing.JPanel {
             Date date = formater.parse(txtNgaySinh.getText());
             nv.setNgaySinh(date);
         } catch (Exception e) {
-            Msgbox.alert(this,"Ngày sinh" );
+            Msgbox.alert(this, "Ngày sinh");
         }
 
-        
         nv.setCCCD(txtCCCD.getText());
         nv.setSDT(txtSDT.getText());
-        if (rdoNam.isSelected()){
+        if (rdoNam.isSelected()) {
             nv.setGioiTinh(true);
         } else {
             nv.setGioiTinh(false);
@@ -388,6 +419,7 @@ public class pannelQLNV extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton RdoChuCH;
+    private javax.swing.JButton btnDoiiMk;
     private javax.swing.JButton btnInsert;
     private javax.swing.JButton btnKhoa;
     private javax.swing.JButton btnUpdate;

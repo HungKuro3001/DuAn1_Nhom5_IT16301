@@ -158,7 +158,7 @@ public class QLPhieuNhap extends javax.swing.JPanel {
             pnDao.insert(pn);
             Msgbox.alert(this, "Thêm thành công");
             fillTable();
-            Clear();
+//            Clear();
         } catch (Exception e) {
             e.printStackTrace();
             Msgbox.alert(this, "Ngày nhập định dạng: dd-MM-yyyy ");
