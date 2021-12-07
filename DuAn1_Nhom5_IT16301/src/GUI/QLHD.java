@@ -270,12 +270,12 @@ public class QLHD extends javax.swing.JPanel {
                     txtGiamGia.setText("");
                     return;
                 }
-                if (giamGia >100) {
+                if (giamGia > 100) {
                     Msgbox.alert(this, "Giảm giá không vượt 100%");
                     txtGiamGia.setText("");
                     return;
                 }
-              
+
             } catch (Exception e) {
                 Msgbox.alert(this, "Phần trăm giảm là số nguyên dương");
                 txtGiamGia.setText("");
@@ -1291,6 +1291,8 @@ public class QLHD extends javax.swing.JPanel {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        txtGiamGia.setText("0");
+
 
     }//GEN-LAST:event_btnThemActionPerformed
 
@@ -1309,7 +1311,7 @@ public class QLHD extends javax.swing.JPanel {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        txtGiamGia.setText("0");
     }//GEN-LAST:event_btnCapNhatCTHDActionPerformed
 
     private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
