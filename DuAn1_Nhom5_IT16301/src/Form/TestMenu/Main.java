@@ -40,6 +40,9 @@ public class Main extends javax.swing.JFrame {
         menu1.initMoving(this);
         panelTransitions1.setBackground(new Color(240,240,240));
         panelTransitions1.display(new GUI.pannelTrangChu());
+        menu(0);
+    }
+    public void menu(int index){
         menu1.addEventMenu(new EventMenu() {
             @Override
             public void menuIndexChange(int index) {
@@ -54,9 +57,6 @@ public class Main extends javax.swing.JFrame {
                     case 2:   
                             panelTransitions1.display(new QLKH());
                         break;
-
-                          
-
                     case 3:  
                         panelTransitions1.display(new GUI.QLSP());
                         break;  
@@ -101,6 +101,7 @@ public class Main extends javax.swing.JFrame {
                         } catch (SQLException ex) {
                             ex.printStackTrace();
                         }
+                        break;
                     }
                     case 9:
                     {

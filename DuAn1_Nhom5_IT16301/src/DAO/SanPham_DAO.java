@@ -38,6 +38,25 @@ public class SanPham_DAO extends Dao<SanPham, String> {
         }
         return maCL;
     }
+     
+        public void updateSoLuong(String soLuong,String maSP) throws SQLException {
+            
+            String updateSoLuong ="UPDATE SANPHAM set SOLUONG=SOLUONG+" +soLuong+" where MASP = '"+maSP+"'";
+            System.out.println(""+updateSoLuong);
+            jdbcHelper.Update(updateSoLuong);
+        }
+            public int selectSL(String maSP) throws SQLException {
+                String sql="Select soluong from sanpham where masp='"+maSP+"'";
+               ResultSet rs = jdbcHelper.query(sql);
+               int SL =0;
+            while (rs.next()) {
+                SL = rs.getInt(1);
+            }
+            rs.getStatement().getConnection().close();
+            return SL; 
+ 
+    }
+            
     
     
     public List<SanPham> selectByTT(String trangThai) {

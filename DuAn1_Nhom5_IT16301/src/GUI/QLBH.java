@@ -13,8 +13,10 @@ import Entity.HoaDon;
 import Entity.KhachHang;
 import Entity.NhanVien;
 import Entity.SanPham;
+import Form.TestMenu.Main;
 import Utils.Auth;
 import Utils.Msgbox;
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
@@ -321,11 +323,6 @@ public class QLBH extends javax.swing.JPanel {
         jLabel6.setText("Mã khách hàng");
         add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 100, -1, -1));
 
-        cbxMaKH.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbxMaKHItemStateChanged(evt);
-            }
-        });
         add(cbxMaKH, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 90, 129, -1));
 
         btnThemKH.setText("Thêm khách hàng");
@@ -344,7 +341,7 @@ public class QLBH extends javax.swing.JPanel {
         });
         add(btnThemHD, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 140, 110, -1));
 
-        btnThem.setText("Thêm");
+        btnThem.setText("Thêm HDCT");
         btnThem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnThemActionPerformed(evt);
@@ -352,7 +349,7 @@ public class QLBH extends javax.swing.JPanel {
         });
         add(btnThem, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 370, -1, -1));
 
-        btnSua.setText("Sửa");
+        btnSua.setText("Sửa HDCT");
         btnSua.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSuaActionPerformed(evt);
@@ -360,7 +357,7 @@ public class QLBH extends javax.swing.JPanel {
         });
         add(btnSua, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 370, -1, -1));
 
-        btnDelete.setText("Xóa");
+        btnDelete.setText("Xóa HDCT");
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDeleteActionPerformed(evt);
@@ -395,7 +392,7 @@ public class QLBH extends javax.swing.JPanel {
     public void fillCBX() {
         AutoCompleteDecorator.decorate(cbxTenSP);
         AutoCompleteDecorator.decorate(cbxMaKH);
-        listKH = khd.selectAll();
+        listKH = khd.selectAllKH();
         listSP = spd.selectAll();
         for (KhachHang khachHang : listKH) {
             cbxMaKH.addItem(khachHang.getMaKh());
@@ -411,14 +408,6 @@ public class QLBH extends javax.swing.JPanel {
         return maKH;
     }
 
-    public void setCBX(String maKH) {
-        listKH = khd.selectAll();
-        cbxMaKH.removeAllItems();
-        for (KhachHang khachHang : listKH) {
-            cbxMaKH.addItem(khachHang.getMaKh());
-        }
-        cbxMaKH.setSelectedItem(maKH);
-    }
 
     private void thanhTien() {
         if (txtGiamGia.getText().isEmpty()) {
@@ -471,7 +460,7 @@ public class QLBH extends javax.swing.JPanel {
             }
 
             double thanhTien = TTChưaGiamGia / 100 * (100 - giamGia);
-            txtThanhTien.setText(thanhTien + "");
+            txtThanhTien.setText(new BigDecimal(thanhTien) + "");
         }
 
     }
@@ -484,7 +473,7 @@ public class QLBH extends javax.swing.JPanel {
 
     private void txtSoLuongKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSoLuongKeyReleased
         try {
-
+            
             double dongia = Double.parseDouble(txtDonGia.getText());
             int sl = Integer.parseInt(txtSoLuong.getText());
             double TTChưaGiamGia = dongia * sl;
@@ -495,6 +484,18 @@ public class QLBH extends javax.swing.JPanel {
                 Msgbox.alert(this, "Số lượng là số nguyên dương");
                 txtSoLuong.setText("");
                 return;
+            }
+            for (SanPham sanpham : listSP) {
+            if (sanpham.getTenSP().equals(cbxTenSP.getSelectedItem().toString())) {
+                maSP = sanpham.getMaSP();
+            }
+            }
+            int soLuongKho =spd.selectSL(maSP);
+            if(soLuongKho<sl){
+              Msgbox.alert(this, "Số lượng trong kho nhỏ hơn số lượng nhập");
+                txtSoLuong.setText("");
+                txtThanhTien.setText("0");
+                return;  
             }
 
             if (sl <= 0) {
@@ -557,33 +558,51 @@ public class QLBH extends javax.swing.JPanel {
         return hd;
     }
 
-    private void insertHDCT() {
+    private void insertHDCT() throws SQLException {
+        for (SanPham sanpham : listSP) {
+            if (sanpham.getTenSP().equals(cbxTenSP.getSelectedItem().toString())) {
+                maSP = sanpham.getMaSP();
+            }
+            }
+           
+        for (ChiTietHD chiTietHD : listCTHD) {
+            if (chiTietHD.getMaSp().equals(maSP)) {
+                Msgbox.alert(this, "Sản phẩm đã tồn tại trong hóa đơn này");
+                return;
+            }
+        }
         try {
             int sl = Integer.parseInt(txtSoLuong.getText());
             if (sl <= 0) {
-                Msgbox.alert(this, "Số lượng là số nguyên dương");
+                Msgbox.alert(this, "Số lượng lớn hơn 0");
                 txtSoLuong.setText("");
                 return;
             }
-            if (rdoPhanTram.isSelected() == false && rdoTienMat.isSelected() == false) {
-                Msgbox.alert(this, "Chọn giảm giá");
-                return;
-            }
-            if (txtGiamGia.getText().isEmpty()) {
-                Msgbox.alert(this, "nhập phần trăm hoặc số tiền cần giảm");
-                return;
-            }
-            ChiTietHD ctHD = getFormCT();
-            cthdd.insert(ctHD);
-            fillTableCTHD();
-
         } catch (Exception e) {
-            e.printStackTrace();
-            Msgbox.alert(this, "Hóa đơn chi tiết đã tồn tại");
-
-//            e.printStackTrace();
+            Msgbox.alert(this, "Số lượng là số nguyên");
             return;
         }
+
+        if (rdoPhanTram.isSelected() == false && rdoTienMat.isSelected() == false) {
+            Msgbox.alert(this, "Chọn giảm giá");
+            return;
+        }
+        try {
+            float gg = Float.parseFloat(txtGiamGia.getText());
+            if (gg < 0) {
+                Msgbox.alert(this, "giảm giá tối thiểu bằng 0");
+                return;
+            }
+        } catch (Exception e) {
+            Msgbox.alert(this, "giảm giá là số ");
+            return;
+        }
+
+        ChiTietHD ctHD = getFormCT();
+        cthdd.insert(ctHD);
+        fillTableCTHD();
+        Msgbox.alert(this, "Thêm thành công");
+        
     }
 
     private void fillTableCTHD() {
@@ -998,9 +1017,10 @@ public class QLBH extends javax.swing.JPanel {
             PdfWriter.getInstance(document, fos);
             document.open();
 
-            BaseFont bf = BaseFont.createFont("VNARIAL.TTF",
+            BaseFont bf = BaseFont.createFont("Roboto-Italic.TTF",
                     BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
             Font font1 = new Font(bf, 10, Font.NORMAL);
+            font1.setColor(BaseColor.RED);
             Font font11_bold = new Font(bf, 11, Font.BOLD);
 
             String tenKH = "";
@@ -1016,14 +1036,14 @@ public class QLBH extends javax.swing.JPanel {
                 }
             }
 
-            document.add(new Paragraph("Cong ty TNHH Vang Bac                              Giay đam bao vang\n"
-                    + "Toan Huyen                                               Uy tin quy hon vang\n"
-                    + "D/c: Khu Minh Khanh -Xa Minh Khai- Huyen Tan Son - Tinh "
-                    + "Phu Tho   DT:0978154115-0986334292\n"
-                    + "        Chuyen mua nu trang vang 9999-Vang tay cac loai\n\n"
-                    + "Ban cho ong (ba): " + tenKH + "Dia Chi: " + diaChi + "\n"
-                    + "Tong Tien: " + txtTongTien.getText() + "d\n"
-                    + "Bang chu: "+lblBangChu.getText()+"\n", font1));
+            document.add(new Paragraph("Công ty TNHH Vàng Bạc                              Giấy đảm bảo vàng\n"
+                    + "Toản Huyền                                               Uy tín quý hơn vàng\n"
+                    + "Đ/c:Khu Minh Khanh -Xã Minh Khai- Huyện tân sơn - Tỉnh "
+                + "Phú Thọ   ĐT:0978154115-0986334292\n"
+                    + "        Chuyên mua nữ trang vàng 9999-Vàng tây các loại\n\n"
+                    + "Bán cho ông (bà): " + tenKH + "Dia Chi: " + diaChi + "\n"
+                    + "Tổng tiền: " + txtTongTien.getText() + "d\n"
+                    + "Bằng chữ: " + lblBangChu.getText() + "\n\n", font1));
             //document.add(new Paragraph("This is fontname_Times vẫn bị thế", font1));
 
             // p.setAlignment(Paragraph.ALIGN_CENTER);
@@ -1032,14 +1052,20 @@ public class QLBH extends javax.swing.JPanel {
 
             cell = new PdfPCell(new Paragraph("STT", font1));
             tbl.addCell(cell);
-            cell = new PdfPCell(new Paragraph("MaHD", font1));
+            cell = new PdfPCell(new Paragraph("Mã hóa đơn", font1));
             tbl.addCell(cell);
-            tbl.addCell("Ma San Pham");
-            tbl.addCell("Tien cong");
-            tbl.addCell("Don Gia");
-            tbl.addCell("GiamGia");
-            tbl.addCell("So Luong");
-            tbl.addCell("Thanh Tien");
+            cell = new PdfPCell(new Paragraph("Mã sản phẩm", font1));
+            tbl.addCell(cell);
+            cell = new PdfPCell(new Paragraph("Tiền công", font1));
+            tbl.addCell(cell);
+            cell = new PdfPCell(new Paragraph("Đơn giá", font1));
+            tbl.addCell(cell);
+            cell = new PdfPCell(new Paragraph("Giảm giá", font1));
+            tbl.addCell(cell);
+            cell = new PdfPCell(new Paragraph("Số lượng", font1));
+            tbl.addCell(cell);
+            cell = new PdfPCell(new Paragraph("Thành tiền", font1));
+            tbl.addCell(cell);
 
             //font11_bold)); cell.setPaddingLeft(5.0f); cell.setBorder(0);
             for (int i = 0; i < tblHoaDonChiTiet.getRowCount(); i++) {
@@ -1062,12 +1088,14 @@ public class QLBH extends javax.swing.JPanel {
             }
 
             document.add(tbl);
-          
-            document.add(new Paragraph("Luu y:\n"
-                    + "Thua quy khach chung toi co uu dai cho khach hang mua\n"
-                    + "Quy khach giu lại phieu dam bao de thuan tien mua ban hoac doi\n"
-                    + "Rat han hanh phuc vu quy khach                                                Tay Son" + java.time.LocalDate.now()+"\n"
-                    +"                                                                                                      Dai dien cong ty", font1));
+
+            document.add(new Paragraph("Lưu ý:\n"
+                    + "Thưa quý khách chúng tôi có ưu đãi cho khách hàng mua\n"
+                    + "Quý khách giữu lại phiếu đảm bảo để tiện mua bán đổi\n"
+                    + "Rất hân hạnh được phục vụ quý khách                                                                        "
+                    + "Tây Sơn " + java.time.LocalDate.now() + "\n"
+                    + "                                                                                                                 "
+                            + "        Đại diện công ty", font1));
 
             document.close();
             // workbook.write(fos);
@@ -1122,14 +1150,12 @@ public class QLBH extends javax.swing.JPanel {
             Msgbox.alert(this, "Số tiền trả cần tối thiểu bằng tổng tiền");
             return;
         }
-        txtTraLaiKhach.setText(tralai + "");
+        txtTraLaiKhach.setText(new BigDecimal(tralai) + "");
     }//GEN-LAST:event_txtKhachTraMouseExited
 
-    private void cbxMaKHItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxMaKHItemStateChanged
-        //fillNameCustomer();
-    }//GEN-LAST:event_cbxMaKHItemStateChanged
-
     private void btnThemKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemKHActionPerformed
+        this.setVisible(false);
+        int DISPOSE_ON_CLOSE = Main.DISPOSE_ON_CLOSE;
         QuanLiKhachHang QLKH = new QuanLiKhachHang();
         QLKH.setVisible(true);
     }//GEN-LAST:event_btnThemKHActionPerformed
@@ -1185,6 +1211,11 @@ public class QLBH extends javax.swing.JPanel {
         txtThanhTien.setText("");
         DefaultTableModel model = (DefaultTableModel) tblHoaDonChiTiet.getModel();
         model.setRowCount(0);
+                cbxMaKH.removeAllItems();
+        listKH = khd.selectAllKH();
+        for (KhachHang khachHang : listKH) {
+            cbxMaKH.addItem(khachHang.getMaKh());
+        }
 
         try {
             String maHD = hdd.maSP_TuSinh();
