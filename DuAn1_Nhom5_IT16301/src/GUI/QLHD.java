@@ -1164,7 +1164,9 @@ public class QLHD extends javax.swing.JPanel {
             Msgbox.alert(this, "Số tiền trả cần tối thiểu bằng tổng tiền");
             return;
         }
-        txtTraLaiKhach.setText(tralai + "");
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(2);
+        txtTraLaiKhach.setText(df.format(tralai) + "");
     }//GEN-LAST:event_txtKhachTraMouseExited
 
     private void btnCapNhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatActionPerformed
