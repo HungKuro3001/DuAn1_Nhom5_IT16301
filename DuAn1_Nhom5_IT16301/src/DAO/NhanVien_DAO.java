@@ -37,6 +37,9 @@ public class NhanVien_DAO extends Dao<NhanVien, String> {
         jdbcHelper.Update(updateSql, entity.getHoTen(), entity.getNgaySinh(),
                 entity.getCCCD(), entity.getSDT(),entity.getGioiTinh(),entity.getGhiChu(),entity.getMaNV());
     }
+    public void updatePass(String pass,String manv) {
+        jdbcHelper.Update(updatePassWord,pass,manv);
+    }
     public void khoaTk(NhanVien entity){
         jdbcHelper.Update(block,entity.isTrangThai(),entity.getMaNV());
     }

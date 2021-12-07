@@ -112,14 +112,19 @@ public class Main extends javax.swing.JFrame {
                     }
                         break;
 
-
-                }
+                    case 10:  thoat();
+                         break;
+                }   
+                     
+                
  
             }
         });
     }
     public void thoat(){
         this.dispose();
+        Login log = new Login();
+        log.setVisible(true);
     }
     
     
