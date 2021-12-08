@@ -16,6 +16,7 @@ import Entity.SanPham;
 import Utils.Msgbox;
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComboBox;
@@ -104,9 +105,10 @@ public class QLSP extends javax.swing.JPanel {
         if (listSP==null) {
             return;
         }
+        DecimalFormat df=new DecimalFormat("0.00");
         for (SanPham sp : listSP) {
-            model.addRow(new Object[]{sp.getMaSP(),sp.getMaDm(),sp.getTenSP(),sp.getMaLCL(),sp.getKhoiLuong(),new BigDecimal(sp.getGiaMuaVao()),new BigDecimal(sp.getGiaBanRa())
-                    ,sp.getTienCong(),sp.getTrangThai(),sp.getSoLuong(),sp.getMoTa()});
+            model.addRow(new Object[]{sp.getMaSP(),sp.getMaDm(),sp.getTenSP(),sp.getMaLCL(),sp.getKhoiLuong(),df.format(new BigDecimal(sp.getGiaMuaVao())),
+                df.format(new BigDecimal(sp.getGiaBanRa())) ,sp.getTienCong(),sp.getTrangThai(),sp.getSoLuong(),sp.getMoTa()});
         }
     }
     public void insert(){
@@ -217,9 +219,9 @@ public class QLSP extends javax.swing.JPanel {
         
         String maLCL =cbxMaLoaiChatLieu.getSelectedItem().toString();
         double[] result =SPD.calculateMoney(khoiLuong,maLCL);
-      
-        txtGiaBanRa.setText(""+new BigDecimal(result[0]));
-        txtGiaMuaVao.setText(""+new BigDecimal(result[1]));
+        DecimalFormat df=new DecimalFormat("0.00");
+        txtGiaBanRa.setText(""+df.format(new BigDecimal(result[0])));
+        txtGiaMuaVao.setText(""+df.format(new BigDecimal(result[1])));
     }
     private void search(){
         if(txtSearch.getText().trim().equals("")){
