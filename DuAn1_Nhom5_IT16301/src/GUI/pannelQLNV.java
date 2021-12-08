@@ -231,7 +231,7 @@ public class pannelQLNV extends javax.swing.JPanel {
         try {
             insert();
         } catch (ParseException ex) {
-            Logger.getLogger(QuanLiTaiKhoan.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
     }//GEN-LAST:event_btnInsertActionPerformed
 

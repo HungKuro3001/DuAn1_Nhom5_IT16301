@@ -142,8 +142,8 @@ public class QLPhieuNhap extends javax.swing.JPanel {
     public void insertPN() {
         try {
 
-          SimpleDateFormat sfd = new SimpleDateFormat("dd-MM-yyyy");
-        String ngayNhap = sfd.format(jDCNgayNhap.getDate());
+//          SimpleDateFormat sfd = new SimpleDateFormat("dd-MM-yyyy");
+//        String ngayNhap = sfd.format(jDCNgayNhap.getDate());
  
          
             if (jDCNgayNhap.getDate().equals("")) {

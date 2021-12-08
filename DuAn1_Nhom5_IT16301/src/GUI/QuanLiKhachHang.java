@@ -38,7 +38,7 @@ public class QuanLiKhachHang extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(this);
         fillTable();
-        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
     }
     public String getmaKH(){
@@ -430,12 +430,19 @@ public class QuanLiKhachHang extends javax.swing.JFrame {
             Msgbox.alert(this, "sai định dạng SĐT");
             return;
         }
+         for (KhachHang khachHang : list) {
+            if (khachHang.getSdt().equalsIgnoreCase(txtSDT.getText())) {
+                Msgbox.alert(this, "Số điện thoại đã tồn tại");
+                return;
+            }
+        }
         if (txtDiaChi.getText().isEmpty()) {
             Msgbox.alert(this, "Địa chỉ không được để trống");
             return;
         }
         KhachHang kh = getForm();
         dao.insert(kh);
+        Msgbox.alert(this, "Thêm thành công");
         fillTable();
     }
 
@@ -482,6 +489,11 @@ public class QuanLiKhachHang extends javax.swing.JFrame {
     }
 
     private void update() {
+      int row = tblKhachHang.getSelectedRow();
+        if (row < 0) {
+            Msgbox.alert(this, "Chọn khách hàng để cập nhật");
+            return;
+        }
         if (txtHoTen.getText().isEmpty()) {
             Msgbox.alert(this, "Họ tên không được để trống");
             return;
@@ -495,6 +507,18 @@ public class QuanLiKhachHang extends javax.swing.JFrame {
             Msgbox.alert(this, "sai định dạng SĐT");
             return;
         }
+        
+        KhachHang kh2 = list.get(row);
+        int check = 0;
+        for (KhachHang khachHang : list) {
+            
+            if (khachHang.getSdt().equalsIgnoreCase(txtSDT.getText()) && khachHang.getMaKh().equalsIgnoreCase(kh2.getMaKh())==false) {
+                
+                Msgbox.alert(this, "Số điện thoại đã tồn tại");
+                return;
+                
+            }
+        }
         if (txtDiaChi.getText().isEmpty()) {
             Msgbox.alert(this, "Địa chỉ không được để trống");
             return;
@@ -502,6 +526,7 @@ public class QuanLiKhachHang extends javax.swing.JFrame {
 
         KhachHang kh = getForm();
         dao.update(kh);
+         Msgbox.alert(this, "Cập nhật thành công");
         fillTable();
     }
 

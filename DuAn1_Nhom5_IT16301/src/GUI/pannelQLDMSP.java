@@ -205,7 +205,7 @@ public class pannelQLDMSP extends javax.swing.JPanel {
         try {
             insert();
         } catch (ParseException ex) {
-            Logger.getLogger(QuanLiDanhMuc.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
     }//GEN-LAST:event_btnThemActionPerformed
 
@@ -214,7 +214,7 @@ public class pannelQLDMSP extends javax.swing.JPanel {
             // TODO add your handling code here:
             update();
         } catch (ParseException ex) {
-            Logger.getLogger(QuanLiDanhMuc.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
     }//GEN-LAST:event_btnSuaActionPerformed
 
