@@ -14,6 +14,7 @@ import Entity.DanhMuc;
 import Entity.LoaiChatLieu;
 import Entity.SanPham;
 import Utils.Msgbox;
+import java.awt.Color;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -42,6 +43,7 @@ public class QLSP extends javax.swing.JPanel {
         initComponents();
         init();
         txtSoLuong.setText("0");
+        setBackground(new Color(240, 240, 240));
     }
     private void fillCBX(){
         listDM = dmd.selectAll();

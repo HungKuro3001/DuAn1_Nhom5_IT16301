@@ -10,6 +10,7 @@ import DAO.loaiChatLieu_DAO;
 import Entity.ChatLieu;
 import Entity.LoaiChatLieu;
 import Utils.Msgbox;
+import java.awt.Color;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
@@ -32,6 +33,7 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
         initComponents();
         panLCL.setVisible(false);
         fillTable();
+        setBackground(new Color(240, 240, 240));
     }
 
     /**

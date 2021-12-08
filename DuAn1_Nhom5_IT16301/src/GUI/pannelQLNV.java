@@ -9,6 +9,7 @@ import DAO.NhanVien_DAO;
 import Entity.NhanVien;
 import Utils.Auth;
 import Utils.Msgbox;
+import java.awt.Color;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ public class pannelQLNV extends javax.swing.JPanel {
             btnKhoa.setEnabled(true);
             btnInsert.setEnabled(true);
         }
+        setBackground(new Color(240, 240, 240));
     }
 
     /**

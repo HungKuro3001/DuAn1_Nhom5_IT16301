@@ -8,6 +8,7 @@ package GUI;
 import DAO.DanhMuc_DAO;
 import Entity.DanhMuc;
 import Utils.Msgbox;
+import java.awt.Color;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,7 @@ public class pannelQLDMSP extends javax.swing.JPanel {
     public pannelQLDMSP() {
         initComponents();
         fillTable();
+        setBackground(new Color(240, 240, 240));
     }
 
     /**

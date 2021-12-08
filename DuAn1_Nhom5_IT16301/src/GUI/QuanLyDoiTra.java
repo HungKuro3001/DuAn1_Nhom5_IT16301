@@ -12,6 +12,7 @@ import Entity.DoiTra;
 import Entity.HoaDon;
 import Entity.SanPham;
 import Utils.Msgbox;
+import java.awt.Color;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +42,7 @@ public class QuanLyDoiTra extends javax.swing.JPanel {
         txtMaPDT.setText(maPDT);
         fillCbx();
         fillTable();
+        setBackground(new Color(240, 240, 240));
 
     }
 
