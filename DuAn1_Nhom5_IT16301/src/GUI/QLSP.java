@@ -114,7 +114,7 @@ public class QLSP extends javax.swing.JPanel {
         }
     }
     public void insert(){
-        if(txtMaSanPham.getText().equals("")){
+        if(txtTenSp.getText().equals("")){
            Msgbox.alert(this, "Không được để trống tên sản phẩm");
             return; 
         }
@@ -143,10 +143,11 @@ public class QLSP extends javax.swing.JPanel {
         
         SanPham sp =getForm();
         SPD.insert(sp);
+        Msgbox.alert(this, "Thêm thành công");
         fillTable();
     }
     public void update(){
-          if(txtMaSanPham.getText().equals("")){
+          if(txtTenSp.getText().equals("")){
            Msgbox.alert(this, "Không được để trống tên sản phẩm");
             return; 
         }
@@ -173,6 +174,7 @@ public class QLSP extends javax.swing.JPanel {
         }
         SanPham sp =getForm();
         SPD.update(sp);
+        Msgbox.alert(this, "Cập nhật thành công");
         fillTable();
     }
     

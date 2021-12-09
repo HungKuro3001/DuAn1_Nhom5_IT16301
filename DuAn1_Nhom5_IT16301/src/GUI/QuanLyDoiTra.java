@@ -5,9 +5,11 @@
  */
 package GUI;
 
+import DAO.ChiTietHD_DAO;
 import DAO.DoiTra_Dao;
 import DAO.HoaDon_DAO;
 import DAO.SanPham_DAO;
+import Entity.ChiTietHD;
 import Entity.DoiTra;
 import Entity.HoaDon;
 import Entity.SanPham;
@@ -15,6 +17,7 @@ import Utils.Msgbox;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,9 +31,10 @@ public class QuanLyDoiTra extends javax.swing.JPanel {
 
     private DoiTra_Dao dtDao = new DoiTra_Dao();
     private HoaDon_DAO hdDao = new HoaDon_DAO();
+    private ChiTietHD_DAO ctDao = new ChiTietHD_DAO();
     private SanPham_DAO spDao = new SanPham_DAO();
     private List<HoaDon> listHD = new ArrayList<>();
-    private List<SanPham> listSp = new ArrayList<>();
+    private List<ChiTietHD> listSp = new ArrayList<>();
     private List<DoiTra> listDt = new ArrayList<>();
 
     /**
@@ -67,7 +71,7 @@ public class QuanLyDoiTra extends javax.swing.JPanel {
         cbxMaSp.setSelectedItem(dt.getMaSP());
         txtLiDo.setText(dt.getLiDo());
         txtGhiChu.setText(dt.getLiDo());
-        if (dt.isHinhThuc()==true) {
+        if (dt.isHinhThuc() == true) {
             rdoDoi.setSelected(true);
         } else {
             rdoTra.setSelected(true);
@@ -75,13 +79,18 @@ public class QuanLyDoiTra extends javax.swing.JPanel {
     }
 
     private void fillCbx() {
-        listHD = hdDao.selectAll();
-        listSp = spDao.selectAll();
+        Calendar cal = Calendar.getInstance();
+        java.sql.Timestamp ngayGD = new java.sql.Timestamp(cal.getTimeInMillis());
+//        cbxMaHD.removeAllItems();
+//        cbxMaSp.removeAllItems();
+        listHD = hdDao.selectBYDate(ngayGD);
+        
         for (HoaDon hoaDon : listHD) {
             cbxMaHD.addItem(hoaDon.getMaHD());
         }
-        for (SanPham sanPham : listSp) {
-            cbxMaSp.addItem(sanPham.getMaSP());
+        listSp = ctDao.selectByMAHD(cbxMaHD.getSelectedItem()+"");
+        for (ChiTietHD chiTiet : listSp) {
+            cbxMaSp.addItem(chiTiet.getMaSp());
         }
     }
 
@@ -93,7 +102,7 @@ public class QuanLyDoiTra extends javax.swing.JPanel {
             for (DoiTra doiTra : listDt) {
                 Object[] row = new Object[]{
                     doiTra.getMaPDT(), doiTra.getMaHD(), doiTra.getMaSP(),
-                    doiTra.isHinhThuc()==true? "Đổi": "Trả", doiTra.getLiDo(), doiTra.getGhiChu()
+                    doiTra.isHinhThuc() == true ? "Đổi" : "Trả", doiTra.getLiDo(), doiTra.getGhiChu()
                 };
                 model.addRow(row);
 
@@ -113,6 +122,7 @@ public class QuanLyDoiTra extends javax.swing.JPanel {
         Msgbox.alert(this, "Thêm phiếu đổi trả thành công");
         New();
     }
+
     public void update() throws SQLException {
         if (rdoDoi.isSelected() == false && rdoTra.isSelected() == false) {
             Msgbox.alert(this, "Chọn hình thức đổi hoặc trả");
@@ -177,6 +187,12 @@ public class QuanLyDoiTra extends javax.swing.JPanel {
         txtMaPDT.setEditable(false);
 
         jLabel2.setText("MaHD");
+
+        cbxMaHD.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxMaHDItemStateChanged(evt);
+            }
+        });
 
         jLabel3.setText("MaSP");
 
@@ -369,25 +385,33 @@ public class QuanLyDoiTra extends javax.swing.JPanel {
             New();
             btnthem.setEnabled(true);
         } catch (SQLException ex) {
-           ex.printStackTrace();
+            ex.printStackTrace();
         }
     }//GEN-LAST:event_btnNewActionPerformed
 
     private void tblDoiTraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDoiTraMouseClicked
-      int row= tblDoiTra.getSelectedRow();
-      DoiTra dt = listDt.get(row);
+        int row = tblDoiTra.getSelectedRow();
+        DoiTra dt = listDt.get(row);
         setForm(dt);
         btnthem.setEnabled(false);
 
     }//GEN-LAST:event_tblDoiTraMouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       try {
-         update();
+        try {
+            update();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void cbxMaHDItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxMaHDItemStateChanged
+        cbxMaSp.removeAllItems();
+        listSp = ctDao.selectByMAHD(cbxMaHD.getSelectedItem()+"");
+        for (ChiTietHD chiTiet : listSp) {
+            cbxMaSp.addItem(chiTiet.getMaSp());
+        }
+    }//GEN-LAST:event_cbxMaHDItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -460,6 +460,7 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
 
         ChatLieu cl = getForm();
         dao.insert(cl);
+        Msgbox.alert(this, "Thêm thành công");
         fillTable();
     }
 
@@ -475,6 +476,7 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
         }
         ChatLieu cl = getForm();
         dao.update(cl);
+        Msgbox.alert(this, "Cập nhật thành công");
         fillTable();
     }
 
@@ -571,6 +573,7 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
         }
         LoaiChatLieu lcl = getFormLCL();
         daolcl.insert(lcl);
+        Msgbox.alert(this, "Thêm thành công");
         fillTableLCL(txtCL.getText());
     }
 
@@ -624,6 +627,7 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
         }
         LoaiChatLieu lcl = getFormLCL();
         daolcl.update(lcl);
+        Msgbox.alert(this, "Cập nhật thành công");
         fillTableLCL(txtCL.getText());
     }
 
