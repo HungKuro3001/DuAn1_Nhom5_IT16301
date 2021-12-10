@@ -22,7 +22,7 @@ public class ChatLieu_DAO extends Dao<ChatLieu, String> {
     String insert = "INSERT CHATLIEU VALUES (?,?,1,?)";
     String update = "UPDATE CHATLIEU SET TENCL=?,MOTA=? WHERE MACL=?";
     String block = "UPDATE CHATLIEU SET TRANGTHAI=? WHERE MACL=?";
-
+    String selectByTT = "Select *from CHATLIEU WHERE TRANGTHAI =1";
     public void block(ChatLieu entity) {
         jdbcHelper.Update(block,entity.isTrangThai(), entity.getMaCL());
     }
@@ -52,7 +52,10 @@ public class ChatLieu_DAO extends Dao<ChatLieu, String> {
     public ChatLieu selectById(String key) {
         return null;
     }
-
+   public List<ChatLieu> selectByTT() {
+        List<ChatLieu> list = this.selectBySql(selectByTT);
+        return list;
+    }
     @Override
     protected List<ChatLieu> selectBySql(String sql, Object... args) {
         try {

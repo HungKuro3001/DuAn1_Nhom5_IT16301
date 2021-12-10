@@ -50,7 +50,7 @@ public class QLSP extends javax.swing.JPanel {
         for (DanhMuc danhMuc : listDM) { //cbx Danh mục
             cbxMaDanhMuc.addItem(danhMuc.getMaDM());
         }
-        listCL = CLD.selectAll();
+        listCL = CLD.selectByTT();
         for (ChatLieu cl : listCL) { ///cbx chất liệu
             cbxChatLieu.addItem(cl.getMaCL());
         }
