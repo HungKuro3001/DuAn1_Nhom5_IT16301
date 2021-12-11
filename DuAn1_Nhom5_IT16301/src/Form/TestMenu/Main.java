@@ -14,6 +14,7 @@ import GUI.QLKH;
 import GUI.QLPhieuNhap;
 import GUI.QuanLiKhachHang;
 import GUI.QuanLyDoiTra;
+import Utils.Auth;
 import Utils.Msgbox;
 import java.awt.Color;
 import java.awt.Panel;
@@ -65,11 +66,16 @@ public class Main extends javax.swing.JFrame {
                     break;
 
                     case 5: {
-                        try {
-                            panelTransitions1.display(new BaoCaoThongKe());
-                        } catch (SQLException ex) {
-                            ex.printStackTrace();
+                        if (Auth.isManager()) {
+                            try {
+                                panelTransitions1.display(new BaoCaoThongKe());
+                            } catch (SQLException ex) {
+                                ex.printStackTrace();
+                            }
+                        }else{
+                            Msgbox.alert(null, "Đăng nhập với tài khoản Admin để sử dụng");
                         }
+
                     }
                     break;
 
