@@ -199,7 +199,7 @@ public class QLSP extends javax.swing.JPanel {
         txtKhoiLuong.setText("");
         txtMaSanPham.setText(SPD.maSP_TuSinh());
         txtSoLuong.setText("");
-        txtTienCong.setText("");
+        txtTienCong.setText("0");
         txtaMoTa.setText("");
         txtTenSp.setText("");
         tblSanPham.clearSelection();
