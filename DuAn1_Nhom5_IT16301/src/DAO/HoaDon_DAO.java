@@ -21,7 +21,7 @@ public class HoaDon_DAO extends Dao<HoaDon, String> {
 
     String insertHD = "INSERT INTO HOADON VALUES (?,?,?,?,?,?,?,?,?)";
     String updateHD = "UPDATE HOADON SET MAKH=?,KHACHTRA=?, HINHTHUCTHANHTOAN=?, HINHTHUCMUA=?, TRANGTHAIHD=? WHERE MAHD=?";
-    String selectAll = "SELECT * FROM HOADON";
+    String selectAll = "SELECT * FROM HOADON ORDER BY NGAYGD DESC";
     String selectById = "SELECT * FROM HOADON WHERE MAHD=?";
     String updateTT = "UPDATE HOADON SET TONGTIEN=? WHERE MAHD=?";
     String selectByKH = "SELECT * FROM HOADON WHERE MAKH=?";

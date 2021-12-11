@@ -5,6 +5,8 @@
  */
 package Entity;
 
+import java.util.Date;
+
 /**
  *
  * @author Admin
@@ -16,18 +18,30 @@ public class DoiTra {
     private  boolean hinhThuc;
     private String liDo;
     private String ghiChu;
+    private Date NgayDT;
 
     public DoiTra() {
     }
 
-    public DoiTra(String maPDT, String maHD, String maSP, boolean hinhThuc, String liDo, String ghiChu) {
+    public DoiTra(String maPDT, String maHD, String maSP, boolean hinhThuc, String liDo, String ghiChu, Date NgayDT) {
         this.maPDT = maPDT;
         this.maHD = maHD;
         this.maSP = maSP;
         this.hinhThuc = hinhThuc;
         this.liDo = liDo;
         this.ghiChu = ghiChu;
+        this.NgayDT = NgayDT;
     }
+
+    public Date getNgayDT() {
+        return NgayDT;
+    }
+
+    public void setNgayDT(Date NgayDT) {
+        this.NgayDT = NgayDT;
+    }
+
+    
 
     public String getMaPDT() {
         return maPDT;
