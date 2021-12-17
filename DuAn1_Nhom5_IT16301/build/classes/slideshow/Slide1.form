@@ -29,22 +29,19 @@
     <Container class="slideshow.PictureBox" name="pictureBox1">
       <Properties>
         <Property name="image" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/images/banner4.jpg"/>
+          <Image iconType="3" name="/images/banner_top_img.png"/>
         </Property>
       </Properties>
 
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <Component id="panelTransparent1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="221" max="32767" attributes="0"/>
-              </Group>
+              <Component id="panelTransparent1" alignment="0" pref="1420" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="panelTransparent1" alignment="0" max="32767" attributes="0"/>
+              <Component id="panelTransparent1" alignment="0" pref="770" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -57,25 +54,8 @@
             <Property name="alpha" type="float" value="0.5"/>
           </Properties>
 
-          <Layout>
-            <DimensionLayout dim="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="112" max="32767" attributes="0"/>
-                  </Group>
-              </Group>
-            </DimensionLayout>
-            <DimensionLayout dim="1">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="138" max="32767" attributes="0"/>
-                  </Group>
-              </Group>
-            </DimensionLayout>
+          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
+            <Property name="useNullLayout" type="boolean" value="false"/>
           </Layout>
           <SubComponents>
             <Component class="javax.swing.JLabel" name="jLabel1">
@@ -84,10 +64,15 @@
                   <Font name="sansserif" size="40" style="3"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="64" green="46" red="7" type="rgb"/>
+                  <Color blue="99" green="99" red="ff" type="rgb"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Trang s&#x1ee9;c To&#x1ea3;n Huy&#x1ec1;n"/>
               </Properties>
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                  <AbsoluteConstraints x="10" y="11" width="-1" height="-1"/>
+                </Constraint>
+              </Constraints>
             </Component>
           </SubComponents>
         </Container>

@@ -227,6 +227,8 @@ public class QLKH extends javax.swing.JPanel {
         txtHoTen = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(255, 255, 255));
+
         txtTimKiem.setToolTipText("");
         txtTimKiem.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -243,7 +245,7 @@ public class QLKH extends javax.swing.JPanel {
             }
         });
 
-        jLabel3.setText("HỌ VÀ TÊN");
+        jLabel3.setText("Họ và tên");
 
         txtGhiChu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -251,7 +253,7 @@ public class QLKH extends javax.swing.JPanel {
             }
         });
 
-        jLabel4.setText("SỐ ĐIỆN THOẠI");
+        jLabel4.setText("Số điện thoại");
         jLabel4.setToolTipText("");
 
         jPanel1.setLayout(new java.awt.GridLayout(2, 2, 5, 10));
@@ -296,22 +298,22 @@ public class QLKH extends javax.swing.JPanel {
         });
         jPanel1.add(btnXemLS);
 
-        jLabel5.setText("GIỚI TÍNH");
+        jLabel5.setText("Giới tính");
 
         buttonGroup1.add(rdoNam);
         rdoNam.setSelected(true);
-        rdoNam.setText("NAM");
+        rdoNam.setText("Nam");
 
         buttonGroup1.add(rdoNu);
-        rdoNu.setText("NỮ");
+        rdoNu.setText("Nữ");
 
-        jLabel6.setText("ĐỊA CHỈ");
+        jLabel6.setText("Địa chỉ");
 
-        jLabel7.setText("GHI CHÚ");
+        jLabel7.setText("Ghi chú");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 153, 255));
-        jLabel1.setText("QUẢN LÍ KHÁCH HÀNG");
+        jLabel1.setText("Quản lý khách hàng");
 
         txtSDT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -324,7 +326,7 @@ public class QLKH extends javax.swing.JPanel {
 
             },
             new String [] {
-                "MÃ KHÁCH HÀNG", "HỌ VÀ TÊN", "SỐ ĐIỆN THOẠI", "GIỚI TÍNH", "ĐIA CHỈ", "GHI CHÚ", "TRẠNG THÁI"
+                "Mã khách hàng", "Họ và tên", "Số điện thoại", "Giới tính", "Địa chỉ", "Ghi chú", "Trạng Thái"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -351,7 +353,7 @@ public class QLKH extends javax.swing.JPanel {
             }
         });
 
-        jLabel2.setText("MÃ KHÁCH HÀNG");
+        jLabel2.setText("Mã khách hàng");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

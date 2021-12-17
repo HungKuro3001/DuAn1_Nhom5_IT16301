@@ -149,7 +149,7 @@ public class Main extends javax.swing.JFrame {
         panelBorder1.setBackground(new java.awt.Color(242, 242, 242));
         panelBorder1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         panelBorder1.add(menu1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 800));
-        panelBorder1.add(panelTransitions1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 0, 1420, 800));
+        panelBorder1.add(panelTransitions1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 0, 1410, 800));
 
         getContentPane().add(panelBorder1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, 1780, -1));
 

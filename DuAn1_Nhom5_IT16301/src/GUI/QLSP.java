@@ -198,7 +198,7 @@ public class QLSP extends javax.swing.JPanel {
         txtGiaMuaVao.setText("");
         txtKhoiLuong.setText("");
         txtMaSanPham.setText(SPD.maSP_TuSinh());
-        txtSoLuong.setText("");
+        txtSoLuong.setText("0");
         txtTienCong.setText("0");
         txtaMoTa.setText("");
         txtTenSp.setText("");
@@ -305,7 +305,7 @@ public class QLSP extends javax.swing.JPanel {
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 170, -1, -1));
 
         jLabel2.setText("Tên sản phẩm:");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(152, 211, -1, -1));
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 210, -1, -1));
 
         jLabel3.setText("Mã danh mục:");
         add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(146, 80, -1, -1));
@@ -363,7 +363,7 @@ public class QLSP extends javax.swing.JPanel {
         add(txtGiaBanRa, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 130, 134, -1));
 
         jLabel8.setText("Tiền công:");
-        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 190, -1, -1));
+        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 190, -1, -1));
         add(txtTienCong, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 180, 134, -1));
 
         jLabel9.setText("Trạng thái:");
@@ -467,7 +467,7 @@ public class QLSP extends javax.swing.JPanel {
         add(cbxChatLieu, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 80, 134, -1));
 
         jLabel15.setText("Khối lượng:");
-        add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 270, -1, -1));
+        add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 270, -1, -1));
 
         txtSearch.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {

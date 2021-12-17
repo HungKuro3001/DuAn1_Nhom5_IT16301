@@ -33,31 +33,16 @@ public class Slide1 extends javax.swing.JPanel {
         panelTransparent1 = new slideshow.PanelTransparent();
         jLabel1 = new javax.swing.JLabel();
 
-        pictureBox1.setImage(new javax.swing.ImageIcon(getClass().getResource("/images/banner4.jpg"))); // NOI18N
+        pictureBox1.setImage(new javax.swing.ImageIcon(getClass().getResource("/images/banner_top_img.png"))); // NOI18N
 
         panelTransparent1.setBackground(new java.awt.Color(255, 255, 255));
         panelTransparent1.setAlpha(0.5F);
+        panelTransparent1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("sansserif", 3, 40)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(7, 70, 100));
+        jLabel1.setForeground(new java.awt.Color(255, 153, 153));
         jLabel1.setText("Trang sức Toản Huyền");
-
-        javax.swing.GroupLayout panelTransparent1Layout = new javax.swing.GroupLayout(panelTransparent1);
-        panelTransparent1.setLayout(panelTransparent1Layout);
-        panelTransparent1Layout.setHorizontalGroup(
-            panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelTransparent1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addContainerGap(112, Short.MAX_VALUE))
-        );
-        panelTransparent1Layout.setVerticalGroup(
-            panelTransparent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelTransparent1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addContainerGap(138, Short.MAX_VALUE))
-        );
+        panelTransparent1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, -1, -1));
 
         pictureBox1.setLayer(panelTransparent1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
@@ -65,13 +50,11 @@ public class Slide1 extends javax.swing.JPanel {
         pictureBox1.setLayout(pictureBox1Layout);
         pictureBox1Layout.setHorizontalGroup(
             pictureBox1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pictureBox1Layout.createSequentialGroup()
-                .addComponent(panelTransparent1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(221, Short.MAX_VALUE))
+            .addComponent(panelTransparent1, javax.swing.GroupLayout.DEFAULT_SIZE, 1420, Short.MAX_VALUE)
         );
         pictureBox1Layout.setVerticalGroup(
             pictureBox1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelTransparent1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelTransparent1, javax.swing.GroupLayout.DEFAULT_SIZE, 770, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

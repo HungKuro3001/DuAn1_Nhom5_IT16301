@@ -56,7 +56,7 @@ public class pannelQLDMSP extends javax.swing.JPanel {
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(0, 204, 204));
-        jLabel11.setText("Quản lý Danh mục sản phẩm");
+        jLabel11.setText("Quản lý danh mục sản phẩm");
 
         txtMoTa.setColumns(20);
         txtMoTa.setRows(5);
@@ -78,9 +78,9 @@ public class pannelQLDMSP extends javax.swing.JPanel {
             }
         });
 
-        jLabel2.setText("MÃ DANH MỤC");
+        jLabel2.setText("Mã danh mục");
 
-        jLabel3.setText("TÊN DANH MỤC");
+        jLabel3.setText("Tên danh mục");
 
         tblDanhMuc.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -105,7 +105,7 @@ public class pannelQLDMSP extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tblDanhMuc);
 
-        jLabel4.setText("MÔ TẢ");
+        jLabel4.setText("Mô tả");
 
         txtMaDM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -162,8 +162,8 @@ public class pannelQLDMSP extends javax.swing.JPanel {
                         .addGroup(layout.createSequentialGroup()
                             .addGap(19, 19, 19)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 576, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jLabel2)
-                        .addComponent(jLabel4))
+                        .addComponent(jLabel4)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addContainerGap(428, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
