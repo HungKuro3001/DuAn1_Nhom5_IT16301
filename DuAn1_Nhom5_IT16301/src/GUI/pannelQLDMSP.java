@@ -246,11 +246,12 @@ public class pannelQLDMSP extends javax.swing.JPanel {
 
         DanhMuc dm = list.get(row);
         if (dm.isTrangThai() == true) {
-            Msgbox.alert(this, "Khóa thành công");
+             Msgbox.alert(this, "Mở khóa thành công");
             dm.setTrangThai(false);
 
         } else {
-            Msgbox.alert(this, "Mở khóa thành công");
+           
+            Msgbox.alert(this, "Khóa thành công");
             dm.setTrangThai(true);
         }
         dao.updateTT(dm);
@@ -316,7 +317,9 @@ public class pannelQLDMSP extends javax.swing.JPanel {
         for (DanhMuc danhMuc : list) {
             Object[] row = new Object[]{
                 danhMuc.getMaDM(), danhMuc.getTenDm(), danhMuc.getMoTa(), danhMuc.isTrangThai() == false ? "KHÔNG KHÓA" : "KHÓA"
+                    
             };
+          //  System.out.println(""+danhMuc.getMoTa());
             model.addRow(row);
         }
     }
