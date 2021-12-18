@@ -14,6 +14,7 @@ import GUI.QLKH;
 import GUI.QLPhieuNhap;
 import GUI.QuanLiKhachHang;
 import GUI.QuanLyDoiTra;
+import Utils.Auth;
 import Utils.Msgbox;
 import java.awt.Color;
 import java.awt.Panel;
@@ -65,11 +66,16 @@ public class Main extends javax.swing.JFrame {
                     break;
 
                     case 5: {
-                        try {
-                            panelTransitions1.display(new BaoCaoThongKe());
-                        } catch (SQLException ex) {
-                            ex.printStackTrace();
+                        if (Auth.isManager()) {
+                            try {
+                                panelTransitions1.display(new BaoCaoThongKe());
+                            } catch (SQLException ex) {
+                                ex.printStackTrace();
+                            }
+                        }else{
+                            Msgbox.alert(null, "Đăng nhập với tài khoản Admin để sử dụng");
                         }
+
                     }
                     break;
 
@@ -143,7 +149,7 @@ public class Main extends javax.swing.JFrame {
         panelBorder1.setBackground(new java.awt.Color(242, 242, 242));
         panelBorder1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         panelBorder1.add(menu1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 800));
-        panelBorder1.add(panelTransitions1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 0, 1420, 800));
+        panelBorder1.add(panelTransitions1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 0, 1410, 800));
 
         getContentPane().add(panelBorder1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, 1780, -1));
 

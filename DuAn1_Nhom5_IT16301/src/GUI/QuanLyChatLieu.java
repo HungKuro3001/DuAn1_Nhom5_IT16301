@@ -10,6 +10,7 @@ import DAO.loaiChatLieu_DAO;
 import Entity.ChatLieu;
 import Entity.LoaiChatLieu;
 import Utils.Msgbox;
+import java.awt.Color;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
@@ -32,6 +33,7 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
         initComponents();
         panLCL.setVisible(false);
         fillTable();
+        setBackground(new Color(240, 240, 240));
     }
 
     /**
@@ -68,7 +70,6 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
         tblLCL = new javax.swing.JTable();
         btnInsertLClL = new javax.swing.JButton();
         btnUpdateLCL = new javax.swing.JButton();
-        btnDeleteLCL = new javax.swing.JButton();
         btnNewLCL = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         txtTenLCL = new javax.swing.JTextField();
@@ -194,13 +195,6 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
             }
         });
 
-        btnDeleteLCL.setText("Xóa");
-        btnDeleteLCL.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteLCLActionPerformed(evt);
-            }
-        });
-
         btnNewLCL.setText("New");
         btnNewLCL.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -252,7 +246,6 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addGroup(panLCLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnInsertLClL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnDeleteLCL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnUpdateLCL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnNewLCL, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(51, 51, 51))
@@ -286,13 +279,9 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
                     .addComponent(btnNewLCL))
                 .addGap(40, 40, 40)
                 .addGroup(panLCLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(panLCLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(btnDeleteLCL)
-                        .addComponent(jLabel6))
-                    .addGroup(panLCLLayout.createSequentialGroup()
-                        .addComponent(txtGiaMua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(9, 9, 9)))
-                .addGap(18, 18, 18)
+                    .addComponent(jLabel6)
+                    .addComponent(txtGiaMua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
                 .addGroup(panLCLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(txtTuoi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -375,10 +364,6 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
     private void btnUpdateLCLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateLCLActionPerformed
         updateLCL();
     }//GEN-LAST:event_btnUpdateLCLActionPerformed
-
-    private void btnDeleteLCLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteLCLActionPerformed
-        deletelCl();
-    }//GEN-LAST:event_btnDeleteLCLActionPerformed
     public void fillTable() {
         list = dao.selectAll();
         DefaultTableModel model = (DefaultTableModel) tblChatLieu.getModel();
@@ -458,6 +443,7 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
 
         ChatLieu cl = getForm();
         dao.insert(cl);
+        Msgbox.alert(this, "Thêm thành công");
         fillTable();
     }
 
@@ -473,6 +459,7 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
         }
         ChatLieu cl = getForm();
         dao.update(cl);
+        Msgbox.alert(this, "Cập nhật thành công");
         fillTable();
     }
 
@@ -569,6 +556,7 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
         }
         LoaiChatLieu lcl = getFormLCL();
         daolcl.insert(lcl);
+        Msgbox.alert(this, "Thêm thành công");
         fillTableLCL(txtCL.getText());
     }
 
@@ -622,13 +610,13 @@ public class QuanLyChatLieu extends javax.swing.JPanel {
         }
         LoaiChatLieu lcl = getFormLCL();
         daolcl.update(lcl);
+        Msgbox.alert(this, "Cập nhật thành công");
         fillTableLCL(txtCL.getText());
     }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBlock;
-    private javax.swing.JButton btnDeleteLCL;
     private javax.swing.JButton btnInsertLClL;
     private javax.swing.JButton btnNew;
     private javax.swing.JButton btnNewLCL;

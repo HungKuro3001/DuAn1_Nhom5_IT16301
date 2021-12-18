@@ -12,6 +12,7 @@ import Entity.ChiTietPhieuNhap;
 import Entity.PhieuNhap;
 import Entity.SanPham;
 import Utils.Msgbox;
+import java.awt.Color;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.sql.SQLException;
@@ -48,6 +49,7 @@ public class QLPhieuNhap extends javax.swing.JPanel {
         txtMaPn.setText(maPn);
         txtThanhTien.setText("0");
         fillTable();
+         setBackground(new Color(240, 240, 240));
     }
 
     public void Clear() throws SQLException {
@@ -142,8 +144,8 @@ public class QLPhieuNhap extends javax.swing.JPanel {
     public void insertPN() {
         try {
 
-          SimpleDateFormat sfd = new SimpleDateFormat("dd-MM-yyyy");
-        String ngayNhap = sfd.format(jDCNgayNhap.getDate());
+//          SimpleDateFormat sfd = new SimpleDateFormat("dd-MM-yyyy");
+//        String ngayNhap = sfd.format(jDCNgayNhap.getDate());
  
          
             if (jDCNgayNhap.getDate().equals("")) {

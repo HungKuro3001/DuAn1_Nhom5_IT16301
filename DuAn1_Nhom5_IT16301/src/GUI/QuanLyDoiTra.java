@@ -5,15 +5,22 @@
  */
 package GUI;
 
+import DAO.ChiTietHD_DAO;
 import DAO.DoiTra_Dao;
 import DAO.HoaDon_DAO;
 import DAO.SanPham_DAO;
+import Entity.ChiTietHD;
 import Entity.DoiTra;
 import Entity.HoaDon;
 import Entity.SanPham;
 import Utils.Msgbox;
+import java.awt.Color;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,9 +34,10 @@ public class QuanLyDoiTra extends javax.swing.JPanel {
 
     private DoiTra_Dao dtDao = new DoiTra_Dao();
     private HoaDon_DAO hdDao = new HoaDon_DAO();
+    private ChiTietHD_DAO ctDao = new ChiTietHD_DAO();
     private SanPham_DAO spDao = new SanPham_DAO();
     private List<HoaDon> listHD = new ArrayList<>();
-    private List<SanPham> listSp = new ArrayList<>();
+    private List<ChiTietHD> listSp = new ArrayList<>();
     private List<DoiTra> listDt = new ArrayList<>();
 
     /**
@@ -41,10 +49,15 @@ public class QuanLyDoiTra extends javax.swing.JPanel {
         txtMaPDT.setText(maPDT);
         fillCbx();
         fillTable();
+        setBackground(new Color(240, 240, 240));
+        rdoDoi.setSelected(true);
 
     }
 
     private DoiTra getForm() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        Calendar cal = Calendar.getInstance();
+        java.sql.Timestamp ngayGD = new java.sql.Timestamp(cal.getTimeInMillis());
         DoiTra dt = new DoiTra();
         dt.setMaPDT(txtMaPDT.getText());
         dt.setMaHD(cbxMaHD.getSelectedItem() + "");
@@ -56,6 +69,7 @@ public class QuanLyDoiTra extends javax.swing.JPanel {
         }
         dt.setLiDo(txtLiDo.getText());
         dt.setGhiChu(txtGhiChu.getText());
+        dt.setNgayDT(ngayGD);
         return dt;
     }
 
@@ -64,8 +78,8 @@ public class QuanLyDoiTra extends javax.swing.JPanel {
         cbxMaHD.setSelectedItem(dt.getMaHD());
         cbxMaSp.setSelectedItem(dt.getMaSP());
         txtLiDo.setText(dt.getLiDo());
-        txtGhiChu.setText(dt.getLiDo());
-        if (dt.isHinhThuc()==true) {
+        txtGhiChu.setText(dt.getGhiChu());
+        if (dt.isHinhThuc() == true) {
             rdoDoi.setSelected(true);
         } else {
             rdoTra.setSelected(true);
@@ -73,13 +87,18 @@ public class QuanLyDoiTra extends javax.swing.JPanel {
     }
 
     private void fillCbx() {
-        listHD = hdDao.selectAll();
-        listSp = spDao.selectAll();
+        Calendar cal = Calendar.getInstance();
+        java.sql.Timestamp ngayGD = new java.sql.Timestamp(cal.getTimeInMillis());
+//        cbxMaHD.removeAllItems();
+//        cbxMaSp.removeAllItems();
+        listHD = hdDao.selectBYDate(ngayGD);
+
         for (HoaDon hoaDon : listHD) {
             cbxMaHD.addItem(hoaDon.getMaHD());
         }
-        for (SanPham sanPham : listSp) {
-            cbxMaSp.addItem(sanPham.getMaSP());
+        listSp = ctDao.selectByMAHD(cbxMaHD.getSelectedItem() + "");
+        for (ChiTietHD chiTiet : listSp) {
+            cbxMaSp.addItem(chiTiet.getMaSp());
         }
     }
 
@@ -91,7 +110,8 @@ public class QuanLyDoiTra extends javax.swing.JPanel {
             for (DoiTra doiTra : listDt) {
                 Object[] row = new Object[]{
                     doiTra.getMaPDT(), doiTra.getMaHD(), doiTra.getMaSP(),
-                    doiTra.isHinhThuc()==true? "Đổi": "Trả", doiTra.getLiDo(), doiTra.getGhiChu()
+                    doiTra.isHinhThuc() == true ? "Đổi" : "Trả", doiTra.getLiDo(), doiTra.getGhiChu(),
+                    doiTra.getNgayDT()
                 };
                 model.addRow(row);
 
@@ -111,6 +131,7 @@ public class QuanLyDoiTra extends javax.swing.JPanel {
         Msgbox.alert(this, "Thêm phiếu đổi trả thành công");
         New();
     }
+
     public void update() throws SQLException {
         if (rdoDoi.isSelected() == false && rdoTra.isSelected() == false) {
             Msgbox.alert(this, "Chọn hình thức đổi hoặc trả");
@@ -176,6 +197,12 @@ public class QuanLyDoiTra extends javax.swing.JPanel {
 
         jLabel2.setText("MaHD");
 
+        cbxMaHD.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxMaHDItemStateChanged(evt);
+            }
+        });
+
         jLabel3.setText("MaSP");
 
         jLabel4.setText("Hình thức");
@@ -214,17 +241,17 @@ public class QuanLyDoiTra extends javax.swing.JPanel {
 
         tblDoiTra.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "MAPDT", "MaHD", "MaSP", "Hình thức", "Lí do", "Ghi chú"
+                "MAPDT", "MaHD", "MaSP", "Hình thức", "Lí do", "Ghi chú", "Thời gian"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true, false
+                false, false, false, false, true, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -266,38 +293,34 @@ public class QuanLyDoiTra extends javax.swing.JPanel {
                         .addComponent(jLabel1)
                         .addGap(19, 19, 19)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cbxMaSp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxMaHD, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(87, 87, 87)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbxMaSp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbxMaHD, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtMaPDT, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(87, 87, 87)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtMaPDT, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(rdoDoi, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(38, 38, 38)
-                                        .addComponent(rdoTra, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 628, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(151, 151, 151))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(256, 256, 256)
-                                .addComponent(jLabel12)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addComponent(rdoDoi, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(38, 38, 38)
+                                .addComponent(rdoTra, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(btnthem)
+                            .addGap(40, 40, 40)
+                            .addComponent(jButton2)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnNew))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(98, 98, 98)
-                        .addComponent(btnthem)
-                        .addGap(60, 60, 60)
-                        .addComponent(jButton2)
-                        .addGap(27, 27, 27)
-                        .addComponent(btnNew)
-                        .addContainerGap())))
+                        .addGap(256, 256, 256)
+                        .addComponent(jLabel12)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 628, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(151, 151, 151))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(601, 601, 601)
                 .addComponent(jLabel11)
@@ -338,19 +361,23 @@ public class QuanLyDoiTra extends javax.swing.JPanel {
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addGap(85, 85, 85)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(61, 61, 61)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnthem)
-                    .addComponent(jButton2)
-                    .addComponent(btnNew))
-                .addContainerGap(303, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(btnthem))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnNew)
+                            .addComponent(jButton2))))
+                .addContainerGap(317, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -367,25 +394,33 @@ public class QuanLyDoiTra extends javax.swing.JPanel {
             New();
             btnthem.setEnabled(true);
         } catch (SQLException ex) {
-           ex.printStackTrace();
+            ex.printStackTrace();
         }
     }//GEN-LAST:event_btnNewActionPerformed
 
     private void tblDoiTraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDoiTraMouseClicked
-      int row= tblDoiTra.getSelectedRow();
-      DoiTra dt = listDt.get(row);
+        int row = tblDoiTra.getSelectedRow();
+        DoiTra dt = listDt.get(row);
         setForm(dt);
         btnthem.setEnabled(false);
 
     }//GEN-LAST:event_tblDoiTraMouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       try {
-         update();
+        try {
+            update();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void cbxMaHDItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxMaHDItemStateChanged
+        cbxMaSp.removeAllItems();
+        listSp = ctDao.selectByMAHD(cbxMaHD.getSelectedItem() + "");
+        for (ChiTietHD chiTiet : listSp) {
+            cbxMaSp.addItem(chiTiet.getMaSp());
+        }
+    }//GEN-LAST:event_cbxMaHDItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

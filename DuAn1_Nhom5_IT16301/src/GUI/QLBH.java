@@ -26,6 +26,7 @@ import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -81,6 +82,7 @@ public class QLBH extends javax.swing.JPanel {
     private void init() throws SQLException {
         //AutoCompleteDecorator.decorate(cbxMaKH);
         // AutoCompleteDecorator.decorate(cbxTenSP);
+         setBackground(new Color(240, 240, 240));
         fillCBX();
         String maHD = hdd.maHD_TuSinh();
         txtMaHoaDon.setText(maHD);
@@ -1191,6 +1193,13 @@ public class QLBH extends javax.swing.JPanel {
             lblBangChu.setText(numberToString(tongTien));
             HoaDon TTHD = getForm();
             hdd.updatetongTien(TTHD);
+           for (SanPham sanpham : listSP) {
+            if (sanpham.getTenSP().equals(cbxTenSP.getSelectedItem().toString())) {
+                maSP = sanpham.getMaSP();
+            }
+            }
+           int soluong =0 -Integer.parseInt(txtSoLuong.getText());
+            spd.updateSoLuong(soluong+"", maSP);
 
         } catch (Exception e) {
             e.printStackTrace();

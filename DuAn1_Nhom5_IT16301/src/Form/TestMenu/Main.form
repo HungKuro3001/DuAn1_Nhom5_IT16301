@@ -52,7 +52,7 @@
         <Component class="Form.TestMenu.PanelTransitions" name="panelTransitions1">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="350" y="0" width="1420" height="800"/>
+              <AbsoluteConstraints x="360" y="0" width="1410" height="800"/>
             </Constraint>
           </Constraints>
         </Component>

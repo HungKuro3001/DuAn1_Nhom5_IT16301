@@ -29,17 +29,19 @@ public class Slide4 extends javax.swing.JPanel {
 
         pictureBox1 = new slideshow.PictureBox();
 
-        pictureBox1.setImage(new javax.swing.ImageIcon(getClass().getResource("/images/banner3.jpg"))); // NOI18N
+        pictureBox1.setImage(new javax.swing.ImageIcon(getClass().getResource("/images/trang-suc-kim-cuong-nhan-tao-1.jpg"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pictureBox1, javax.swing.GroupLayout.DEFAULT_SIZE, 725, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(pictureBox1, javax.swing.GroupLayout.DEFAULT_SIZE, 1410, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pictureBox1, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
+            .addComponent(pictureBox1, javax.swing.GroupLayout.DEFAULT_SIZE, 770, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 

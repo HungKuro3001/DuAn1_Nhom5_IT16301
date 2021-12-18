@@ -36,47 +36,41 @@
                   </Group>
               </Group>
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="cbxMaSp" alignment="1" min="-2" pref="278" max="-2" attributes="0"/>
+                  <Component id="cbxMaHD" alignment="1" min="-2" pref="278" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="cbxMaSp" alignment="1" min="-2" pref="278" max="-2" attributes="0"/>
-                          <Component id="cbxMaHD" alignment="1" min="-2" pref="278" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="txtMaPDT" min="-2" pref="278" max="-2" attributes="0"/>
-                                  <Group type="102" attributes="0">
-                                      <Component id="rdoDoi" min="-2" pref="50" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-                                      <Component id="rdoTra" min="-2" pref="50" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                          </Group>
-                          <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                              <Component id="jScrollPane1" alignment="0" min="-2" pref="278" max="-2" attributes="0"/>
-                              <Component id="jScrollPane2" alignment="1" min="-2" pref="278" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="txtMaPDT" min="-2" pref="278" max="-2" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <EmptySpace pref="46" max="32767" attributes="0"/>
-                              <Component id="jScrollPane3" min="-2" pref="628" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="151" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="256" max="-2" attributes="0"/>
-                              <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="rdoDoi" min="-2" pref="50" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                              <Component id="rdoTra" min="-2" pref="50" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
+                  <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="jScrollPane1" alignment="0" min="-2" pref="278" max="-2" attributes="0"/>
+                      <Component id="jScrollPane2" alignment="1" min="-2" pref="278" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="btnthem" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                          <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="btnNew" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+              </Group>
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="98" max="-2" attributes="0"/>
-                      <Component id="btnthem" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
-                      <Component id="jButton2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-                      <Component id="btnNew" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="256" max="-2" attributes="0"/>
+                      <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace pref="46" max="32767" attributes="0"/>
+                      <Component id="jScrollPane3" min="-2" pref="628" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="151" max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -132,23 +126,30 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Component id="jScrollPane2" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="85" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                          <Component id="jScrollPane1" min="-2" pref="47" max="-2" attributes="0"/>
+                          <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <Component id="jScrollPane2" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="btnthem" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnNew" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                      <Component id="btnthem" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="btnNew" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
               </Group>
-              <EmptySpace pref="303" max="32767" attributes="0"/>
+              <EmptySpace pref="317" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -186,6 +187,9 @@
           <StringArray count="0"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cbxMaHDItemStateChanged"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
@@ -292,17 +296,23 @@
         <Component class="javax.swing.JTable" name="tblDoiTra">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="6" rowCount="4">
+              <Table columnCount="7" rowCount="4">
                 <Column editable="false" title="MAPDT" type="java.lang.Object"/>
                 <Column editable="false" title="MaHD" type="java.lang.Object"/>
                 <Column editable="false" title="MaSP" type="java.lang.Object"/>
                 <Column editable="false" title="H&#xec;nh th&#x1ee9;c" type="java.lang.Object"/>
                 <Column editable="true" title="L&#xed; do" type="java.lang.Object"/>
                 <Column editable="false" title="Ghi ch&#xfa;" type="java.lang.Object"/>
+                <Column editable="true" title="Th&#x1edd;i gian" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>

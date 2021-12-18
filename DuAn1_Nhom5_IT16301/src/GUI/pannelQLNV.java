@@ -9,6 +9,7 @@ import DAO.NhanVien_DAO;
 import Entity.NhanVien;
 import Utils.Auth;
 import Utils.Msgbox;
+import java.awt.Color;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ public class pannelQLNV extends javax.swing.JPanel {
             btnKhoa.setEnabled(true);
             btnInsert.setEnabled(true);
         }
+        setBackground(new Color(240, 240, 240));
     }
 
     /**
@@ -147,46 +149,46 @@ public class pannelQLNV extends javax.swing.JPanel {
         add(txtMoTa, new org.netbeans.lib.awtextra.AbsoluteConstraints(483, 340, 137, -1));
         add(txtNgaySinh, new org.netbeans.lib.awtextra.AbsoluteConstraints(483, 156, 137, -1));
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel7.setText("User name ");
         add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 116, -1, -1));
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setText("Password ");
         add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(726, 156, -1, -1));
 
-        jLabel9.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel9.setText("Role ");
         add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(763, 194, -1, -1));
 
-        jLabel10.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel10.setText("Manv ");
         add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(756, 242, -1, -1));
         add(txtUserName, new org.netbeans.lib.awtextra.AbsoluteConstraints(833, 116, 137, -1));
         add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(833, 156, 137, -1));
         add(txtMaNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(833, 242, 137, -1));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Họ tên ");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(341, 116, -1, -1));
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Ngày sinh ");
         add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(341, 156, -1, -1));
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("CCCD");
         add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(341, 194, -1, -1));
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setText("SĐT ");
         add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(341, 232, -1, -1));
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("Giới tính ");
         add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(341, 279, -1, -1));
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setText("Mô Tả ");
         add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(341, 340, -1, -1));
         add(txtTen, new org.netbeans.lib.awtextra.AbsoluteConstraints(483, 116, 137, -1));
@@ -208,13 +210,14 @@ public class pannelQLNV extends javax.swing.JPanel {
         jLabel11.setText("Quản lý nhân viên");
         add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 30, -1, -1));
 
+        btnDoiiMk.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\OneDrive\\Desktop\\UploadGitHub\\DuAn1_Nhom5_IT16301\\DuAn1_Nhom5_IT16301\\src\\images\\Icon_Logo\\password (1).png")); // NOI18N
         btnDoiiMk.setText("Đổi mật khẩu");
         btnDoiiMk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDoiiMkActionPerformed(evt);
             }
         });
-        add(btnDoiiMk, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 380, -1, -1));
+        add(btnDoiiMk, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 370, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblNhanVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNhanVienMouseClicked
@@ -231,7 +234,7 @@ public class pannelQLNV extends javax.swing.JPanel {
         try {
             insert();
         } catch (ParseException ex) {
-            Logger.getLogger(QuanLiTaiKhoan.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
     }//GEN-LAST:event_btnInsertActionPerformed
 

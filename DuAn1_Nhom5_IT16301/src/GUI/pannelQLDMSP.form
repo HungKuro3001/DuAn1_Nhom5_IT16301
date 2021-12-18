@@ -57,8 +57,8 @@
                           <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                           <Component id="jScrollPane1" min="-2" pref="576" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel2" alignment="0" min="-2" pref="75" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="428" max="32767" attributes="0"/>
               </Group>
@@ -120,7 +120,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="cc" green="cc" red="0" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Qu&#x1ea3;n l&#xfd; Danh m&#x1ee5;c s&#x1ea3;n ph&#x1ea9;m"/>
+        <Property name="text" type="java.lang.String" value="Qu&#x1ea3;n l&#xfd; danh m&#x1ee5;c s&#x1ea3;n ph&#x1ea9;m"/>
       </Properties>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane2">
@@ -165,12 +165,12 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="M&#xc3; DANH M&#x1ee4;C"/>
+        <Property name="text" type="java.lang.String" value="M&#xe3; danh m&#x1ee5;c"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
-        <Property name="text" type="java.lang.String" value="T&#xca;N DANH M&#x1ee4;C"/>
+        <Property name="text" type="java.lang.String" value="T&#xea;n danh m&#x1ee5;c"/>
       </Properties>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
@@ -226,7 +226,7 @@
     </Container>
     <Component class="javax.swing.JLabel" name="jLabel4">
       <Properties>
-        <Property name="text" type="java.lang.String" value="M&#xd4; T&#x1ea2;"/>
+        <Property name="text" type="java.lang.String" value="M&#xf4; t&#x1ea3;"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtMaDM">

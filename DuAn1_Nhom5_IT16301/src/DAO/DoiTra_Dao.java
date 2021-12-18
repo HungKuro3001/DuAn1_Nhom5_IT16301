@@ -18,14 +18,14 @@ import java.util.List;
  */
 public class DoiTra_Dao extends Dao<DoiTra, String> {
 
-    String insert = "INSERT DOITRA values (?,?,?,?,?,?)";
+    String insert = "INSERT DOITRA values (?,?,?,?,?,?,?)";
     String update = "UPDATE DOITRA SET MAHD=?,MASP=?,HINHTHUC=?,LYDO=?,GHICHU=? WHERE MAPDT=?";
-    String selectAll = "SELECT * FROM DOITRA";
+    String selectAll = "SELECT * FROM DOITRA ORDER BY THOIGIAN DESC";
 
     @Override
     public void insert(DoiTra entity) {
         jdbcHelper.Update(insert, entity.getMaPDT(), entity.getMaHD(), entity.getMaSP(),
-                entity.isHinhThuc(), entity.getLiDo(), entity.getGhiChu());
+                entity.isHinhThuc(), entity.getLiDo(), entity.getGhiChu(),entity.getNgayDT());
     }
 
     @Override
@@ -73,6 +73,7 @@ public class DoiTra_Dao extends Dao<DoiTra, String> {
                 dt.setHinhThuc(rs.getBoolean(4));
                 dt.setLiDo(rs.getString(5));
                 dt.setGhiChu(rs.getString(6));
+                dt.setNgayDT(rs.getDate(7));
                 list.add(dt);
             }
             return list;

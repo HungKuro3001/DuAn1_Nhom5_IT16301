@@ -10,6 +10,7 @@ import Helper.jdbcHelper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,10 +21,12 @@ public class HoaDon_DAO extends Dao<HoaDon, String> {
 
     String insertHD = "INSERT INTO HOADON VALUES (?,?,?,?,?,?,?,?,?)";
     String updateHD = "UPDATE HOADON SET MAKH=?,KHACHTRA=?, HINHTHUCTHANHTOAN=?, HINHTHUCMUA=?, TRANGTHAIHD=? WHERE MAHD=?";
-    String selectAll = "SELECT * FROM HOADON";
+    String selectAll = "SELECT * FROM HOADON ORDER BY NGAYGD DESC";
     String selectById = "SELECT * FROM HOADON WHERE MAHD=?";
     String updateTT = "UPDATE HOADON SET TONGTIEN=? WHERE MAHD=?";
     String selectByKH = "SELECT * FROM HOADON WHERE MAKH=?";
+    String selectByDate = "SELECT HD.* FROM HOADON HD JOIN HOADONCHITIET CT ON HD.MAHD = CT.MAHD  WHERE DATEDIFF(DAY,NGAYGD,?) <5";
+
 
     @Override
     public void insert(HoaDon entity) {
@@ -53,14 +56,20 @@ public class HoaDon_DAO extends Dao<HoaDon, String> {
         return list;
     }
 
+
+    public List<HoaDon> selectBYDate(Date date) {
+        List<HoaDon> list = this.selectBySql(selectByDate, date);
+        return list;
+    }
+
     public List<HoaDon> selectByKH(String makh) {
-        List<HoaDon> list = this.selectBySql(selectByKH,makh);
+        List<HoaDon> list = this.selectBySql(selectByKH, makh);
         return list;
     }
 
     @Override
     public HoaDon selectById(String key) {
-        List<HoaDon> list = this.selectBySql(selectById,key);
+        List<HoaDon> list = this.selectBySql(selectById, key);
         if (list.isEmpty()) {
             return null;
         }

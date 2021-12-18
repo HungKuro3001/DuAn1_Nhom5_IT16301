@@ -14,8 +14,10 @@ import Entity.DanhMuc;
 import Entity.LoaiChatLieu;
 import Entity.SanPham;
 import Utils.Msgbox;
+import java.awt.Color;
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComboBox;
@@ -41,13 +43,14 @@ public class QLSP extends javax.swing.JPanel {
         initComponents();
         init();
         txtSoLuong.setText("0");
+        setBackground(new Color(240, 240, 240));
     }
     private void fillCBX(){
         listDM = dmd.selectAll();
         for (DanhMuc danhMuc : listDM) { //cbx Danh mục
             cbxMaDanhMuc.addItem(danhMuc.getMaDM());
         }
-        listCL = CLD.selectAll();
+        listCL = CLD.selectByTT();
         for (ChatLieu cl : listCL) { ///cbx chất liệu
             cbxChatLieu.addItem(cl.getMaCL());
         }
@@ -104,13 +107,14 @@ public class QLSP extends javax.swing.JPanel {
         if (listSP==null) {
             return;
         }
+        DecimalFormat df=new DecimalFormat("0.00");
         for (SanPham sp : listSP) {
-            model.addRow(new Object[]{sp.getMaSP(),sp.getMaDm(),sp.getTenSP(),sp.getMaLCL(),sp.getKhoiLuong(),new BigDecimal(sp.getGiaMuaVao()),new BigDecimal(sp.getGiaBanRa())
-                    ,sp.getTienCong(),sp.getTrangThai(),sp.getSoLuong(),sp.getMoTa()});
+            model.addRow(new Object[]{sp.getMaSP(),sp.getMaDm(),sp.getTenSP(),sp.getMaLCL(),sp.getKhoiLuong(),df.format(new BigDecimal(sp.getGiaMuaVao())),
+                df.format(new BigDecimal(sp.getGiaBanRa())) ,sp.getTienCong(),sp.getTrangThai(),sp.getSoLuong(),sp.getMoTa()});
         }
     }
     public void insert(){
-        if(txtMaSanPham.getText().equals("")){
+        if(txtTenSp.getText().equals("")){
            Msgbox.alert(this, "Không được để trống tên sản phẩm");
             return; 
         }
@@ -139,10 +143,11 @@ public class QLSP extends javax.swing.JPanel {
         
         SanPham sp =getForm();
         SPD.insert(sp);
+        Msgbox.alert(this, "Thêm thành công");
         fillTable();
     }
     public void update(){
-          if(txtMaSanPham.getText().equals("")){
+          if(txtTenSp.getText().equals("")){
            Msgbox.alert(this, "Không được để trống tên sản phẩm");
             return; 
         }
@@ -169,6 +174,7 @@ public class QLSP extends javax.swing.JPanel {
         }
         SanPham sp =getForm();
         SPD.update(sp);
+        Msgbox.alert(this, "Cập nhật thành công");
         fillTable();
     }
     
@@ -192,8 +198,8 @@ public class QLSP extends javax.swing.JPanel {
         txtGiaMuaVao.setText("");
         txtKhoiLuong.setText("");
         txtMaSanPham.setText(SPD.maSP_TuSinh());
-        txtSoLuong.setText("");
-        txtTienCong.setText("");
+        txtSoLuong.setText("0");
+        txtTienCong.setText("0");
         txtaMoTa.setText("");
         txtTenSp.setText("");
         tblSanPham.clearSelection();
@@ -217,9 +223,9 @@ public class QLSP extends javax.swing.JPanel {
         
         String maLCL =cbxMaLoaiChatLieu.getSelectedItem().toString();
         double[] result =SPD.calculateMoney(khoiLuong,maLCL);
-      
-        txtGiaBanRa.setText(""+new BigDecimal(result[0]));
-        txtGiaMuaVao.setText(""+new BigDecimal(result[1]));
+        DecimalFormat df=new DecimalFormat("0.00");
+        txtGiaBanRa.setText(""+df.format(new BigDecimal(result[0])));
+        txtGiaMuaVao.setText(""+df.format(new BigDecimal(result[1])));
     }
     private void search(){
         if(txtSearch.getText().trim().equals("")){
@@ -299,7 +305,7 @@ public class QLSP extends javax.swing.JPanel {
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 170, -1, -1));
 
         jLabel2.setText("Tên sản phẩm:");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(152, 211, -1, -1));
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 210, -1, -1));
 
         jLabel3.setText("Mã danh mục:");
         add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(146, 80, -1, -1));
@@ -357,7 +363,7 @@ public class QLSP extends javax.swing.JPanel {
         add(txtGiaBanRa, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 130, 134, -1));
 
         jLabel8.setText("Tiền công:");
-        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 190, -1, -1));
+        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 190, -1, -1));
         add(txtTienCong, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 180, 134, -1));
 
         jLabel9.setText("Trạng thái:");
@@ -461,7 +467,7 @@ public class QLSP extends javax.swing.JPanel {
         add(cbxChatLieu, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 80, 134, -1));
 
         jLabel15.setText("Khối lượng:");
-        add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 270, -1, -1));
+        add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 270, -1, -1));
 
         txtSearch.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
