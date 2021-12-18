@@ -117,21 +117,30 @@ public class BaoCaoThongKe extends javax.swing.JPanel {
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
         String ngayBatDau = sdf.format(jDCNgayBatDau.getDate());
         String ngayKetThuc = sdf.format(jDCNgayKetThuc.getDate());
-        // System.out.println(""+ngayBatDau);
-        double[] result = thongSo(ngayBatDau, ngayKetThuc);
+        
+        //double[] result = thongSo(ngayBatDau, ngayKetThuc);
         DecimalFormat df = new DecimalFormat();
         df.setMaximumFractionDigits(2);
-        lblDoanhTHu.setText("" + df.format(result[0]));
-        lblSoHoaDon.setText("" + df.format(result[1]));
-        lblGiamGia.setText("" + df.format(result[2]));
-
+        lbltienNhap.setText("" + df.format(tienNhap(ngayBatDau, ngayKetThuc)));
+        lblSoHoaDon.setText("" + df.format(soHoaDon(ngayBatDau, ngayKetThuc)));
+        lblGiamGia.setText("" + df.format(giamGia(ngayBatDau, ngayKetThuc)));
+         lblTienMua.setText("" + df.format(tienMua(ngayBatDau, ngayKetThuc)));
         lblDoanhTHuBan.setText("" + df.format(doanhThuBan(ngayBatDau, ngayKetThuc)));
-        lblTienMua.setText("" + df.format(tienMua(ngayBatDau, ngayKetThuc)));
+       
     }
 
     private double doanhThuBan(String ngayBatDau, String ngayKetThuc) throws SQLException {
-        String query = "select SUM(TONGTIEN) from HOADON HD\n"
-                + "where HINHTHUCMUA =0 AND HD.NGAYGD BETWEEN '" + ngayBatDau + "' AND '" + ngayKetThuc + " 23:59:59.999'";
+             String query = "DECLARE @TONGTIEN FLOAT,\n"
+                + " @DOITRA FLOAT \n"
+                + "SET @TONGTIEN=(select SUM(TONGTIEN) from HOADON HD where HINHTHUCMUA =0\n"
+                + "AND HD.NGAYGD BETWEEN  '" + ngayBatDau + "' AND  '" + ngayKetThuc + " 23:59:59.999 ') "
+                + "SET @DOITRA = (select SUM(ct.DonGia) from HOADONCHITIET ct join HOADON hd ON CT.MaHD =HD.MAHD\n"
+                + "JOIN DOITRA dt ON DT.MAHD =HD.MAHD\n"
+                + "WHERE DT.THOIGIAN between '" + ngayBatDau + "' AND  '" + ngayKetThuc + " 23:59:59.999 '\n"
+                + "and dt.HINHTHUC =0 AND DT.MASP =CT.MaSP);\n"
+                + "SELECT @TONGTIEN - @DOITRA";
+        
+        System.out.println(""+query);
         ResultSet rs = jdbcHelper.query(query);
         double doanhThuBan = 0;
 
@@ -144,7 +153,7 @@ public class BaoCaoThongKe extends javax.swing.JPanel {
     private double tienMua(String ngayBatDau, String ngayKetThuc) throws SQLException {
         String query = "select SUM(TONGTIEN) from HOADON HD\n"
                 + "where HINHTHUCMUA =1 AND HD.NGAYGD BETWEEN '" + ngayBatDau + "' AND '" + ngayKetThuc + " 23:59:59.999'";
-        System.out.println("" + query);
+        //System.out.println("" + query);
         ResultSet rs = jdbcHelper.query(query);
         double tienMua = 0;
 
@@ -153,19 +162,41 @@ public class BaoCaoThongKe extends javax.swing.JPanel {
         }
         return tienMua;
     }
+        private double tienNhap(String ngayBatDau, String ngayKetThuc) throws SQLException {
+        String query = "SELECT SUM(THANHTIEN) FROM PHIEUNHAP WHERE NGAYNHAP\n"
+                + " BETWEEN '" + ngayBatDau + "' AND '" + ngayKetThuc + " 23:59:59.999'";
+        ResultSet rs = jdbcHelper.query(query);
+        double tienNhap = 0;
 
-    private double[] thongSo(String ngayBatDau, String ngayKetThuc) throws SQLException { //lấy số lượng theo danh mục
-        String query = "exec SP_BCTK3 @NGAYBATDAU = '" + ngayBatDau + "',@NGAYKETTHUC ='" + ngayKetThuc + " 23:59:59.999'";
+        while (rs.next()) {
+            tienNhap = rs.getDouble(1);
+        }
+        return tienNhap;
+    }
+
+    private double soHoaDon(String ngayBatDau, String ngayKetThuc) throws SQLException { //lấy số lượng theo danh mục
+        String query = "SELECT  COUNT(HD.MAHD) FROM HOADON HD WHERE NGAYGD BETWEEN "
+                + " '" + ngayBatDau + "' AND '" + ngayKetThuc + " 23:59:59.999'";
         //System.out.println(""+query);
-        double doanhThu = 0, soHoaDon = 0, giamGia = 0;
+        double soHoaDon = 0;
         ResultSet rs = jdbcHelper.query(query);
         while (rs.next()) {
-            doanhThu = rs.getDouble(1);
-            soHoaDon = rs.getDouble(2);
-            giamGia = rs.getDouble(3);
-        }
 
-        return new double[]{doanhThu, soHoaDon, giamGia};
+            soHoaDon = rs.getDouble(1);
+        }
+        return soHoaDon;
+    }
+        private double giamGia(String ngayBatDau, String ngayKetThuc) throws SQLException {
+        String query = "SELECT  SUM(GIAMGIA) FROM HOADONCHITIET CT JOIN HOADON HD ON CT.MaHD =HD.MAHD  "
+                + "WHERE NGAYGD BETWEEN '" + ngayBatDau + "' AND '" + ngayKetThuc + " 23:59:59.999'";
+        //System.out.println(""+query);
+        double giamGia = 0;
+        ResultSet rs = jdbcHelper.query(query);
+        while (rs.next()) {
+
+            giamGia = rs.getDouble(1);
+        }
+        return giamGia;
     }
 
     private void init() throws SQLException {
@@ -176,7 +207,7 @@ public class BaoCaoThongKe extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblDoanhTHu = new javax.swing.JLabel();
+        lbltienNhap = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         lblMau1 = new javax.swing.JLabel();
         lblDoanhTHuBan = new javax.swing.JLabel();
@@ -200,16 +231,16 @@ public class BaoCaoThongKe extends javax.swing.JPanel {
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblDoanhTHu.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        lblDoanhTHu.setForeground(new java.awt.Color(255, 255, 255));
-        lblDoanhTHu.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblDoanhTHu.setText("0");
-        add(lblDoanhTHu, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 160, 180, -1));
+        lbltienNhap.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lbltienNhap.setForeground(new java.awt.Color(255, 255, 255));
+        lbltienNhap.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbltienNhap.setText("0");
+        add(lbltienNhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 160, 180, -1));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Doanh Thu ");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 120, -1, -1));
+        jLabel1.setText("Tiền nhập hàng ");
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 120, -1, -1));
 
         lblMau1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/AnhBCTK1.png"))); // NOI18N
         lblMau1.setText("jLabel3");
@@ -320,7 +351,6 @@ public class BaoCaoThongKe extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel lbl;
-    private javax.swing.JLabel lblDoanhTHu;
     private javax.swing.JLabel lblDoanhTHuBan;
     private javax.swing.JLabel lblGiamGia;
     private javax.swing.JLabel lblMau1;
@@ -330,6 +360,7 @@ public class BaoCaoThongKe extends javax.swing.JPanel {
     private javax.swing.JLabel lblMau5;
     private javax.swing.JLabel lblSoHoaDon;
     private javax.swing.JLabel lblTienMua;
+    private javax.swing.JLabel lbltienNhap;
     private javax.swing.JPanel panelBDCot;
     private javax.swing.JPanel panelBarChart;
     // End of variables declaration//GEN-END:variables

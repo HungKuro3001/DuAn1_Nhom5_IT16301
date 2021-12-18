@@ -411,7 +411,7 @@ public class QLBH extends javax.swing.JPanel {
     }
 
 
-    private void thanhTien() {
+    private void thanhTien() throws ParseException {
         if (txtGiamGia.getText().isEmpty()) {
             Msgbox.alert(this, "không để trống giảm giá");
             return;
@@ -455,6 +455,11 @@ public class QLBH extends javax.swing.JPanel {
                     txtGiamGia.setText("");
                     return;
                 }
+                if (giamGia > 100) {
+                    Msgbox.alert(this, "Giảm giá không vượt 100%");
+                    txtGiamGia.setText("");
+                    return;
+                }
             } catch (Exception e) {
                 Msgbox.alert(this, "Phần trăm giảm là số nguyên dương");
                 txtGiamGia.setText("");
@@ -462,7 +467,9 @@ public class QLBH extends javax.swing.JPanel {
             }
 
             double thanhTien = TTChưaGiamGia / 100 * (100 - giamGia);
-            txtThanhTien.setText(new BigDecimal(thanhTien) + "");
+            DecimalFormat df = new DecimalFormat();
+            df.setMaximumFractionDigits(2);
+            txtThanhTien.setText(df.format(thanhTien) + "");
         }
 
     }
@@ -872,7 +879,7 @@ public class QLBH extends javax.swing.JPanel {
         //dòng 4
         row = sheet.createRow(4);
         cell = row.createCell(1, CellType.STRING);
-        cell.setCellValue("Đ/c:Khu Minh Khanh -Xã Minh Khai- Huyện tân sơn - Tỉnh "
+        cell.setCellValue("Đ/c:Khu Minh Khanh -Xã Minh Khai- Huyện Tân Sơn - Tỉnh "
                 + "Phú Thọ   ĐT:0978154115-0986334292");
         cell.setCellStyle(cellStyle2);
         //dòng 5
@@ -885,7 +892,7 @@ public class QLBH extends javax.swing.JPanel {
         cell = row.createCell(1, CellType.STRING);
         for (KhachHang kh : listKH) {
             if (cbxMaKH.getSelectedItem().toString().equals(kh.getMaKh())) {
-                cell.setCellValue("Bán cho ông (bà):" + kh.getHoTen());
+                cell.setCellValue("Bán cho ông (bà): " + kh.getHoTen());
             }
         }
         cell.setCellStyle(cellStyle3);
@@ -894,7 +901,7 @@ public class QLBH extends javax.swing.JPanel {
         cell = row.createCell(1, CellType.STRING);
         for (KhachHang kh : listKH) {
             if (cbxMaKH.getSelectedItem().toString().equals(kh.getMaKh())) {
-                cell.setCellValue("Địa chỉ:" + kh.getDiaChi());
+                cell.setCellValue("Địa chỉ: " + kh.getDiaChi());
             }
         }
 
@@ -903,18 +910,18 @@ public class QLBH extends javax.swing.JPanel {
         //dòng 8
         row = sheet.createRow(8);
         cell = row.createCell(1, CellType.STRING);
-        cell.setCellValue("Nhân viên:" + Auth.user.getHoTen());
+        cell.setCellValue("Nhân viên: " + Auth.user.getHoTen());
         cell.setCellStyle(cellStyle3);
 
         //dòng 9
         row = sheet.createRow(9);
         cell = row.createCell(1, CellType.STRING);
-        cell.setCellValue("Tổng tiền:" + txtTongTien.getText() + "đ");
+        cell.setCellValue("Tổng tiền: " + txtTongTien.getText() + "đ");
         cell.setCellStyle(cellStyle3);
 
         row = sheet.createRow(10);
         cell = row.createCell(1, CellType.STRING);
-        cell.setCellValue("Bằng chữ :" + lblBangChu.getText());
+        cell.setCellValue("Bằng chữ : " + lblBangChu.getText());
         cell.setCellStyle(cellStyle3);
 
         row = sheet.createRow(12);
@@ -972,7 +979,7 @@ public class QLBH extends javax.swing.JPanel {
         //dòng 22
         row = sheet.createRow(22);
         cell = row.createCell(1, CellType.STRING);
-        cell.setCellValue("Quý khách giữu lại phiếu đảm bảo để tiện mua bán đổi");
+        cell.setCellValue("Quý khách giữ lại phiếu đảm bảo để tiện mua bán đổi");
         cell.setCellStyle(cellStyle3);
 
         //dòng 23
@@ -1013,7 +1020,7 @@ public class QLBH extends javax.swing.JPanel {
 
         int result = jFileChooser.showSaveDialog(null);
         if (result == JFileChooser.APPROVE_OPTION) {
-            File file = new File(jFileChooser.getSelectedFile() + "mã hóa đơn" + ".pdf");
+            File file = new File(jFileChooser.getSelectedFile() + "" + ".pdf");
 
             FileOutputStream fos = new FileOutputStream(file);
             PdfWriter.getInstance(document, fos);
@@ -1039,11 +1046,11 @@ public class QLBH extends javax.swing.JPanel {
             }
 
             document.add(new Paragraph("Công ty TNHH Vàng Bạc                              Giấy đảm bảo vàng\n"
-                    + "Toản Huyền                                               Uy tín quý hơn vàng\n"
+                    + "       Toản Huyền                                               Uy tín quý hơn vàng\n"
                     + "Đ/c:Khu Minh Khanh -Xã Minh Khai- Huyện tân sơn - Tỉnh "
                 + "Phú Thọ   ĐT:0978154115-0986334292\n"
                     + "        Chuyên mua nữ trang vàng 9999-Vàng tây các loại\n\n"
-                    + "Bán cho ông (bà): " + tenKH + "Dia Chi: " + diaChi + "\n"
+                    + "Bán cho ông (bà): " + tenKH + "  Địa chỉ: " + diaChi + "\n"
                     + "Tổng tiền: " + txtTongTien.getText() + "d\n"
                     + "Bằng chữ: " + lblBangChu.getText() + "\n\n", font1));
             //document.add(new Paragraph("This is fontname_Times vẫn bị thế", font1));
@@ -1097,7 +1104,7 @@ public class QLBH extends javax.swing.JPanel {
                     + "Rất hân hạnh được phục vụ quý khách                                                                        "
                     + "Tây Sơn " + java.time.LocalDate.now() + "\n"
                     + "                                                                                                                 "
-                            + "        Đại diện công ty", font1));
+                            + "                              Đại diện công ty", font1));
 
             document.close();
             // workbook.write(fos);
@@ -1116,7 +1123,11 @@ public class QLBH extends javax.swing.JPanel {
     }//GEN-LAST:event_rdoPhanTramMouseClicked
 
     private void txtGiamGiaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtGiamGiaKeyReleased
-        thanhTien();
+        try {
+            thanhTien();
+        } catch (ParseException e) {
+           e.printStackTrace();
+        }
     }//GEN-LAST:event_txtGiamGiaKeyReleased
 
     private void tblHoaDonChiTietMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHoaDonChiTietMouseClicked

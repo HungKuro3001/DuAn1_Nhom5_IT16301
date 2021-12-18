@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class DanhMuc_DAO extends Dao<DanhMuc, String> {
 
-    String insert = "Insert DANHMUCSANPHAM values (?,?,?,0)";
+    String insert = "Insert DANHMUCSANPHAM values (?,?,0,?)";
     String selectAll = "Select *from DANHMUCSANPHAM";
     String updateSql = "UPDATE DANHMUCSANPHAM SET TENDM =?,MOTA =? where MADM=?";
     String deleteSQL = "Delete from DANHMUCSANPHAM where MADM=?";
@@ -67,8 +67,8 @@ public class DanhMuc_DAO extends Dao<DanhMuc, String> {
                 DanhMuc dm = new DanhMuc();
                 dm.setMaDM(rs.getString(1));
                 dm.setTenDm(rs.getString(2));
-                dm.setMoTa(rs.getString(3));
-                dm.setTrangThai(rs.getBoolean(4));
+                dm.setMoTa(rs.getString(4));
+                dm.setTrangThai(rs.getBoolean(3));
                 list.add(dm);
             }
             rs.getStatement().getConnection().close();

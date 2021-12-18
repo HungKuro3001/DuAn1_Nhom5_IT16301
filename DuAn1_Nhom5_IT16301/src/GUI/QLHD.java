@@ -14,6 +14,7 @@ import Entity.KhachHang;
 import Entity.SanPham;
 import Utils.Auth;
 import Utils.Msgbox;
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.PageSize;
@@ -137,8 +138,11 @@ public class QLHD extends javax.swing.JPanel {
         } else {
             cbxHinhThucMua.setSelectedItem("Bán");
         }
-        txtKhachTra.setText("" + new BigDecimal(hd.getKhachTra()));
-        txtTongTien.setText("" + new BigDecimal(hd.getTongTien()));
+                       
+               DecimalFormat df = new DecimalFormat("#.##");
+
+        txtKhachTra.setText("" + df.format(hd.getKhachTra()));
+        txtTongTien.setText("" + df.format(hd.getTongTien()));
         cbxTrangThaiHD.setSelectedItem(hd.getTrangThaiHD());
         String chu = numberToString(Double.parseDouble(txtTongTien.getText()));
         lblBangChu.setText(chu);
@@ -612,7 +616,7 @@ public class QLHD extends javax.swing.JPanel {
         //dòng 4
         row = sheet.createRow(4);
         cell = row.createCell(1, CellType.STRING);
-        cell.setCellValue("Đ/c:Khu Minh Khanh -Xã Minh Khai- Huyện tân sơn - Tỉnh "
+        cell.setCellValue("Đ/c:Khu Minh Khanh -Xã Minh Khai- Huyện Tân Sơn - Tỉnh "
                 + "Phú Thọ   ĐT:0978154115-0986334292");
         cell.setCellStyle(cellStyle2);
         //dòng 5
@@ -623,29 +627,29 @@ public class QLHD extends javax.swing.JPanel {
         //dòng 6
         row = sheet.createRow(6);
         cell = row.createCell(1, CellType.STRING);
-        cell.setCellValue("Bán cho ông (bà):" + txtTenKH.getText());
+        cell.setCellValue("Bán cho ông (bà): " + txtTenKH.getText());
         cell.setCellStyle(cellStyle3);
         //dòng 7
         row = sheet.createRow(7);
         cell = row.createCell(1, CellType.STRING);
-        cell.setCellValue("Địa chỉ:" + diaChiKH);
+        cell.setCellValue("Địa chỉ: " + diaChiKH);
         cell.setCellStyle(cellStyle3);
 
         //dòng 8
         row = sheet.createRow(8);
         cell = row.createCell(1, CellType.STRING);
-        cell.setCellValue("Nhân viên:" + txtTenNV.getText());
+        cell.setCellValue("Nhân viên: " + txtTenNV.getText());
         cell.setCellStyle(cellStyle3);
 
         //dòng 9
         row = sheet.createRow(9);
         cell = row.createCell(1, CellType.STRING);
-        cell.setCellValue("Tổng tiền:" + txtTongTien.getText() + "đ");
+        cell.setCellValue("Tổng tiền: " + txtTongTien.getText() + "đ");
         cell.setCellStyle(cellStyle3);
 
         row = sheet.createRow(10);
         cell = row.createCell(1, CellType.STRING);
-        cell.setCellValue("Bằng chữ :" + lblBangChu.getText());
+        cell.setCellValue("Bằng chữ : " + lblBangChu.getText());
         cell.setCellStyle(cellStyle3);
 
         row = sheet.createRow(12);
@@ -697,13 +701,13 @@ public class QLHD extends javax.swing.JPanel {
         //dòng 21
         row = sheet.createRow(21);
         cell = row.createCell(1, CellType.STRING);
-        cell.setCellValue("Thưa quý khách chúng tôi có ưu đai cho khách hàng mua");
+        cell.setCellValue("Thưa quý khách chúng tôi có ưu đãi cho khách hàng mua");
         cell.setCellStyle(cellStyle3);
 
         //dòng 22
         row = sheet.createRow(22);
         cell = row.createCell(1, CellType.STRING);
-        cell.setCellValue("Quý khách giữu lại phiếu đảm bảo để tiện mua bán đổi");
+        cell.setCellValue("Quý khách giữ lại phiếu đảm bảo để tiện mua bán đổi");
         cell.setCellStyle(cellStyle3);
 
         //dòng 23
@@ -744,19 +748,42 @@ public class QLHD extends javax.swing.JPanel {
 
         int result = jFileChooser.showSaveDialog(null);
         if (result == JFileChooser.APPROVE_OPTION) {
-            File file = new File(jFileChooser.getSelectedFile() + "mã hóa đơn" + ".pdf");
+            File file = new File(jFileChooser.getSelectedFile() + "" + ".pdf");
 
             FileOutputStream fos = new FileOutputStream(file);
             PdfWriter.getInstance(document, fos);
             document.open();
 
-            BaseFont bf = BaseFont.createFont("C:\\Users\\vuong\\Desktop\\VnArial_Font_VnUnikey.com_\\VNARIALB.TTF",
+            BaseFont bf = BaseFont.createFont("Roboto-Italic.TTF",
                     BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
             Font font1 = new Font(bf, 10, Font.NORMAL);
+            font1.setColor(BaseColor.RED);
             Font font11_bold = new Font(bf, 11, Font.BOLD);
 
-            document.add(new Paragraph("This is fontname_Times cay thế nhờ", font11_bold));
-            document.add(new Paragraph("This is fontname_Times vẫn bị thế", font1));
+            String tenKH = "";
+            for (KhachHang kh : listKH) {
+                if (cbxMaKH.getSelectedItem().toString().equals(kh.getMaKh())) {
+                    tenKH = kh.getHoTen();
+                }
+            }
+            String diaChi = "";
+            for (KhachHang kh : listKH) {
+                if (cbxMaKH.getSelectedItem().toString().equals(kh.getMaKh())) {
+                    diaChi = kh.getDiaChi();
+                }
+            }
+
+            document.add(new Paragraph("Công ty TNHH Vàng Bạc                              "
+                    + "                                       Giấy đảm bảo vàng\n"
+                    + "       Toản Huyền                                               "
+                    + "                                       Uy tín quý hơn vàng\n"
+                    + "Đ/c:Khu Minh Khanh -Xã Minh Khai- Huyện tân sơn - Tỉnh "
+                + "Phú Thọ   ĐT:0978154115-0986334292\n"
+                    + "        Chuyên mua nữ trang vàng 9999-Vàng tây các loại\n\n"
+                    + "Bán cho ông (bà): " + tenKH + "  Địa chỉ: " + diaChi + "\n"
+                    + "Tổng tiền: " + txtTongTien.getText() + " vnđ\n"
+                    + "Bằng chữ: " + lblBangChu.getText() + "\n\n", font1));
+            //document.add(new Paragraph("This is fontname_Times vẫn bị thế", font1));
 
             // p.setAlignment(Paragraph.ALIGN_CENTER);
             PdfPTable tbl = new PdfPTable(8);
@@ -766,12 +793,18 @@ public class QLHD extends javax.swing.JPanel {
             tbl.addCell(cell);
             cell = new PdfPCell(new Paragraph("Mã hóa đơn", font1));
             tbl.addCell(cell);
-            tbl.addCell("Mã sản phẩm");
-            tbl.addCell("Tiền công");
-            tbl.addCell("Đơn giá");
-            tbl.addCell("Giảm giá");
-            tbl.addCell("Số lượng");
-            tbl.addCell("Thành tiền");
+            cell = new PdfPCell(new Paragraph("Mã sản phẩm", font1));
+            tbl.addCell(cell);
+            cell = new PdfPCell(new Paragraph("Tiền công", font1));
+            tbl.addCell(cell);
+            cell = new PdfPCell(new Paragraph("Đơn giá", font1));
+            tbl.addCell(cell);
+            cell = new PdfPCell(new Paragraph("Giảm giá", font1));
+            tbl.addCell(cell);
+            cell = new PdfPCell(new Paragraph("Số lượng", font1));
+            tbl.addCell(cell);
+            cell = new PdfPCell(new Paragraph("Thành tiền", font1));
+            tbl.addCell(cell);
 
             //font11_bold)); cell.setPaddingLeft(5.0f); cell.setBorder(0);
             for (int i = 0; i < tblHoaDonChiTiet.getRowCount(); i++) {
@@ -795,9 +828,15 @@ public class QLHD extends javax.swing.JPanel {
 
             document.add(tbl);
 
+            document.add(new Paragraph("Lưu ý:\n"
+                    + "Thưa quý khách chúng tôi có ưu đãi cho khách hàng mua\n"
+                    + "Quý khách giữu lại phiếu đảm bảo để tiện mua bán đổi\n"
+                    + "Rất hân hạnh được phục vụ quý khách                                                                        "
+                    + "Tây Sơn " + java.time.LocalDate.now() + "\n"
+                    + "                                                                                                                 "
+                            + "                           Đại diện công ty", font1));
+
             document.close();
-            // workbook.write(fos);
-            // fos.close();
         }
     }
 
@@ -1145,6 +1184,7 @@ public class QLHD extends javax.swing.JPanel {
 
     private void tblHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHoaDonMouseClicked
         try {
+            
             display();
             float khachtra = Float.parseFloat(txtKhachTra.getText());
             float tongtien = Float.parseFloat(txtTongTien.getText());

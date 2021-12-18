@@ -92,10 +92,12 @@ public class QuanLyDoiTra extends javax.swing.JPanel {
 //        cbxMaHD.removeAllItems();
 //        cbxMaSp.removeAllItems();
         listHD = hdDao.selectBYDate(ngayGD);
+       
 
         for (HoaDon hoaDon : listHD) {
             cbxMaHD.addItem(hoaDon.getMaHD());
         }
+         cbxMaSp.removeAllItems();
         listSp = ctDao.selectByMAHD(cbxMaHD.getSelectedItem() + "");
         for (ChiTietHD chiTiet : listSp) {
             cbxMaSp.addItem(chiTiet.getMaSp());
@@ -225,7 +227,7 @@ public class QuanLyDoiTra extends javax.swing.JPanel {
         txtLiDo.setRows(5);
         jScrollPane2.setViewportView(txtLiDo);
 
-        btnthem.setText("thêm");
+        btnthem.setText("Thêm");
         btnthem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnthemActionPerformed(evt);
